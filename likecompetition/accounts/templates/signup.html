@@ -1,1 +1,15 @@
 회원가입 페이지입니당.:3
+<form method="POST">
+    {%csrf_token%}
+    {{signupForm.as_p}}
+    {{err_msg}}
+    </br>
+    <!--
+        속성 추가는 forms.py에서
+        {{signupForm.email}}
+        {{signupForm.nickname}}
+        {{signupForm.password}}
+        {{signupForm.password_conf}}
+    -->
+    <button type="submit">signup</button>
+</form>

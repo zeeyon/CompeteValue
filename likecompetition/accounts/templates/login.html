@@ -1,1 +1,13 @@
 로그인 페이지입니당.:3
+<form method="POST">
+    {%csrf_token%}
+    {{loginForm.as_p}}
+    {{err_msg}}
+    </br>
+    <!--
+        속성 추가는 forms.py에서
+        {{loginForm.email}}
+        {{loginForm.password}}
+    -->
+    <button type="submit">login</button>
+</form>
