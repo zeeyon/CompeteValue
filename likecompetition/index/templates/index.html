@@ -1,3 +1,7 @@
+<!--  base.html을 불러오는 확장 템플릿 태그 -->
+{% extends 'base.html' %}  
+{% block contents %}
+{% load static %}
 INDEX(MAIN)페이지 입니당.:3
 
 <br>
@@ -5,3 +9,5 @@ INDEX(MAIN)페이지 입니당.:3
 <a href = "/accounts/signup">회원가입</a><br>
 <a href = "/board/result">board로 가기</a><br>
 <a href = "/users/mypage">mypage로 가기</a><br>
+
+{% endblock %}

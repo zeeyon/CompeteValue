@@ -58,7 +58,7 @@ ROOT_URLCONF = 'likecompetition.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'likecompetition', 'templates') ], # base의 위치 likecompetition/templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,4 +121,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' # 실제 파일이나 디렉터리 X, URL로만 존재하는 단위
+
+# static file 사용 시 목록에 추가
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'likecomptition', 'static'),
+    os.path.join(BASE_DIR, 'board', 'static'),
+    
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 이 경로에 있는 모든 파일을 웹 서버가 직접 제공하기 위함
