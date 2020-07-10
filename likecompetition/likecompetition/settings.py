@@ -122,8 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/' # 실제 파일이나 디렉터리 X, URL로만 존재하는 단위
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') #개발자가 관리하는 파일들 
 
-AUTH_USER_MODEL = 'accounts.User'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #사용자가 업로드한 파일 관리
+
 # static file 사용 시 목록에 추가
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'likecomptition', 'static'),
@@ -131,4 +134,4 @@ STATICFILES_DIRS = [
     
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 이 경로에 있는 모든 파일을 웹 서버가 직접 제공하기 위함
+AUTH_USER_MODEL = 'accounts.User'
