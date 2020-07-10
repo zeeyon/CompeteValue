@@ -129,7 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #사용자가 업로드한 파일 �
 # static file 사용 시 목록에 추가
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'likecomptition', 'static'),
-    os.path.join(BASE_DIR, 'board', 'static'),
+    os.path.join(BASE_DIR, 'index', 'static'),
     
 ]
 
