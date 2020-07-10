@@ -1,0 +1,12 @@
+{% block content %}
+<h3>수정하기</h3>
+
+<form method='POST'>
+    {%csrf_token%}
+    <table>
+        {{form.as_p}}
+    </table>
+    <button type="submit">수정</button>
+</form>
+
+{% endblock %}

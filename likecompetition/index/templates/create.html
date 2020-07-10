@@ -1,0 +1,12 @@
+{% block content %}
+<h3>글쓰기</h3>
+
+<form method='POST'>
+    {%csrf_token%}
+    <table>
+        {{form.as_p}}
+    </table>
+    <button type="submit">제출</button>
+</form>
+
+{% endblock %}

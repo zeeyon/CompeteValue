@@ -1,0 +1,8 @@
+{% block content %}
+<a href="{% url 'index' %}">index로 이동하기</a>
+<h1>{{post.title}}</h1>
+{{post.date}}
+{{post.content}}
+<a href ="{% url 'postupdate' post.id %}">수정하기</a>
+<a href ="{% url 'postdelete' post.id %}" onclick="return confirm('삭제할까요?')">삭제하기</a>
+{% endblock %}
