@@ -1,7 +1,16 @@
 INDEX(MAIN)페이지 입니당.:3
 
 <br>
-<a href = "/accounts/login">로그인</a><br>
-<a href = "/accounts/signup">회원가입</a><br>
+
+{% if user.is_authenticated %}
+    {{user.nickname}}
+    /
+    <a href = "{% url 'logout' %}">로그아웃</a>
+{% else %}
+    <a href = "/accounts/login">로그인</a>
+    /
+    <a href = "/accounts/signup">회원가입</a>
+{% endif %}
+<br><br>
 <a href = "/board/result">board로 가기</a><br>
 <a href = "/users/mypage">mypage로 가기</a><br>
