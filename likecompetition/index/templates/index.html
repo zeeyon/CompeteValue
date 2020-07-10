@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-INDEX(MAIN)페이지 입니당
+INDEX(MAIN)페이지 입니당:3
 
 <br>
 
@@ -16,6 +16,14 @@ INDEX(MAIN)페이지 입니당
     <a href = "/accounts/signup">회원가입</a>
 {% endif %}
 <br><br>
+<h3><a href="{% url 'postcreate' %}">글 작성</a><h3>
+
+<h1>등록된 글</h1>
+{% for post in posts %}
+    <a href ="{% url 'post' post.id %}">{{post.title}}</a>
+    <br>
+{% endfor %}
+<br> <br>
 <a href = "/board/result">board로 가기</a><br>
 <a href = "/users/mypage">mypage로 가기</a><br>
 
