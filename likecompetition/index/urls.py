@@ -8,5 +8,5 @@ urlpatterns = [
     path('update/', views.update, name='update'), # update.html
     path('postcreate/', views.postcreate, name='postcreate'), # create 함수
     path('postupdate/<int:post_id>', views.postupdate, name='postupdate'), # update 함수
-    path('postdelete/<int:post_id>', views.postdelete, name='postdelete' ), # delete 함수
+    path('postdelete/<int:post_id>', views.postdelete, name='postdelete'), # delete 함수
 ]

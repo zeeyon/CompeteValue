@@ -1,8 +1,10 @@
 from django.db import models
+from django.conf import settings
 
 class Post(models.Model):
 
     title = models.CharField(max_length=50,null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True) # 사용자가 직접 입력하지 않아도 자동으로 시간 받아오기
     content = models.TextField(default='') # default='', content에 아무것도 안써도 null에러가 나지 않음
 
