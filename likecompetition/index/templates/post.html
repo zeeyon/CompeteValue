@@ -3,8 +3,19 @@
 <h1>{{post.title}}</h1>
 {{post.date}}
 {{post.content}}
+{{post.title}}
 {% if request.user == post.user %}
-    <a href ="{% url 'postupdate' post.id %}">수정하기</a>
-    <a href ="{% url 'postdelete' post.id %}" onclick="return confirm('삭제할까요?')">삭제하기</a>
+    <a href ="{% url 'update_post' post.id %}">수정하기</a>
+    <a href ="{% url 'delete_post' post.id %}" onclick="return confirm('삭제할까요?')">삭제하기</a>
 {% endif %}
+<br><br>
+{% for comment in comments %}
+    댓글임둥: {{comment.content}}<br><br>
+{% endfor %}
+<br><br>
+<form method='POST'>
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">제출</button>
+</form>
 {% endblock %}
