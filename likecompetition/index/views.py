@@ -7,11 +7,12 @@ from django.contrib.auth.decorators import login_required
 # post의 상세 내용을 보여줌, 댓글 기능 추가
 def post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    comments = Comment.objects.all()
+    comments = Comment.objects.filter(post=post)
     if request.method == 'POST': # POST 방식으로 요청이 들어올 때
         form = CommentForm(request.POST) # 입력된 내용을 form 변수에 저장
         if form.is_valid(): # form이 유효하면(models.py에서 정의한 필드에 적합하면)
             comment = form.save(commit=False) # form 데이터를 가져온다
+            comment.post = post
             comment.user = request.user
             comment.save() # form 데이터를 db에 저장한다
     else: # GET 방식으로 요청이 들어올 때
