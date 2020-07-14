@@ -3,6 +3,7 @@ from .models import Post
 from .forms import PostForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # post의 상세 내용을 보여줌
 def post(request, post_id):
@@ -10,8 +11,10 @@ def post(request, post_id):
     return render(request, 'post.html', {'post':post})
 
 # postlist를 보여줌 / pagination 구현 해야함
-def index(request):
+def index(request, page=1):
     posts = Post.objects.all()
+    paginator = Paginator(posts, 5)
+    posts = paginator.get_page(page)
     return render(request, 'index.html', {'posts':posts})
 
 # post만드는 html

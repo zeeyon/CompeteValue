@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'), # index 
+    path('', views.index, name='index'), # index
+    path('<int:page>', views.index, name='index'), # index pagination
     path('create/', views.create, name='create'), # create.html
     path('post/<int:post_id>', views.post, name='post'), # post.html
     path('update/', views.update, name='update'), # update.html
