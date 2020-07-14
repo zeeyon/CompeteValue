@@ -1,4 +1,3 @@
-<!-- base.html을 불러오는 확장 템플릿 태그 -->
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
@@ -16,7 +15,8 @@ INDEX(MAIN)페이지 입니당:3
     <a href="/accounts/signup">회원가입</a>
 {% endif %}
 <br><br>
-<h3><a href="{% url 'postcreate' %}">글 작성</a><h3>
+
+<h3><a href="{% url 'create_post' %}">글 작성</a><h3>
 
 <h1>등록된 글</h1>
 {% for post in posts %}
