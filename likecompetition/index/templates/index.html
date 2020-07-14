@@ -9,22 +9,31 @@ INDEX(MAIN)페이지 입니당:3
 {% if user.is_authenticated %}
     {{user.nickname}}
     /
-    <a href = "{% url 'logout' %}">로그아웃</a>
+    <a href="{% url 'logout' %}">로그아웃</a>
 {% else %}
-    <a href = "/accounts/login">로그인</a>
+    <a href="/accounts/login">로그인</a>
     /
-    <a href = "/accounts/signup">회원가입</a>
+    <a href="/accounts/signup">회원가입</a>
 {% endif %}
 <br><br>
 <h3><a href="{% url 'postcreate' %}">글 작성</a><h3>
 
 <h1>등록된 글</h1>
 {% for post in posts %}
-    <a href ="{% url 'post' post.id %}">{{post.title}}</a>
+    <a href="{% url 'post' post.id %}">{{post.title}}</a>
     <br>
 {% endfor %}
-<br> <br>
-<a href = "/board/result">board로 가기</a><br>
-<a href = "/users/mypage">mypage로 가기</a><br>
+<br>
+
+{% if posts.has_previous %}
+<a href="{% url 'index' posts.previous_page_number %}">이전 페이지</a>
+{% endif %}
+{% if posts.has_next %}
+<a href="{% url 'index' posts.next_page_number %}">다음 페이지</a>
+{% endif %}
+<br><br>
+
+<a href="/board/result">board로 가기</a><br>
+<a href="/users/mypage">mypage로 가기</a><br>
 
 {% endblock %}
