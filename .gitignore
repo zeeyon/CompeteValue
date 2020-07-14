@@ -1,9 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/sublimetext,visualstudiocode,django,sass,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=sublimetext,visualstudiocode,django,sass,venv
 
-### custome files ###
-migrations/
-!__init__.py
+# django migrations 
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
 
 ### Django ###
 *.log
