@@ -9,6 +9,7 @@
     <a href ="{% url 'update_post' post.id %}">수정하기</a>
     <a href ="{% url 'delete_post' post.id %}" onclick="return confirm('삭제할까요?')">삭제하기</a>
 {% endif %}
+<a href ="{% url 'create_scrap' post.id %}" onclick="return confirm('스크랩할까요?')">스크랩하기</a>
 <br><br>
 {% for comment in comments %}
     {{comment.user.nickname}}<br>

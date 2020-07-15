@@ -20,3 +20,10 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True) # 사용자가 직접 입력하지 않아도 자동으로 시간 받아오기
     content = models.TextField(default='') # default='', content에 아무것도 안 써도 null 에러가 나지 않음
+
+class Scrap(models.Model):
+    class Meta:
+        unique_together = ('user', 'post')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True) # 사용자가 직접 입력하지 않아도 자동으로 시간 받아오기

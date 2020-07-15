@@ -1,0 +1,13 @@
+{% block content %}
+<a href="{% url 'index' %}">index로 이동하기</a>
+
+<h1>스크랩한 글</h1>
+{% for scrap in scraps %}
+    <a href="{% url 'post' scrap.post.id %}">{{scrap.post.title}}</a><br>
+    스크랩 시간 : {{scrap.date}}<br>
+    <a href="{% url 'delete_scrap' scrap.id %}" onclick="return confirm('삭제할까요?')">스크랩 삭제</a><br>
+    <br>
+{% endfor %}
+<br>
+
+{% endblock %}
