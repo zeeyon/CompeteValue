@@ -1,8 +1,9 @@
 {% block content %}
 <a href="{% url 'index' %}">index로 이동하기</a>
 <h1>{{post.title}}</h1>
-{{post.date}}<br>
-{{post.content}}<br>
+글번호 : {{post.id}}<br>
+날짜 : {{post.date}}<br>
+내용 : {{post.content}}<br>
 조회수 : {{post.view_count}}<br>
 {% if request.user == post.user %}
     <a href ="{% url 'update_post' post.id %}">수정하기</a>
