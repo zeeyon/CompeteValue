@@ -11,7 +11,7 @@
 {% endif %}
 <br><br>
 {% for comment in comments %}
-    {{comment.user}}<br>
+    {{comment.user.nickname}}<br>
     {{comment.date}}<br>
     {{comment.content}}<br>
     {% if request.user == comment.user %}
