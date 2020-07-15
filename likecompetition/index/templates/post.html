@@ -12,9 +12,13 @@
 {% for comment in comments %}
     {{comment.user}}<br>
     {{comment.date}}<br>
-    {{comment.content}}<br><br>
+    {{comment.content}}<br>
+    {% if request.user == comment.user %}
+        <a href ="{% url 'delete_comment' comment.id %}" onclick="return confirm('삭제할까요?')">삭제하기</a>
+    {% endif %}
+    <br><br>
 {% endfor %}
-<form method='POST'>
+<form method="POST">
     {%csrf_token%}
     {{form.as_p}}
     <button type="submit">댓글 달기</button>

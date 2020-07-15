@@ -3,6 +3,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 # post의 상세 내용을 보여줌, 댓글 기능 추가
 def post(request, post_id):
@@ -16,6 +17,7 @@ def post(request, post_id):
             comment.user = request.user
             comment.save() # form 데이터를 db에 저장한다
     form = CommentForm()
+    Post.objects.filter(id=post_id).update(view_count=F('view_count')+1)
     return render(request, 'post.html', {'post':post, 'form':form, 'comments':comments})
 
 # post를 넘겨줌
@@ -60,3 +62,10 @@ def delete_post(request, post_id):
     if request.user == post.user:
         post.delete() # Post db에서 post 객체 삭제
     return redirect('index')
+
+# comment 삭제하는 메소드
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('post', post_id=comment.post.pk)
