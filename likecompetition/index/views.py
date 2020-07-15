@@ -25,10 +25,6 @@ def index(request, page=1):
     posts = paginator.get_page(page)
     return render(request, 'index.html', {'posts':posts})
 
-# post 만드는 html
-def create(request):
-    return render(request, 'create.html')
-
 # post 만드는 메소드
 @login_required
 def create_post(request):
@@ -41,10 +37,6 @@ def create_post(request):
         post.user = request.user
         post.save() # form 데이터를 db에 저장한다
     return redirect('post', post_id=post.id)
-
-# post 수정하는 html
-def update(request):
-    return render(request, 'update.html')
 
 # post 수정하는 메소드
 @login_required
