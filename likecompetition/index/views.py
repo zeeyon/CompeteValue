@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
+from .models import Post, Comment, Scrap
 from .forms import PostForm, CommentForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -64,8 +64,32 @@ def delete_post(request, post_id):
     return redirect('index')
 
 # comment 삭제하는 메소드
+@login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user == comment.user:
         comment.delete()
     return redirect('post', post_id=comment.post.pk)
+
+# post 스크랩하는 메소드
+@login_required
+def create_scrap(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    count = Scrap.objects.filter(user=request.user, post=post).count()
+    if not count:
+        scrap = Scrap(user=request.user, post=post)
+        scrap.save()
+    return redirect('post', post_id=post_id)
+
+@login_required
+def scrap(request):
+    scraps = Scrap.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'scrap.html', {'scraps':scraps})
+
+# 스크랩 삭제하는 메소드
+@login_required
+def delete_scrap(request, scrap_id):
+    scrap = get_object_or_404(Scrap, pk=scrap_id)
+    if request.user == scrap.user:
+        scrap.delete()
+    return redirect('scrap')
