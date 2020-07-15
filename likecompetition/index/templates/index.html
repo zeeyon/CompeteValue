@@ -20,7 +20,7 @@ INDEX(MAIN)페이지 입니당:3
 
 <h1>등록된 글</h1>
 {% for post in posts %}
-    <a href="{% url 'post' post.id %}">{{post.title}}</a>
+    {{post.id}} <a href="{% url 'post' post.id %}">{{post.title}}</a>
     <br>
 {% endfor %}
 <br>

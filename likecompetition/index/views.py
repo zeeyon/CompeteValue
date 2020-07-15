@@ -22,7 +22,7 @@ def post(request, post_id):
 
 # post를 넘겨줌
 def index(request, page=1):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-id')
     paginator = Paginator(posts, 5)
     posts = paginator.get_page(page)
     return render(request, 'index.html', {'posts':posts})
