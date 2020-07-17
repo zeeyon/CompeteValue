@@ -1,40 +1,36 @@
 {% extends 'base.html' %}
-{% block content %}
-{% load static %}
-INDEX(MAIN)페이지 입니당:3
 
-<br>
+{% block content %}
+
+INDEX(MAIN)페이지 입니당:3
+<br><br>
 
 {% if user.is_authenticated %}
-    {{user.nickname}}
-    /
-    <a href="{% url 'logout' %}">로그아웃</a>
+    {{ user.nickname }} / <a href="{% url 'logout' %}">로그아웃</a>
 {% else %}
-    <a href="/accounts/login">로그인</a>
-    /
-    <a href="/accounts/signup">회원가입</a>
+    <a href="{% url 'login' %}">로그인</a> / <a href="{% url 'signup' %}">회원가입</a>
 {% endif %}
 <br><br>
 
-<h3><a href="{% url 'create_post' %}">글 작성</a><h3>
+<h3><a href="{% url 'post_create' %}">글 작성</a><h3>
 <h3><a href="{% url 'scrap' %}">스크랩 보기</a></h3>
-
-<h1>등록된 글</h1>
-{% for post in posts %}
-    {{post.id}} <a href="{% url 'post' post.id %}">{{post.title}}</a>
-    <br>
-{% endfor %}
 <br>
 
+<h2>등록된 글</h2>
+{% for post in posts %}
+    {{ post.id }} <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br>
+{% endfor %}
+<br><br>
+
 {% if posts.has_previous %}
-<a href="{% url 'index' posts.previous_page_number %}">이전 페이지</a>
+    <a href="{% url 'index_page' posts.previous_page_number %}">이전 페이지</a>
 {% endif %}
 {% if posts.has_next %}
-<a href="{% url 'index' posts.next_page_number %}">다음 페이지</a>
+    <a href="{% url 'index_page' posts.next_page_number %}">다음 페이지</a>
 {% endif %}
 <br><br>
 
-<a href="/board/result">board로 가기</a><br>
-<a href="/users/mypage">mypage로 가기</a><br>
+<a href="/board/result">board로 가기(href 수정 필요)</a><br>
+<a href="/users/mypage">mypage로 가기(href 수정 필요)</a><br>
 
 {% endblock %}

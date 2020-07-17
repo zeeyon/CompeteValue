@@ -1,0 +1,16 @@
+{% block content %}
+
+<h3>글쓰기</h3>
+
+{{ error_message }}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="등록" />
+    {% if method %}
+    <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+</form>
+
+{% endblock %}

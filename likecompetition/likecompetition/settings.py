@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'index',
-    'users',
+    'accounts.apps.AccountsConfig',
+    'index.apps.IndexConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,16 +121,15 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/' # 실제 파일이나 디렉터리 X, URL로만 존재하는 단위
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') #개발자가 관리하는 파일들 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 개발자가 관리하는 파일들 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #사용자가 업로드한 파일 관리
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 사용자가 업로드한 파일 관리
 
 # static file 사용 시 목록에 추가
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'likecomptition', 'static'),
-    os.path.join(BASE_DIR, 'index', 'static'),
-    
+    os.path.join(BASE_DIR, 'likecompetition', 'static'),
+    os.path.join(BASE_DIR, 'index', 'static'),    
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
