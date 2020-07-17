@@ -8,8 +8,7 @@ urlpatterns = [
     path('posts/new', views.PostCreateView.as_view(), name='post_create'),
     path('posts/<int:post_id>/edit', views.PostEditView.as_view(), name='post_edit'),
     path('posts/<int:post_id>/comments', views.CommentView.as_view(), name='comment'),
-    path('posts/<int:post_id>/comments/<int:comment_id>', views.CommentDetailView.as_view(), name='comment_detail'),
-    path('scrap/', views.scrap, name='scrap'),
-    path('create/scrap/<int:post_id>', views.create_scrap, name='create_scrap'),
-    path('delete/scrap/<int:scrap_id>', views.delete_scrap, name='delete_scrap'),
+    path('posts/<int:post_id>/comments/<int:comment_id>', views.CommentView.as_view(), name='comment_detail'),
+    path('posts/scrap', views.ScrapView.as_view(), name='scrap_list'),
+    path('posts/<int:post_id>/scrap', views.ScrapView.as_view(), name='scrap_detail'),
 ]

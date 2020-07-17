@@ -1,8 +1,8 @@
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.base import View
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic.base import View
 from .models import Post, Comment, Scrap
 from .forms import PostForm, CommentForm
 
@@ -19,7 +19,7 @@ class BaseView(View):
 
 class IndexView(BaseView):
     def get(self, request, *args, **kwargs):
-        page = kwargs.get('page')
+        page = self.kwargs.get('page')
         if page == None:
             return redirect('index_page', page=1)
         posts = Post.objects.all().order_by('-id')
@@ -29,7 +29,7 @@ class IndexView(BaseView):
 
 class PostDetailView(BaseView):
     def get(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = self.kwargs['post_id']
         post = get_object_or_404(Post, pk=post_id)
         comments = Comment.objects.filter(post=post)
         form = CommentForm()
@@ -57,13 +57,13 @@ class PostCreateView(LoginRequiredMixin, BaseView):
 
 class PostEditView(LoginRequiredMixin, BaseView):
     def get(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['post_id'])
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         if not request.user == post.user:
             return redirect('index')
         return render(request, 'post_form.html', {'form': PostForm(instance=post), 'method': 'PUT'})
 
     def put(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['post_id'])
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         if not request.user == post.user:
             return redirect('index')
         form = PostForm(request.POST, instance=post)
@@ -75,7 +75,7 @@ class PostEditView(LoginRequiredMixin, BaseView):
 
 class CommentView(LoginRequiredMixin, BaseView):
     def post(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['post_id'])
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -84,27 +84,28 @@ class CommentView(LoginRequiredMixin, BaseView):
             comment.save()
         return redirect('post_detail', post_id=post.id)
 
-class CommentDetailView(LoginRequiredMixin, BaseView):
     def delete(self, request, *args, **kwargs):
-        comment = get_object_or_404(Comment, pk=kwargs['comment_id'])
+        comment = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
         if request.user == comment.user:
             comment.delete()
-        return redirect('post_detail', post_id=kwargs['post_id'])
+        return redirect('post_detail', post_id=comment.post.id)
 
-def create_scrap(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    count = Scrap.objects.filter(user=request.user, post=post).count()
-    if not count:
-        scrap = Scrap(user=request.user, post=post)
-        scrap.save()
-    return redirect('post', post_id=post_id)
+class ScrapView(LoginRequiredMixin, BaseView):
+    def get(self, request, *args, **kwargs):
+        scraps = Scrap.objects.filter(user=request.user).order_by('-date')
+        return render(request, 'scrap.html', {'scraps': scraps})
 
-def scrap(request):
-    scraps = Scrap.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'scrap.html', {'scraps':scraps})
+    def post(self, request, *args, **kwargs):
+        post_id = self.kwargs['post_id']
+        post = get_object_or_404(Post, pk=post_id)
+        count = Scrap.objects.filter(user=request.user, post=post).count()
+        if not count:
+            scrap = Scrap(user=request.user, post=post)
+            scrap.save()
+        return redirect('post_detail', post_id=post_id)
 
-def delete_scrap(request, scrap_id):
-    scrap = get_object_or_404(Scrap, pk=scrap_id)
-    if request.user == scrap.user:
+    def delete(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
+        scrap = get_object_or_404(Scrap, user=request.user, post=post)
         scrap.delete()
-    return redirect('scrap')
+        return redirect('scrap_list')

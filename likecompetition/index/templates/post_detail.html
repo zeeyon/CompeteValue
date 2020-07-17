@@ -19,7 +19,10 @@
         <input type="hidden" name="_method" value="DELETE" />
     </form>
 {% endif %}
-<a href="#" onclick="return confirm('스크랩할까요?')">스크랩하기</a>
+<form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
+    {% csrf_token %}
+    <a href="#" onclick="parentNode.submit();">스크랩하기</a>
+</form>
 <br><br>
 
 {% for comment in comments %}
@@ -31,9 +34,9 @@
             {% csrf_token %}
             <a href="#" onclick="parentNode.submit();">삭제하기</a>
             <input type="hidden" name="_method" value="DELETE" />
-        </form>
+        </form><br>
     {% endif %}
-    <br><br>
+    <br>
 {% endfor %}
 
 <form action="{% url 'comment' post.id %}" method="post">
