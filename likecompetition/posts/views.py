@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
-from .models import Post, Comment, Scrap
+from .models import Post, Comment, Scrap, Area
 from .forms import PostForm, CommentForm
 
 class BaseView(View):
@@ -98,3 +98,8 @@ class ScrapView(LoginRequiredMixin, BaseView):
         scrap = get_object_or_404(Scrap, user=request.user, post=post)
         scrap.delete()
         return redirect('scrap_list')
+
+def load_areas(request):
+    city_id = request.GET.get('city_id')
+    areas = Area.objects.filter(city_id=city_id).all()
+    return render(request, 'ajax_post_areas_list.html',{'areas':areas})
