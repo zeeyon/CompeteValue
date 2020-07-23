@@ -1,14 +1,37 @@
 로그인 페이지입니당.:3
-<form method="POST">
-    {%csrf_token%}
-    {{loginForm.as_p}}
-    {{err_msg}}
-    </br>
-    <!--
-        속성 추가는 forms.py에서
-        {{loginForm.email}}
-        {{loginForm.password}}
-    -->
-    <button type="submit">login</button>
-    회원이 아니신가요? <a href="{% url 'signup' %}">회원가입</a>
-</form>
+{% extends 'base.html' %}
+
+{% block title %}<link rel="stylesheet" type="text/css" href="/static/login.css">{% endblock %}
+{% block content %}
+<fieldset>
+    <form method="POST" action="{% url 'login' %}">
+        <div id="login-form">
+            <legend>공가치</legend>
+            {% csrf_token %}
+            {{ loginForm.non_field_errors }}
+            <div id="id-subject">
+                <!-- {{ loginForm.email.errors }} -->
+                {{ loginForm.email }}
+            </div>
+            <div id="pw-section">
+                <!-- {{ loginForm.password.errors }} -->
+                {{ loginForm.password }}
+
+            </div>
+            <button id="login-button">로그인</button>
+            <div>
+                <span id="user-save">
+                    <label>
+                        <input type="checkbox" name="user_save" style="cursor:pointer">
+                        로그인 유지
+                    </label>
+                </span>
+                <span id="user-register"><a href="{% url 'signup' %}">회원가입</a></span>
+                <span id="user-find"><a href="">비밀번호 찾기</a></span>
+            </div>
+            {{err_msg}}
+        </div>
+    </form>
+</fieldset>
+{% endblock %}
+{% block end %}{% endblock %}

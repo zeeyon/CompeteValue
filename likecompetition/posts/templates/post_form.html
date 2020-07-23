@@ -1,7 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
 {% block content %}
-
 <h3>글쓰기</h3>
-
 {{ error_message }}
 
 <form method="post" id="areaForm" data-areas-url="{% url 'ajax_load_areas' %}">
@@ -33,4 +33,55 @@
 </script>
 
 
+<!-- <form methode="POST" >
+    {% csrf_token %}
+    <div id="upload-form">
+        <table>
+            <tr>
+                <th>
+                    성별
+                </th>
+                <td>
+                    <label for="male">남성</label><input type="radio" name="gender" value="male" id="male">
+                    <label for="female">여성</label><input type="radio" name="gender" value="female" id="female">  
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    나이
+                </th>
+                <td>
+                    <input type="number" name="age" id="age">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    지역
+                </th>
+                <td>
+                    <select name="sido" id="sido"></select>
+                    <select name="gugun" id="gugun"></select>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    분야
+                </th>
+                <td>
+                    ?
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    툴
+                </th>
+                <td>
+                    해시태그?
+                </td>
+            </tr>
+        </table>
+    </div>
+</form> -->
+
 {% endblock %}
+{% block end %}{% endblock %}

@@ -1,15 +1,47 @@
 회원가입 페이지입니당.:3
-<form method="POST">
-    {%csrf_token%}
-    {{signupForm.as_p}}
-    {{err_msg}}
-    </br>
+{% extends 'base.html' %}
+
+{% block title %}<link rel="stylesheet" type="text/css" href="/static/signup.css">{% endblock %}
+{% block content %}
+<form method="POST" id="register-form">
+    <span id="legend">공가치</span>
+    <table>
+        {%csrf_token%}
+    
     <!--
+        {{signupForm.as_p}}
+        {{err_msg}}
+        </br>
+
         속성 추가는 forms.py에서
         {{signupForm.email}}
         {{signupForm.nickname}}
         {{signupForm.password}}
         {{signupForm.password_conf}}
     -->
-    <button type="submit">signup</button>
+
+        <tr class="user-id">
+            <td class="user-id-logo"><img src="/static/images/userID.png" id="user-id-logo"></td>
+            <td class="user-id-input">{{ signupForm.nickname }}</td>
+        </tr>
+        <tr class="user-pw">
+            <td class="user-pw-logo"><img src="/static/images/userEMAIL.png" id="user-pw-logo"></td>
+            <td class="user-pw-input">{{ signupForm.email }}</td>
+        </tr>
+        <tr class="user-pw">
+            <td class="user-pw-logo"><img src="/static/images/userPW.png" id="user-pw-logo"></td>
+            <td class="user-pw-input">{{ signupForm.password }}</td>
+        </tr>
+        <tr class="user-name">
+            <td class="user-name-logo"><img src="/static/images/userPW.png" id="user-name-logo"></td>
+            <td class="user-name-input">{{ signupForm.password_conf }}</td>
+        </tr>
+    </table>
+    
+    <div id="form-submit">
+        <button class="form-submit" style="cursor:pointer">가입</button>
+    </div>
+</div>
 </form>
+{% endblock %}
+{% block end %}{% endblock %}

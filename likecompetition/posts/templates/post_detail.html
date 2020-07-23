@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
 {% block content %}
 
 <a href="{% url 'index' %}">index로 이동하기</a>
@@ -50,3 +50,6 @@
 </form>
 
 {% endblock %}
+
+
+{% block end %}{% endblock %}
