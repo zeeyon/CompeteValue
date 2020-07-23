@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,16 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
     'users.apps.UsersConfig',
+
+    #allauth?
+    'allauth', 
+    'allauth.account', 
+    'allauth.socialaccount', 
+
+    #provider
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.naver',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +144,42 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# 유저 인증 방식을 목록에 추가
+AUTHENTICATION_BACKENDS = ( 
+'django.contrib.auth.backends.ModelBackend',
+
+'allauth.account.auth_backends.AuthenticationBackend', 
+) 
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            #'read:user',
+            'user:email',
+        ],
+    },
+
+    'google': {
+        'SCOPE': [
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
+
+    #'naver'
+    
+}
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'nickname'
+
+SITE_ID=1
+
+LOGIN_REDIRECT_URL = '/'
+

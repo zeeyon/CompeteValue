@@ -1,3 +1,6 @@
+{% load socialaccount %}
+{% providers_media_js %}
+
 로그인 페이지입니당.:3
 <form method="POST">
     {%csrf_token%}
@@ -11,4 +14,23 @@
     -->
     <button type="submit">login</button>
     회원이 아니신가요? <a href="{% url 'signup' %}">회원가입</a>
+    <a href="{% provider_login_url 'google' %}">google</a>
+    <a href="{% provider_login_url 'github' %}">github</a>
+    
+    <!-- 네이버 로그인은 방법을 찾아보고 있어요.
+    <a href="{% provider_login_url 'naver' %}">naver</a>
+    -->
+
 </form>
+
+github (id/token)
+5323648498b4ecea0c17
+d3f6090b3f37dc190f3c5484c8b0dc5221bb84de
+
+google (id/token)
+985855600883-oecl7j9evvkorb0bhklhmo6gq5ftapnj.apps.googleusercontent.com
+k1aFsybgJKTl08Yz37j1Dtbl
+
+naver (id/token)
+Voxi_r0w4v5_KNbzmoYw
+Voxi_r0w4v5_KNbzmoYw
