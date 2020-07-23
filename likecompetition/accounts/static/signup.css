@@ -1,0 +1,70 @@
+
+/**
+* 회원가입 폼
+*/
+
+
+#register-form, #register-form>table{
+	text-align:center;
+	width:100%;
+	border-spacing:0px 10px;
+}
+
+#register-form table{
+	margin-top:10px;
+}
+
+#register-form table tr td input{
+	width:320px;
+	font-size:15px;
+	line-height:23px;
+	padding:10px;
+	margin:0;
+	vertical-align:middle;
+	font-family:'IBMPlexSansKR-Light';
+}
+
+#register-form tr td input::placeholder{
+	color: #A6A6A6;
+}
+
+.user-name-logo,
+.user-name-input,
+.user-id-logo,
+.user-id-input,
+.user-pw-logo,
+.user-pw-input,
+.user-email-logo,
+.user-email-input{
+	display:inline-block; 
+}
+
+#user-name-logo,
+#user-id-logo,
+#user-pw-logo,
+#user-email-logo{
+	width:45px;
+	height:auto;
+	border:1px solid #A6A6A6;
+	vertical-align:middle;
+	background-color:#DCDCDC;
+}
+
+#form-submit{
+	text-align:center;
+	margin-top:50px;
+}
+.form-submit{
+	font-size:15pt;
+	padding:10px;
+	width:365px;
+	background-color:#1C1C1C;
+	color:white;
+	font-family:'TmoneyRoundWindExtraBold';
+}
+
+#legend{
+	text-align:center;
+	font-size:150%;
+	font-family:'TmoneyRoundWindExtraBold';
+}

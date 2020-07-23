@@ -10,7 +10,7 @@ urlpatterns = [
     path('<int:page>', views.IndexView.as_view(), name='index_page'),
     path('posts/', include('posts.urls')),
     path('accounts/', include('accounts.urls')),
-    path('users/', include('users.urls')),
+    path('users/', include('users.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

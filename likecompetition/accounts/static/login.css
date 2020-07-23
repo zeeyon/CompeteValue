@@ -1,0 +1,72 @@
+
+/**
+* 본문
+*/
+#content{
+	height:100%;
+}
+.content-main{
+	padding-left:250px;
+	padding-right:250px;
+	padding-top:80px;
+	height:100%;
+	font-family:'Nanum Gothic', sans-serif;
+	font-size:15pt;
+	text-align:center;
+}
+
+#login-form{
+	vertical-align:middle;
+	margin-top: 100px;
+}
+#id_email, #id_password{
+	font-size:15pt;
+	padding:10px;
+	width:324px;
+	border-radius:3px;
+	border:1px solid #B9B9B9;
+	outline:0;
+}
+#login-form>#login-button{
+	margin-top:20px;
+	margin-bottom:10px;
+	width:324;
+	padding:10px;
+	background-color:#B9B9B9;
+	color:white;
+	font-family:'TmoneyRoundWindExtraBold';
+	font-size:15pt;
+	border-radius:3px;
+	border:0;
+	outline:0;
+	cursor:pointer;
+}
+
+legend{
+	margin-bottom:20px;
+	font-size:150%;
+	font-family:'TmoneyRoundWindExtraBold';
+}
+#user-save{
+	font-size:80%;
+	padding-right:5px;
+	border-right:1px solid black;
+	color:black;
+	text-decoration:none;
+}
+#user-register{
+	font-size:80%;
+	padding-right:5px;
+	padding-left:5px;
+	border-right:1px solid black;
+	cursor:pointer;
+}
+#user-find{
+	font-size:80%;
+	cursor:pointer;
+}
+#user-register>a, #user-find>a{
+	color:black;
+	text-decoration:none;
+}
+
