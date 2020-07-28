@@ -9,7 +9,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:page>', views.IndexView.as_view(), name='index_page'),
     path('posts/', include('posts.urls')),
-    path('accounts/', include('accounts.urls')),
     path('users/', include('users.urls')),
 ]
 

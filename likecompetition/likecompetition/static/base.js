@@ -1,7 +1,7 @@
 
 var sideBars=[
 	{text:'홈', link:"/1"},
-	{text:'회원가입', link:'/accounts/signup/'},
+	{text:'회원가입', link:'/users/signup/'},
 	{text:'내 정보', link:'/users/mypage'},
 	{text:'등록하기', link:'/posts/new'}
 ];

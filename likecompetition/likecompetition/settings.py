@@ -37,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
-    'users.apps.UsersConfig',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +131,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'index', 'static'),    
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = 'login'
