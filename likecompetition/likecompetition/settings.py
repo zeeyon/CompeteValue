@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
     'users.apps.UsersConfig',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
