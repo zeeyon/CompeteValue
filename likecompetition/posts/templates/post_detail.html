@@ -8,10 +8,11 @@
 글번호 : {{ post.id }}<br>
 작성자 : {{ post.user }}<br>
 날짜 : {{ post.date }}<br>
-성별 : {{ post.gender }}<br>
-나이 : {{ post.age }}<br>
+{% comment %} 성별 : {{ post.gender }}<br>
+나이 : {{ post.age }}<br> {% endcomment %}
 시/도 : {{ post.city }}<br>
 구/군 : {{ post.area }}<br>
+분야 : {{ post.field }}<br>
 내용 : {{ post.content }}<br>
 조회수 : {{ post.view_count }}<br>
 

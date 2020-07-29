@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
+from multiselectfield import MultiSelectField
 
 class City(models.Model):
     name = models.CharField(max_length=40)
@@ -14,17 +16,19 @@ class Area(models.Model):
     def __str__(self):
         return self.name
 
+FIELD_CHOICES=(
+    ('server_backend','서버/백엔드'),
+    ('frontend','프론트엔드'),
+    ('web_pullstack','웹 풀스택'),
+)
+
 class Post(models.Model):
     title = models.CharField(max_length=50, null=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    gender = models.CharField(max_length=50, choices={
-        ('male','남자'),
-        ('female','여자'),
-    })
-    age = models.IntegerField(null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, blank=True, null=True) 
+    field = MultiSelectField(choices=FIELD_CHOICES)
     content = models.TextField(default='')
     view_count = models.IntegerField(default=0)
 
