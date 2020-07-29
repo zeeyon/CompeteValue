@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
+
 {% block content %}
 <h3>글쓰기</h3>
 {{ error_message }}
@@ -12,8 +14,6 @@
     <input type="hidden" name="_method" value="{{ method }}" />
     {% endif %}
 </form>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <script>
     $("#id_city").change(function () {
@@ -31,7 +31,6 @@
         });
     });
 </script>
-
 
 <!-- <form methode="POST" >
     {% csrf_token %}
@@ -84,4 +83,5 @@
 </form> -->
 
 {% endblock %}
+
 {% block end %}{% endblock %}

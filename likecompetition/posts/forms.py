@@ -17,7 +17,10 @@ class PostForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
+            try:
                 self.fields['area'].queryset = self.instance.city.area_set.order_by('name')
+            except:
+                pass
 
 class CommentForm(forms.ModelForm):
     class Meta:

@@ -1,75 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}<link rel="stylesheet" type="text/css" href="static/index.css">{% endblock %}
+{% block title %}<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">{% endblock %}
 
 {% block content %}
-					
-    <!-- <a href="/board/result">board로 가기(href 수정 필요)</a><br> -->
-    <form method="POST">
-        <div id="check-box">
-            <table>
-                <tr>
-                    <th >나이</th>
-                    <td id="check-box-age">
-                        <label v-for="element in age"><input type="checkbox" name="age" value="element.name">[[ element.text ]]</label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>성별</th>
-                    <td id="check-box-gender">
-                        <label v-for="element in gender"><input type="checkbox" name="gender" value="element.name">[[ element.text ]]</label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>지역</th>
-                    <td id="check-box-area">
-                        <label v-for="element in area"><input type="checkbox" name="area" value="element.name">[[ element.text ]]</label>
-                    </td>
-                </tr>
-                <tr>
-                    <th>분야</th>
-                    <td id="check-box-field">
-                        <label v-for="element in field"><input type="checkbox" name="field" value="element.name">[[ element.text ]]</label>
-                    </td>
-                </tr>
-                <tr>
-                    <th id="check-box-tool">툴</th>
-                    <td>
-                        <input id>
-                    </td>
-                </tr>
-            </table>
-            <div id="check-box-add">
-                <ul>
-                    <li v-for="element in check_list" id="check-box-add-li">[[ element ]]<span id="check_box_remove" onclick="check_box_remove(this)">X</span></li>
-                </ul>
-            </div>
+<form method="post">
+    <div id="check-box">
+        <table>
+            <tr>
+                <th>나이</th>
+                <td id="check-box-age">
+                    <label v-for="element in age"><input type="checkbox" name="age" value="element.name">[[ element.text ]]</label>
+                </td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td id="check-box-gender">
+                    <label v-for="element in gender"><input type="checkbox" name="gender" value="element.name">[[ element.text ]]</label>
+                </td>
+            </tr>
+            <tr>
+                <th>지역</th>
+                <td id="check-box-area">
+                    <label v-for="element in area"><input type="checkbox" name="area" value="element.name">[[ element.text ]]</label>
+                </td>
+            </tr>
+            <tr>
+                <th>분야</th>
+                <td id="check-box-field">
+                    <label v-for="element in field"><input type="checkbox" name="field" value="element.name">[[ element.text ]]</label>
+                </td>
+            </tr>
+            <tr>
+                <th id="check-box-tool">언어</th>
+                <td>
+                    <input type="text">
+                </td>
+            </tr>
+        </table>
+        <div id="check-box-add">
+            <ul>
+                <li v-for="element in check_list" id="check-box-add-li">[[ element ]]<span id="check_box_remove" onclick="check_box_remove(this)">X</span></li>
+            </ul>
         </div>
-    </form>
-
-    <div id="posts">
-        {% for post in posts %}
-					{{ post.id }} <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br>
-		{% endfor %}
-				<br><br>
-				
-		{% if posts.has_previous %}
-			<a href="{% url 'index_page' posts.previous_page_number %}">이전 페이지</a>
-        {% endif %}
-        
-		{% if posts.has_next %}
-			<a href="{% url 'index_page' posts.next_page_number %}">다음 페이지</a>
-		{% endif %}
     </div>
-    
+</form>
 
+<div id="posts">
+    {% for post in posts %}
+		{{ post.id }} <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br>
+	{% endfor %}
+	<br><br>
+	{% if posts.has_previous %}
+		<a href="{% url 'index_page' posts.previous_page_number %}">이전 페이지</a>
+    {% endif %}
+	{% if posts.has_next %}
+		<a href="{% url 'index_page' posts.next_page_number %}">다음 페이지</a>
+	{% endif %}
+</div>
 {% endblock %}
 
-{% block end %}<script src="static/index.js"></script>{% endblock %}
-
-
-
-
-
-
-
+{% block end %}<script src="{% static 'index.js' %}"></script>{% endblock %}

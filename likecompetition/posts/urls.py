@@ -9,5 +9,5 @@ urlpatterns = [
     path('<int:post_id>/comments/<int:comment_id>', views.CommentView.as_view(), name='comment_detail'),
     path('scrap', views.ScrapView.as_view(), name='scrap_list'),
     path('<int:post_id>/scrap', views.ScrapView.as_view(), name='scrap_detail'),
-    path('ajax_load_areas/', views.load_areas, name='ajax_load_areas'),
+    path('ajax_load_areas', views.load_areas, name='ajax_load_areas'),
 ]
