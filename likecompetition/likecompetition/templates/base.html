@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <title>공가치</title>
@@ -18,14 +17,11 @@
 		<header>
 			<div class="hamburger-button" onclick="toggleMenu()">☰</div>
 			<div class="header-logo"><a href="/">공가치</a></div>
-			<div id="header-menu">
+			<nav id="header-menu">
 				<ul>
-					<!--django 괄호랑 겹쳐서 인식이 안되서 [[ ]]로 바꿈-->
 					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
-					<li>
-						<a href="{% url 'logout' %}">로그아웃</a>
-					</li>
+					<li><a href="{% url 'logout' %}">로그아웃</a></li>
 					<li class="header_user">
 						<a>{{ user.nickname }}<img id="user_image" src="/static/images/header_user_image.png"></a>
 						<div class="user_dropdown">
@@ -42,31 +38,28 @@
 					<li><a href="{% url 'login' %}">로그인</a></li>
 					{% endif %}
 				</ul>
-			</div>
-		</div>
-	</header>
-
-	<div id="section">
-		<!--사이드바-->
-		<aside id="side-bar" class="side-bar">
-			<ul>
-				<li class="close-button" onclick="toggleMenu()">X</li>
-				<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
-				{% if user.is_authenticated %}
-				<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
-				<li><a href="{% url 'mypage' %}">내 정보</a></li>
-				{% else %}
-				<li><a href="{% url 'login' %}">로그인</a></li>
-				<li><a href="{% url 'signup' %}">회원가입</a></li>
-				{% endif %}
-			</ul>
-		</aside> 
-
-		<div id="content">
-			<section class="content-main">
-				{% block content %}{% endblock %}
+			</nav>
+		</header>
+		<div id="container">
+			<aside id="side-bar" class="side-bar">
+				<ul>
+					<li class="close-button" onclick="toggleMenu()">X</li>
+					<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
+					{% if user.is_authenticated %}
+					<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
+					<li><a href="{% url 'mypage' %}">내 정보</a></li>
+					{% else %}
+					<li><a href="{% url 'login' %}">로그인</a></li>
+					<li><a href="{% url 'signup' %}">회원가입</a></li>
+					{% endif %}
+				</ul>
+			</aside>
+			<div id="content">
+				<section class="content-main">
+					{% block content %}{% endblock %}
+				</section>
 			</section>
-		</section>
+		</div>
 	</section>
 	{% block end %}{% endblock %}
 	<script src="{% static 'base.js' %}"></script>
