@@ -27,10 +27,7 @@
 						<a href="{% url 'logout' %}">로그아웃</a>
 					</li>
 					<li class="header_user">
-						<a>
-							{{ user.nickname }}
-							<img id="user_image" src="/static/images/header_user_image.png">
-						</a>
+						<a>{{ user.nickname }}<img id="user_image" src="/static/images/header_user_image.png"></a>
 						<div class="user_dropdown">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
@@ -41,13 +38,9 @@
 						</div>
 					</li>
 					{% else %}
-					<li>
-						<a href="{% url 'signup' %}">회원가입</a>
-					</li>
-					<li>
-						<a href="{% url 'login' %}">로그인</a>
-					</li>
-				{% endif %}
+					<li><a href="{% url 'signup' %}">회원가입</a></li>
+					<li><a href="{% url 'login' %}">로그인</a></li>
+					{% endif %}
 				</ul>
 			</div>
 		</div>
@@ -55,24 +48,16 @@
 
 	<div id="section">
 		<!--사이드바-->
-		<aside id="side-bar" class="side-bar open">
+		<aside id="side-bar" class="side-bar">
 			<ul>
 				<li class="close-button" onclick="toggleMenu()">X</li>
 				<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
 				{% if user.is_authenticated %}
-				<li>
-					<a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a>
-				</li>
-				<li>
-					<a href="{% url 'mypage' %}">내 정보</a>
-				</li>
+				<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
+				<li><a href="{% url 'mypage' %}">내 정보</a></li>
 				{% else %}
-				<li>
-					<a href="{% url 'login' %}">로그인</a>
-				</li>
-				<li>
-					<a href="{% url 'signup' %}">회원가입</a>
-				</li>
+				<li><a href="{% url 'login' %}">로그인</a></li>
+				<li><a href="{% url 'signup' %}">회원가입</a></li>
 				{% endif %}
 			</ul>
 		</aside> 
