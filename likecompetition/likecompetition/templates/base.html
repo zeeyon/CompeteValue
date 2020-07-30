@@ -29,7 +29,7 @@
 					<li class="header_user">
 						<a>
 							{{ user.nickname }}
-							<!-- <img id="user_image" src="/static/images/header_user_image.png"> -->
+							<img id="user_image" src="/static/images/header_user_image.png">
 						</a>
 						<div class="user_dropdown">
 							<ul>
@@ -40,25 +40,6 @@
 							</ul>
 						</div>
 					</li>
-=======
-						<li>
-							<a href="{% url 'logout' %}">로그아웃</a>
-						</li>
-						<li class="header_user">
-							<a>
-								{{ user.nickname }}
-								<img id="user_image" src="/static/images/header_user_image.png">
-							</a>
-							<div class="user_dropdown">
-								<ul>
-									<li><a href="{% url 'mypage' %}">내 정보</a></li>
-									<li><a href="#">쪽지</a></li>
-									<li><a href="{% url 'scrap_list' %}">내 스크랩</a></li>
-									<li><a href="#">내 글</a></li>
-								</ul>
-							</div>
-						</li>
->>>>>>> master
 					{% else %}
 					<li>
 						<a href="{% url 'signup' %}">회원가입</a>
