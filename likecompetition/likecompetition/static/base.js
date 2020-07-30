@@ -1,5 +1,5 @@
 var sideBars=[
-	{text:'홈', link:"/1"},
+	{text:'홈', link:"/"},
 	{text:'글쓰기', link:'/posts/new'} 
 ];
 

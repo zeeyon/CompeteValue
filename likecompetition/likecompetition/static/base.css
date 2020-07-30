@@ -60,7 +60,6 @@ header::after{
 .header-logo{
 	float:left;
 }
-
 .header-logo a{
 	padding:0px 25px;
 	font-size:30pt;
@@ -84,11 +83,12 @@ header::after{
 	cursor:pointer;
 }
 #header-menu>ul>li>a{
+    font-family:'IBMPlexSansKR-Light';
 	font-size:13pt;
 	color:white;
 }
 #header-menu>ul>li>a:hover, #header-menu>ul>li>a:active{
-	color:red;
+	text-decoration:underline;
 }
 
 /**
@@ -151,53 +151,14 @@ header::after{
 }
 */
 
-#header-menu{
-	width: 450px;
-	margin: 0px auto;
-	
-}
-
-#header-menu ul{
-	color:white;
-	list-style:none;
-	text-decoration:none;
-	position: absolute;
-	right: 50px;
-}
-
-#header-menu li{
-	display: inline;
-	z-index:100;
-	line-height:50px;
-	padding-left:20px;
-	cursor:pointer;
-}
-
-#header-menu li a{
-	cursor:pointer;
-}
-
-#header-menu>ul>li>a:link, #header-menu>ul>li>a:visited{
-	font-family:'IBMPlexSansKR-Light';
-	font-size:13pt;
-	color:white;
-	text-decoration:none;
-}
-#header-menu>ul>li>a:hover, #header-menu>ul>li>a:active{
-	font-family:'IBMPlexSansKR-Light';
-	font-size:13pt;
-	color:white;
-	text-decoration:underline;
-}
-
 #user_image{
-	width: 45px;
-	height: 45px;
-	background-color: white;
-	border: 1px solid white;
-	border-radius: 25px;
-	vertical-align: middle;
-	margin-left: 10px;
+	width:45px;
+	height:45px;
+    margin-left:10px;
+	background-color:white;
+	border:1px solid white;
+	border-radius:25px;
+	vertical-align:middle;
 }
 
 /**
@@ -205,24 +166,24 @@ header::after{
 */
 .user_dropdown{
 	position:absolute;
-	right: -70px;
-	top: 60px;
-	visibility: hidden;
+	right:-70px;
+	top:60px;
+	visibility:hidden;
 	color:black;
 	transition:all 0.3s ease;
 	border-radius:0px 0px 7px 7px;
 	transform:translateY(10px);
-	cursor: default;
-	font-family: 'IBMPlexSansKR-Light';
+	cursor:default;
+	font-family:'IBMPlexSansKR-Light';
 }
 
-.header_user:hover  .user_dropdown{
-	visibility: visible;
+.header_user:hover .user_dropdown{
+	visibility:visible;
 	transform:translateY(0px);
 }
 
 .user_dropdown li{
-	padding: 0px !important;
+	padding:0px !important;
 }
 
 .user_dropdown li a{
@@ -233,13 +194,12 @@ header::after{
 	width: 100px;
 	transition:all 0.3s ease;
 	color:black;
-	background-color: rgb(238, 238, 238);
-	line-height: 30px;
-	text-align: center;
+	background-color:rgb(238, 238, 238);
+	line-height:30px;
+	text-align:center;
 }
 
 .user_dropdown li a:hover{
 	font-size:18px;
-	background-color: rgb(221, 221, 221);
+	background-color:rgb(221, 221, 221);
 }
-
