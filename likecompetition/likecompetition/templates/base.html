@@ -78,12 +78,9 @@
 		</aside> 
 
 		<div id="content">
-			<div class="content-main">
-				<div>
-					<div id="somediv"></div>
-					{% block content %}{% endblock %}
-				</section>
-			</div>
+			<section class="content-main">
+				{% block content %}{% endblock %}
+			</section>
 		</section>
 	</section>
 	{% block end %}{% endblock %}
