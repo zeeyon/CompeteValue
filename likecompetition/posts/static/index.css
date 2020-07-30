@@ -1,59 +1,51 @@
-
 /**
-*체크박스
+* check-box
 */
-
 #check-box{
+	min-width:800px;
+	max-width:800px;
 	font-size:15px;
 	font-family:'IBMPlexSansKR-Light';
-	max-width: 800px;
 	text-align:left;
-	margin:10px;
 }
-
 #check-box table{
-	border-spacing:15px;
 	border:1px solid gray;
+	border-spacing:15px;
 }
-
 #check-box table th{
 	width:80px;
 }
-
-#check-box tr{
-	max-width:800px;
-}
-
 #check-box label{
 	display:inline-block;
 	width:105px;
 }
-
 #check-box input{
 	margin-right:10px;
 }
-
 #check-box-add ul{
+	max-width:700px;
 	list-style:none;
 	color:gray;
-	max-width:700px;
 }
-
 #check-box-add li{
 	float:left;
+	padding:7px;
 	margin:10px;
 	border:1px solid gray;
 	border-radius:5px / 5px;
-	padding:7px;
 	font-size:14px;
 }
-
-#check_box_remove{
-	cursor:Pointer;
+#check-box-remove{
+	cursor:pointer;
 }
-
 #check-box-add li:hover, #check-box-add li:active{
 	color: black;
 	border: 1px solid black;
 }
 
+/**
+* posts
+*/
+#posts{
+	margin-top:20px;
+}

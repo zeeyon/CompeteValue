@@ -102,4 +102,4 @@ class ScrapView(LoginRequiredMixin, BaseView):
 def load_areas(request):
     city_id = request.GET.get('city_id')
     areas = Area.objects.filter(city_id=city_id).all()
-    return render(request, 'ajax_post_areas_list.html',{'areas':areas})
+    return render(request, 'ajax_post_areas_list.html', {'areas':areas})

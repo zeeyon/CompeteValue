@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	$("input[type=checkbox]").click(function(){
 		check_lists_reload();
@@ -9,7 +8,6 @@ var ages=[
 	{name:'age-10', text:'10대'},
 	{name:'age-20', text:'20대'},
 	{name:'age-30', text:'30대'}
-	
 ];
 
 var genders=[
@@ -50,7 +48,6 @@ var fields=[
 ]
 
 var all= ages.concat(genders, areas, fields);
-
 
 function check_lists_reload(){
 	for(var i=0; i<check_lists.length; i++)
@@ -140,7 +137,3 @@ $(function() {
 	});
 	
 }) */
-
-
-
-
