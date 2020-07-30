@@ -16,16 +16,17 @@
 
 #register-form table tr td input{
 	width:320px;
-	font-size:15px;
+	font-size:20px;
 	line-height:23px;
 	padding:10px;
 	margin:0;
 	vertical-align:middle;
-	font-family:'IBMPlexSansKR-Light';
+	/* font-family:'IBMPlexSansKR-Light'; */
+	font-family:'Nanum Gothic', sans-serif;
 }
 
 #register-form tr td input::placeholder{
-	color: #A6A6A6;
+	color: GRAY;
 }
 
 .user-name-logo,

@@ -10,14 +10,14 @@ from .models import User
 
 """
 class SignupForm(forms.ModelForm):
-    password_conf = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호 확인'}))
+    password_conf = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'CONFIRM PASSWORD'}))
     class Meta:
         model = User 
         fields = ['nickname', 'email', 'password'] #"__all__"
         widgets = {
-            'nickname': forms.TextInput(attrs={'placeholder': '닉네임'}),
-            'email': forms.TextInput(attrs={'placeholder': '이메일'}),
-            'password' : forms.PasswordInput(attrs={'placeholder': '비밀번호'}),
+            'nickname': forms.TextInput(attrs={'placeholder': 'NICKNAME'}),
+            'email': forms.TextInput(attrs={'placeholder': 'EMAIL'}),
+            'password' : forms.PasswordInput(attrs={'placeholder': 'PASSWORD'}),
         }
 
 class LoginForm(forms.ModelForm):
@@ -25,6 +25,6 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ['email', 'password'] #"__all__"
         widgets = {
-            'email': forms.TextInput(attrs={'placeholder': 'ID'}),
+            'email': forms.TextInput(attrs={'placeholder': 'EMAIL'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'PASSWORD'}),
         }

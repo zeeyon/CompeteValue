@@ -1,27 +1,40 @@
 
 var sideBars=[
 	{text:'홈', link:"/1"},
-	{text:'회원가입', link:'/accounts/signup/'},
-	{text:'내 정보', link:'/users/mypage'},
-	{text:'등록하기', link:'/posts/new'}
+	{text:'글쓰기', link:'/posts/new'} 
 ];
 
 $(document).ready(function(){
 	if(window.innerWidth<=960){
-		$('.content-main').css('padding-left','10px')
-		.css('padding-right','10px');
+		$('.content-main').css('padding-left','10px').css('padding-right','10px');
+		$('.hamburger-button').show();
+		$('#header-menu').hide();
+		document.getElementById("header-logo-id").style.margin="0px auto";
 	}
+	else{
+		$('.hamburger-button').hide();
+		$('#header-menu').show();
+		document.getElementById("header-logo-id").style.float="left";
+	}
+
 });
 
 $(window).resize(function(){
+	
 	if(window.innerWidth<=960){
-		$('.content-main').css('padding-left','10px')
-		.css('padding-right','10px');
+		$('.content-main').css('padding-left','10px').css('padding-right','10px');
+		$('.hamburger-button').show();
+		$('#header-menu').hide();
+		document.getElementById("header-logo-id").style.margin="0px auto";
+		document.getElementById("header-logo-id").style.float="";
 	}else{
-		$('.content-main').css('padding-left','250px')
-		.css('padding-right','250px');
+		$('.content-main').css('padding-left','250px').css('padding-right','250px');
+		$('.hamburger-button').hide();
+		$('#header-menu').show();
+		document.getElementById("header-logo-id").style.float="left";
 	}
 }); 
+
 
 function toggleMenu(){
 	var sideBar=$("#side-bar");
