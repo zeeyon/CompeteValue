@@ -3,7 +3,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <title>공가치</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
@@ -18,20 +20,39 @@
 			<div class="hamburger-button" onclick="toggleMenu()">
 				☰
 			</div>
-			<div class="header-logo">
+			<div class="header-logo" id="header-logo-id">
 				<a href="/1" style="color: white; text-decoration: none;">공가치</a>
 			</div>
 			<div id="header-menu">
 				<ul>
 					<!--django 괄호랑 겹쳐서 인식이 안되서 [[ ]]로 바꿈-->
-					<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
-					<li>
-						{% if user.is_authenticated %}
-							<a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a>
-						{% else %}
+					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
+					{% if user.is_authenticated %}
+						<li>
+							<a href="{% url 'logout' %}">로그아웃</a>
+						</li>
+						<li class="header_user">
+							<a>
+								{{ user.nickname }}
+								<img id="user_image" src="/static/images/header_user_image.png">
+							</a>
+							<div class="user_dropdown">
+								<ul>
+									<li><a href="{% url 'mypage' %}">내 정보</a></li>
+									<li><a href="#">쪽지</a></li>
+									<li><a href="{% url 'scrap_list' %}">내 스크랩</a></li>
+									<li><a href="#">내 글</a></li>
+								</ul>
+							</div>
+						</li>
+					{% else %}
+						<li>
+							<a href="{% url 'signup' %}">회원가입</a>
+						</li>
+						<li>
 							<a id="login_url" href="{% url 'login' %}">로그인</a>
-						{% endif %}
-					</li>
+						</li>
+				{% endif %}
 				</ul>
 			</div>
 		</div>
@@ -44,19 +65,28 @@
 			<ul>
 				<li class="close-button" onclick="toggleMenu()">X</li>
 				<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
-				<li>
 					{% if user.is_authenticated %}
-						<a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a>
+						<li>
+							<a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a>
+						</li>
+						<li>
+							<a href="{% url 'mypage' %}">내 정보</a>
+						</li>
 					{% else %}
-						<a id="login_url" href="{% url 'login' %}">로그인</a>
+						<li>
+							<a id="login_url" href="{% url 'login' %}">로그인</a>
+						</li>
+						<li>
+							<a href="{% url 'signup' %}">회원가입</a>
+						</li>
 					{% endif %}
-				</li>
 			</ul>
 		</aside> 
 		
 		<div id="content">
 			<div class="content-main">
 				<div>
+					<div id="somediv"></div>
 					{% block content %}{% endblock %}
 				</div>
 			</div>

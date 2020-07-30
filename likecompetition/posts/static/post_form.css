@@ -1,0 +1,78 @@
+
+/**
+*post_form
+*/
+
+
+#post_form_1{
+	box-shadow:0px 0px 10px gray;
+	margin-left:auto;
+	margin-right:auto;
+	width:550px;
+	background-color:white;
+	margin-bottom:100px;
+}
+
+#post_form span{
+	color:red;
+}
+
+legend{
+	font-size:40px;
+	text-align:center;
+	font-family:'TmoneyRoundWindExtraBold';
+	padding-right:5px;
+}
+
+input[type=text], select, input[type=number], textarea{
+	width:150px;
+	padding:12px 20px;
+	margin:8px 0;
+	display:inline-block;
+	border:1px solid #ccc;
+	border-radius:4px;
+	box-sizing:border-box;
+	font-weight:bold;
+	font-family:'IBMPlexSansKR-Light';
+	font-size:20px;
+}
+
+#id_field{
+	width:304px;
+}
+
+#id_tool{
+	width:100%;
+}
+
+textarea{
+	width:100%;
+	height:200px;
+}
+
+input[type=submit]{
+	width:96%;
+	background-color:black;
+	color:white;
+	padding:14px 20px;
+	margin:8px 13px;
+	border:none;
+	border-radius:4px;
+	cursor:pointer;
+	font-size:25px;
+	font-family:'TmoneyRoundWindExtraBold';
+}
+
+#post_form{
+	font-family:'IBMPlexSansKR-Light';
+	margin:0px;
+	padding:10px;
+}
+
+label{
+	font-size:15px;
+}
+
+#post_form table{
+	border-spacing:30px;
+}

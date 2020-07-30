@@ -1,87 +1,61 @@
 {% extends 'base.html' %}
-{% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
+{% block title %}
+<link rel="stylesheet" type="text/css" href="/static/post_form.css">
+{% endblock %}
 {% block content %}
-<h3>글쓰기</h3>
 {{ error_message }}
 
-<form method="post" id="areaForm" data-areas-url="{% url 'ajax_load_areas' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="등록" />
-    {% if method %}
-    <input type="hidden" name="_method" value="{{ method }}" />
-    {% endif %}
-</form>
+<div id="post_form_1">
+    <form method="POST" id="areaForm" data-areas-url="{% url 'ajax_load_areas' %}">
+        {% csrf_token %}
+        <div id="post_form">
+                <legend>NEW POST</legend>
+                <br><br><br>
+                <table>
+                    <tr>
+                        {{ form.title }}
+                        {{ form.gender }}
+                        {{ form.age }}
+                        이건 지울거임
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_city">지역 <span> *</span></label><br>
+                            {{ form.city }}
+                            {{ form.area }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_field">분야 <span> *</span></label><br>
+                            {{ form.field }}
+                            <input type="text" id="id_field">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_tool">툴</label><br>
+                            {{ form.tool }}
+                            <input type="text" id="id_tool">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="id_content">기타사항</label><br>
+                            {{ form.content }}
+                            </td>
+                    </tr>
+                </table>
+            <input type="submit" value="등록"/>
+            {% if method %}
+            <input type="hidden" name="_method" value="{{ method }}" />
+            {% endif %}
+        </div>
+    </form>
+</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-<script>
-    $("#id_city").change(function () {
-        const url = $("#areaForm").attr("data-areas-url");
-        const cityId = $(this).val();
-
-        $.ajax({
-            url: url,
-            data: {
-                'city_id': cityId
-            },
-            success: function (data) {
-                $("#id_area").html(data);
-            }
-        });
-    });
-</script>
-
-
-<!-- <form methode="POST" >
-    {% csrf_token %}
-    <div id="upload-form">
-        <table>
-            <tr>
-                <th>
-                    성별
-                </th>
-                <td>
-                    <label for="male">남성</label><input type="radio" name="gender" value="male" id="male">
-                    <label for="female">여성</label><input type="radio" name="gender" value="female" id="female">  
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    나이
-                </th>
-                <td>
-                    <input type="number" name="age" id="age">
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    지역
-                </th>
-                <td>
-                    <select name="sido" id="sido"></select>
-                    <select name="gugun" id="gugun"></select>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    분야
-                </th>
-                <td>
-                    ?
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    툴
-                </th>
-                <td>
-                    해시태그?
-                </td>
-            </tr>
-        </table>
-    </div>
-</form> -->
 
 {% endblock %}
-{% block end %}{% endblock %}
+{% block end %}
+<script src="/static/post_form.js"></script>
+{% endblock %}
