@@ -9,14 +9,12 @@
     <form method="POST" id="areaForm" data-areas-url="{% url 'ajax_load_areas' %}">
         {% csrf_token %}
         <div id="post_form">
-                <legend>NEW POST</legend>
-                <br><br><br>
+                <legend>NEW POST</legend><br>
                 <table>
                     <tr>
-                        {{ form.title }}
-                        {{ form.gender }}
-                        {{ form.age }}
-                        이건 지울거임
+                        <td>
+                            {{ form.title }}
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -29,7 +27,6 @@
                         <td>
                             <label for="id_field">분야 <span> *</span></label><br>
                             {{ form.field }}
-                            <input type="text" id="id_field">
                         </td>
                     </tr>
                     <tr>

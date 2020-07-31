@@ -48,16 +48,50 @@
 
 <div id="posts">
     {% for post in posts %}
-		{{ post.id }} <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a><br>
-	{% endfor %}
-	<br><br>
-	{% if posts.has_previous %}
-		<a href="{% url 'index_page' posts.previous_page_number %}">이전 페이지</a>
-    {% endif %}
-	{% if posts.has_next %}
-		<a href="{% url 'index_page' posts.next_page_number %}">다음 페이지</a>
-	{% endif %}
+        <div id="post_card">
+            <a style="text-decoration:none !important; color:black !important; " href="{% url 'post_detail' post.id %}">
+                <ul>
+                    <li>
+                        <div id="post_card_user"><img src="{% static '/images/post_card_user.png' %}"></div>
+                    </li>
+                    <li>
+                        {{ post.user }} / {{ post.gender }}
+                    </li>
+                    <li>
+                        {{ post.date }}
+                    </li>
+                    <li>
+                        <img src="{% static '/images/post_card_location.png' %}" style="width: 13px; height: 17px;">{{ post.city }} {{ post.area }}
+                    </li>
+                </ul>
+                <div id="post_card_field">
+                    {{ post.field }}
+                </div>
+                <div id="post_card_tool">
+                    툴
+                </div>
+            </a>
+            
+            <div id="post_card_icon">
+                <a href="#" onclick=""><img src="{% static '/images/post_card_message.png' %}"></a>
+                <form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
+                    {% csrf_token %}
+                    <a href="#" onclick="parentNode.submit();"><img src="{% static '/images/post_card_scrap.png' %}"></a>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
+<div id="post_page">
+    {% if posts.has_previous %}
+        <a href="{% url 'index_page' posts.previous_page_number %}">&#60;Prev</a>
+    {% endif %}
+    {% if posts.has_next %}
+        <a href="{% url 'index_page' posts.next_page_number %}">Next&#62;</a>
+    {% endif %}
+</div>
+
 {% endblock %}
 
 {% block end %}<script src="{% static 'index.js' %}"></script>{% endblock %}

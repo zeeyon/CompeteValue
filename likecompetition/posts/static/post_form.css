@@ -38,7 +38,13 @@ input[type=text], select, input[type=number], textarea{
 }
 
 #id_field{
-	width:304px;
+	list-style: none;
+}
+
+#id_field li{
+	padding: 10px;
+	float: left;
+	width:210px;
 }
 
 #id_tool{

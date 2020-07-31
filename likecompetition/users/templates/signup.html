@@ -7,19 +7,6 @@
     <span id="legend">공가치</span>
     <table>
         {%csrf_token%}
-    
-    <!--
-        {{signupForm.as_p}}
-        {{err_msg}}
-        </br>
-
-        속성 추가는 forms.py에서
-        {{signupForm.email}}
-        {{signupForm.nickname}}
-        {{signupForm.password}}
-        {{signupForm.password_conf}}
-    -->
-
         <tr class="user-id">
             <td class="user-id-logo"><img src="/static/images/userID.png" id="user-id-logo"></td>
             <td class="user-id-input">{{ signupForm.nickname }}</td>

@@ -7,6 +7,8 @@
 	font-size:15px;
 	font-family:'IBMPlexSansKR-Light';
 	text-align:left;
+	margin-left: auto;
+	margin-right: auto;
 }
 #check-box table{
 	border:1px solid gray;
@@ -47,5 +49,134 @@
 * posts
 */
 #posts{
-	margin-top:20px;
+	margin-top:100px;
+	font-family:'IBMPlexSansKR-Light';
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	clear: both;
+}
+
+#post_card{
+	box-shadow:0px 0px 5px darkgray;
+	width: 300px;
+	height: 300px;
+	padding: 5px;
+	position: relative;
+	float: left;
+	margin-left: 50px;
+	margin-bottom: 50px;
+	z-index: 10;
+}
+
+#post_card:hover{
+	box-shadow:0px 0px 5px gray;
+}
+
+#post_card ul{
+	list-style: none;
+	border-bottom: 1px solid gainsboro;
+}
+
+#post_card ul li:nth-child(2), #post_card ul li:nth-child(3), #post_card ul li:nth-child(4){
+	font-size: 15px;
+	position: absolute;
+}
+
+#post_card ul li:nth-child(1) div{
+	border-radius: 30px;
+	width: 40px;
+	height: 40px;
+	padding: 10px;
+	margin: 15px;
+}
+
+#post_card ul li:nth-child(1) img{
+	width: 40px;
+	height: 40px;
+}
+
+#post_card ul li:nth-child(2){
+	top: 40px;
+	left: 95px;
+	font-weight: 700;
+}
+
+#post_card ul li:nth-child(3){
+	top: 10px;
+	right: 10px;
+}
+
+#post_card ul li:nth-child(4){
+	font-weight: 700;
+	top: 65px;
+	left: 90px;
+}
+
+#post_card ul li:nth-child(4) img{
+	vertical-align: middle;
+	padding-right: 5px;
+	z-index: -1;
+}
+
+#post_card_field{
+	padding: 15px;
+	overflow: hidden;
+	font-size: 20px;
+	height: 50px;
+	width:280px;
+	font-family: 'TmoneyRoundWindExtraBold';
+}
+
+#post_card_tool{
+	padding: 15px;
+	overflow: hidden;
+	font-size: 15px;
+	width:280px;
+	height:50px;
+}
+
+#post_card_icon{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	padding-left: 5px;
+	z-index: -1;
+}
+
+#post_card_icon img{
+	width: 40px;
+	height: 40px;
+}
+
+#post_card_icon a{
+	padding-right: 15px;
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	z-index: 20;
+}
+
+#post_card_icon img:hover{
+	width: 42px;
+	height: 42px;
+}
+
+/**
+*  post page
+*/
+
+#post_page{
+	clear: both;
+	font-family: 'TmoneyRoundWindExtraBold';
+	text-align: center;
+	margin: 20px;
+	font-size: 25px;
+}
+
+#post_page a{
+	text-decoration: none;
+	color:black;
+	padding-left: 30px;
 }

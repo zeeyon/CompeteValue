@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$("input[type=checkbox]").click(function(){
 		check_lists_reload();
 	})
+	return_color();
 });
 
 var ages=[
@@ -124,16 +125,18 @@ var check_field=new Vue({
 	}
 })
 
-/* 해시태그
-$(function() {
-	var availableTags = [
-	“바나나”,
-	“사과”,
-	“오렌지”,
-	“수박”
-	]; //자동으로 완성될 단어들을 입력해줍니다
-	$( “#tags” ).autocomplete({
-	source: availableTags //자동완성 될 소스는 위에 선언한 availableTags이다.
-	});
-	
-}) */
+/**
+ * 글쓰기 박스
+ */
+
+var colors = ['#EADFF2', '#DCCBED', '#FEE5EB', '#FCB7D0'];
+var post_cards= document.querySelectorAll("#post_card");
+var j=0;
+function return_color(){
+	for(var i=0; i<post_cards.length; i++)
+	{
+		$(post_cards[i]).find('#post_card_user').css('background-color', colors[j%4]);
+		j++;
+	}
+} 
+
