@@ -5,5 +5,13 @@
 
 <h3><a href="{% url 'scrap_list' %}">스크랩 보기</a></h3>
 
+
+
+<form method="POST">
+    {% csrf_token %}
+    {{ mypageForm.birth }}
+    <!--yyyy-mm-dd 형태로 값이 저장되면 돼요.-->
+    <input type="submit" value="save"/>
+</form>
 {% endblock %}
 {% block end %}{% endblock %}
