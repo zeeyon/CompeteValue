@@ -20,6 +20,6 @@ class IndexView(BaseView):
         if page == None:
             return redirect('index_page', page=1)
         posts = Post.objects.all().order_by('-id')
-        paginator = Paginator(posts, 5)
+        paginator = Paginator(posts, 30)
         posts = paginator.get_page(page)
         return render(request, 'index.html', {'posts': posts})

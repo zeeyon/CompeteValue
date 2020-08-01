@@ -15,6 +15,13 @@ $("#id_city").change(function () {
 });
 
 
-$(document).ready(function(){
-	$('body').css("backgroundColor", "gainsboro");
-});
+
+
+
+
+
+
+
+
+
+

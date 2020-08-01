@@ -23,7 +23,7 @@
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">로그아웃</a></li>
 					<li class="header_user">
-						<a>{{ user.nickname }}<img id="user_image" src="/static/images/header_user_image.png"></a>
+						<a>{{ user.nickname }}<img id="user_image" src="{% static 'images/header_user_image.png' %}"></a>
 						<div class="user_dropdown">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
