@@ -28,3 +28,11 @@ class LoginForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'placeholder': 'EMAIL'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'PASSWORD'}),
         }
+
+class MypageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['birth']
+        widgets = {
+            'birth': forms.DateInput(attrs={'type':'date'}),
+        }
