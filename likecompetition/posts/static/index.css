@@ -1,48 +1,54 @@
 /**
-* check-box
+* filter-box
 */
-#check-box{
+#filter-box{
+	display:table;
 	min-width:800px;
 	max-width:800px;
-	font-size:15px;
-	font-family:'IBMPlexSansKR-Light';
-	text-align:left;
-}
-#check-box table{
+	padding:5px 5px;
 	border:1px solid gray;
-	border-spacing:15px;
+	font-family:'IBMPlexSansKR-Light';
+	font-size:15px;
 }
-#check-box table th{
-	width:80px;
+#filter-box .filter{
+	display:table;
+	width:100%;
+	margin:10px 10px;
 }
-#check-box label{
-	display:inline-block;
-	width:105px;
+#filter-box .filter .filter-name, #filter-box .filter .filter-options{
+	display:table-cell;
+	vertical-align:top;
 }
-#check-box input{
-	margin-right:10px;
+#filter-box .filter .filter-name{
+	width:130px;
 }
-#check-box-add ul{
-	max-width:700px;
+#filter-box .filter .filter-option{
+	float:left;
+	width:130px;
+}
+#check-list ul{
 	list-style:none;
+}
+#check-list li{
+	float:left;
+	padding:2px 8px 4px 8px;
+	margin:5px;
+	border:1px solid gray;
+	border-radius:5px;
+	font-size:14px;
 	color:gray;
 }
-#check-box-add li{
-	float:left;
-	padding:7px;
-	margin:10px;
-	border:1px solid gray;
-	border-radius:5px / 5px;
-	font-size:14px;
+#check-list li:hover, #check-list li:active{
+	border-color:black;
+	color:black;
 }
-#check-box-remove{
+#check-list li span{
+	vertical-align:middle;
+}
+#check-list .remove-option{
+	font-size:20px;
 	cursor:pointer;
 }
-#check-box-add li:hover, #check-box-add li:active{
-	color: black;
-	border: 1px solid black;
-}
-
 /**
 * posts
 */

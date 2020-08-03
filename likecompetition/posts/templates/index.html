@@ -4,21 +4,27 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">{% endblock %}
 
 {% block content %}
-<div id="check-box" v-cloak>
-    <div v-for="qwer in qwerty">
-        <span>[[ qwer.name_kor ]]</span>
-        <template v-for="elem in qwer.elems">
-            <input type="checkbox" :id="elem.name" :name="qwer.name_eng" :value="index"><label for="elem.name">[[ elem.text ]]</label>
-        </template>
+<div id="filter-box" v-cloak>
+    <div class="filter" v-for="filter in filters">
+        <div class="filter-name">[[ filter.name_kor ]]</div>
+        <div class="filter-options">
+            <div class="filter-option" v-for="(option, index) in filter.options">
+                <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
+                <label :for="option.name">[[ option.text ]]</label>
+            </div>
+        </div>
     </div>
-    <div>
-        <span>언어</span>
-        <input type="text">
+    <div class="filter">
+        <div class="filter-name">언어</div>
+        <div class="filter-options">
+            <input type="text">
+        </div>
     </div>
-    <div id="check-box-add">
+    <div id="check-list">
         <ul>
-            <li v-for="elem in check_list" class="check-box-add-li">
-                <span id="check_box_remove" onclick="check_box_remove(this)">[[ elem ]] X</span>
+            <li v-for="option in check_list">
+                <span class="option-name">[[ option.text ]]</span>
+                <span class="remove-option" v-on:click="remove_option(option)">×</span>
             </li>
         </ul>
     </div>

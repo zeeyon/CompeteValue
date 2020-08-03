@@ -44,13 +44,14 @@
 			<aside id="side-bar" v-cloak>
 				<ul>
 					<li class="close-button" onclick="toggleMenu()">X</li>
-					<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
+					<li><a href="{% url 'index' %}">홈</a></li>
+					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
 					<li><a href="{% url 'mypage' %}">내 정보</a></li>
 					{% else %}
-					<li><a href="{% url 'login' %}">로그인</a></li>
 					<li><a href="{% url 'signup' %}">회원가입</a></li>
+					<li><a href="{% url 'login' %}">로그인</a></li>
 					{% endif %}
 				</ul>
 			</aside>
