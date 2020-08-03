@@ -11,13 +11,13 @@
 	{% block title %}{% endblock %}
 </head>
 <body>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<section id="wrap">
 		<header>
 			<div class="hamburger-button" onclick="toggleMenu()">☰</div>
 			<div class="header-logo"><a href="/">공가치</a></div>
-			<nav id="header-menu">
+			<nav id="header-menu" v-cloak>
 				<ul>
 					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
@@ -41,16 +41,17 @@
 			</nav>
 		</header>
 		<div id="container">
-			<aside id="side-bar" class="side-bar">
+			<aside id="side-bar" v-cloak>
 				<ul>
 					<li class="close-button" onclick="toggleMenu()">X</li>
-					<li v-for="element in sideBar"><a :href="element.link">[[ element.text ]]</a></li>
+					<li><a href="{% url 'index' %}">홈</a></li>
+					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
 					<li><a href="{% url 'mypage' %}">내 정보</a></li>
 					{% else %}
-					<li><a href="{% url 'login' %}">로그인</a></li>
 					<li><a href="{% url 'signup' %}">회원가입</a></li>
+					<li><a href="{% url 'login' %}">로그인</a></li>
 					{% endif %}
 				</ul>
 			</aside>
