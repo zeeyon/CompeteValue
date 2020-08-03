@@ -17,7 +17,7 @@
 		<header>
 			<div class="hamburger-button" onclick="toggleMenu()">☰</div>
 			<div class="header-logo"><a href="/">공가치</a></div>
-			<nav id="header-menu" v-cloak>
+			<nav id="header-menu">
 				<ul>
 					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
@@ -41,7 +41,7 @@
 			</nav>
 		</header>
 		<div id="container">
-			<aside id="side-bar" v-cloak>
+			<aside id="side-bar">
 				<ul>
 					<li class="close-button" onclick="toggleMenu()">X</li>
 					<li><a href="{% url 'index' %}">홈</a></li>
