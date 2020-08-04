@@ -4,47 +4,31 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">{% endblock %}
 
 {% block content %}
-<form method="post">
-    <div id="check-box">
-        <table>
-            <tr>
-                <th>나이</th>
-                <td id="check-box-age">
-                    <label v-for="element in age"><input type="checkbox" name="age" value="element.name">[[ element.text ]]</label>
-                </td>
-            </tr>
-            <tr>
-                <th>성별</th>
-                <td id="check-box-gender">
-                    <label v-for="element in gender"><input type="checkbox" name="gender" value="element.name">[[ element.text ]]</label>
-                </td>
-            </tr>
-            <tr>
-                <th>지역</th>
-                <td id="check-box-area">
-                    <label v-for="element in area"><input type="checkbox" name="area" value="element.name">[[ element.text ]]</label>
-                </td>
-            </tr>
-            <tr>
-                <th>분야</th>
-                <td id="check-box-field">
-                    <label v-for="element in field"><input type="checkbox" name="field" value="element.name">[[ element.text ]]</label>
-                </td>
-            </tr>
-            <tr>
-                <th id="check-box-tool">언어</th>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
-        </table>
-        <div id="check-box-add">
-            <ul>
-                <li v-for="element in check_list" id="check-box-add-li">[[ element ]]<span id="check_box_remove" onclick="check_box_remove(this)">X</span></li>
-            </ul>
+<div id="filter-box" v-cloak>
+    <div class="filter" v-for="filter in filters">
+        <div class="filter-name">[[ filter.name_kor ]]</div>
+        <div class="filter-options">
+            <div class="filter-option" v-for="(option, index) in filter.options">
+                <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
+                <label :for="option.name">[[ option.text ]]</label>
+            </div>
         </div>
     </div>
-</form>
+    <div class="filter">
+        <div class="filter-name">언어</div>
+        <div class="filter-options">
+            <input type="text">
+        </div>
+    </div>
+    <div id="check-list">
+        <ul>
+            <li v-for="option in check_list">
+                <span class="option-name">[[ option.text ]]</span>
+                <span class="remove-option" v-on:click="remove_option(option)">×</span>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div id="posts">
     {% for post in posts %}
