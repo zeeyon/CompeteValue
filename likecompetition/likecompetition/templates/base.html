@@ -12,19 +12,20 @@
 </head>
 <body>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<section id="wrap">
 		<header>
 			<div class="hamburger-button" onclick="toggleMenu()">☰</div>
 			<div class="header-logo"><a href="/">공가치</a></div>
-			<nav id="header-menu">
+			<nav id="main-menu">
 				<ul>
 					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">로그아웃</a></li>
-					<li class="header_user">
-						<a>{{ user.nickname }}<img id="user_image" src="{% static 'images/header_user_image.png' %}"></a>
-						<div class="user_dropdown">
+					<li class="profile">
+						<a href="#">{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></a>
+						<div id="user-menu">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
 								<li><a href="#">쪽지</a></li>
@@ -62,7 +63,7 @@
 			</section>
 		</div>
 	</section>
-	{% block end %}{% endblock %}
 	<script src="{% static 'base.js' %}"></script>
+	{% block end %}{% endblock %}
 </body>
 </html>
