@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">{% endblock %}
+{% block title %}
+<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'posts.css' %}">
+{% endblock %}
 
 {% block content %}
 <div id="filter-box" v-cloak>
@@ -58,7 +61,7 @@
     <div class="post-card filling-empty-space"></div>
 </div>
 
-<div id="post_page">
+<div id="page-btn">
     {% if posts.has_previous %}
     <a href="{% url 'index_page' posts.previous_page_number %}">&#60;Prev</a>
     {% endif %}
@@ -68,4 +71,7 @@
 </div>
 {% endblock %}
 
-{% block end %}<script src="{% static 'index.js' %}"></script>{% endblock %}
+{% block end %}
+<script src="{% static 'index.js' %}"></script>
+<script src="{% static 'posts.js' %}"></script>
+{% endblock %}

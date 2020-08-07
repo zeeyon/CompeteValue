@@ -1,7 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-
-<a href="{% url 'index' %}">index로 이동하기</a><br>
-
 <h2>스크랩한 글</h2>
 {% for scrap in scraps %}
 {% with post=scrap.post %}

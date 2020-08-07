@@ -1,0 +1,108 @@
+#posts{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    overflow:auto;
+    margin-top:10px;
+    font-family:'IBMPlexSansKR-Light';
+}
+#posts .post-card{
+    position:relative;
+    width:300px;
+    height:300px;
+    padding:5px;
+    margin:25px;
+    box-shadow:0px 0px 5px darkgray;
+}
+#posts .post-card:hover{
+    box-shadow:0px 0px 5px gray;
+}
+#posts .post-card .profile{
+    display:flex;
+    align-items:center;
+    width:100%;
+    padding-bottom:5px;
+    border-bottom:1px solid gainsboro;
+    font-size:15px;
+}
+#posts .post-card .profile-image-box{
+    font-size:0;
+}
+#posts .post-card .profile-image{
+    width:50px;
+    height:50px;
+    margin:15px;
+    border-radius:25px;
+    background-color:lightpink;
+}
+#posts .post-card .user-info-box{
+    margin-left:5px;
+    line-height:25px;
+}
+#posts .post-card .user-info-box .location::before{
+    content:'';
+    display:inline-block;
+    width:13px;
+    height:17px;
+    margin-right:5px;
+    background:url(./images/post_card_location.png);
+    background-size:100%;
+    vertical-align:middle;
+}
+#posts .post-card .field, #posts .post-card .tool{
+    height:50px;
+    padding:10px;
+}
+#posts .post-card .field{
+    font-family:'TmoneyRoundWindExtraBold';
+    font-size:20px;
+}
+#posts .post-card .tool{
+    font-size:15px;
+}
+#posts .post-card .date{
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    font-size:15px;
+}
+#posts .post-card .icon{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    font-size:0;
+}
+#posts .post-card .icon a{
+    display:inline-block;
+    z-index:10;
+    width:40px;
+    height:40px;
+    margin-left:15px;
+}
+#posts .post-card .icon .message{
+    background:url(./images/post_card_message.png);
+    background-size:100%;
+}
+#posts .post-card .icon .scrap{
+    background:url(./images/post_card_scrap.png);
+    background-size:100%;
+}
+#posts .post-card .icon .scrap.scrapped{
+    background:url(./images/post_card_scrapped.png);
+    background-size:100%;
+}
+#posts .post-card.filling-empty-space{
+    height:0;
+    padding:0 5px;
+    margin:0 25px;
+}
+
+#page-btn{
+    margin-bottom:20px;
+    font-family:'TmoneyRoundWindExtraBold';
+    font-size:25px;
+    text-align:center;
+}
+#page-btn a{
+    margin:50px;
+}
