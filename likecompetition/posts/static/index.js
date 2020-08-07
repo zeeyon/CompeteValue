@@ -70,7 +70,7 @@ var scrap = {
 			this.isScrapped = !this.isScrapped;
 			axios({
 				method: method,
-				url: comp.url
+				url: this.url
 			})
 			.catch(function(error) {
 				console.log(error);
