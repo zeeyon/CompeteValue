@@ -2,21 +2,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
+from django.http import HttpResponse
 from .models import Post, Comment, Scrap, Area
 from .forms import PostForm, CommentForm
 
-class BaseView(View):
-    def dispatch(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
-        elif request.method == 'POST':
-            method = request.POST.get('_method', 'POST')
-            handler = getattr(self, method.lower(), self.http_method_not_allowed)
-        else:
-            handler = self.http_method_not_allowed
-        return handler(request, *args, **kwargs)
-
-class PostDetailView(BaseView):
+class PostDetailView(View):
     def get(self, request, *args, **kwargs):
         post_id = self.kwargs['post_id']
         post = get_object_or_404(Post, pk=post_id)
@@ -31,7 +21,7 @@ class PostDetailView(BaseView):
             post.delete()
         return redirect('index')
 
-class PostCreateView(LoginRequiredMixin, BaseView):
+class PostCreateView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         return render(request, 'post_form.html', {'form': PostForm()})
 
@@ -44,7 +34,7 @@ class PostCreateView(LoginRequiredMixin, BaseView):
         post.save()
         return redirect('post_detail', post_id=post.id)
 
-class PostEditView(LoginRequiredMixin, BaseView):
+class PostEditView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         if not request.user == post.user:
@@ -62,7 +52,7 @@ class PostEditView(LoginRequiredMixin, BaseView):
         post.save()
         return redirect('post_detail', post_id=post.id)
 
-class CommentView(LoginRequiredMixin, BaseView):
+class CommentView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         form = CommentForm(request.POST)
@@ -79,7 +69,7 @@ class CommentView(LoginRequiredMixin, BaseView):
             comment.delete()
         return redirect('post_detail', post_id=comment.post.id)
 
-class ScrapView(LoginRequiredMixin, BaseView):
+class ScrapView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         scraps = Scrap.objects.filter(user=request.user).order_by('-date')
         return render(request, 'scrap.html', {'scraps': scraps})
@@ -87,17 +77,16 @@ class ScrapView(LoginRequiredMixin, BaseView):
     def post(self, request, *args, **kwargs):
         post_id = self.kwargs['post_id']
         post = get_object_or_404(Post, pk=post_id)
-        count = Scrap.objects.filter(user=request.user, post=post).count()
-        if not count:
+        if not Scrap.objects.filter(user=request.user, post=post).exists():
             scrap = Scrap(user=request.user, post=post)
             scrap.save()
-        return redirect('post_detail', post_id=post_id)
+        return HttpResponse()
 
     def delete(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         scrap = get_object_or_404(Scrap, user=request.user, post=post)
         scrap.delete()
-        return redirect('scrap_list')
+        return HttpResponse()
 
 def load_areas(request):
     city_id = request.GET.get('city_id')

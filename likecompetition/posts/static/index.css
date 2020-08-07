@@ -5,14 +5,14 @@
 	display:table;
 	min-width:800px;
 	max-width:800px;
-	padding:5px 5px;
+	padding:5px;
+    margin:0 auto;
 	border:1px solid gray;
 	font-family:'IBMPlexSansKR-Light';
 	font-size:15px;
 }
 #filter-box .filter{
 	display:table;
-	width:100%;
 	margin:10px 10px;
 }
 #filter-box .filter .filter-name, #filter-box .filter .filter-options{
@@ -26,6 +26,10 @@
 	float:left;
 	width:130px;
 }
+
+/**
+* check-list
+*/
 #check-list ul{
 	list-style:none;
 }
@@ -49,138 +53,119 @@
 	font-size:20px;
 	cursor:pointer;
 }
+
 /**
 * posts
 */
 #posts{
-	margin-top:100px;
-	font-family:'IBMPlexSansKR-Light';
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	clear: both;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    overflow:auto;
+    margin-top:25px;
+    font-family:'IBMPlexSansKR-Light';
 }
-
-#post_card{
+#posts .post-card{
+    position:relative;
+	width:300px;
+	height:300px;
+	padding:5px;
+    margin:25px;
 	box-shadow:0px 0px 5px darkgray;
-	width: 300px;
-	height: 300px;
-	padding: 5px;
-	position: relative;
-	float: left;
-	margin-left: 50px;
-	margin-bottom: 50px;
-	z-index: 10;
 }
-
-#post_card:hover{
+#posts .post-card:hover{
 	box-shadow:0px 0px 5px gray;
 }
-
-#post_card ul{
-	list-style: none;
-	border-bottom: 1px solid gainsboro;
+#posts .post-card .profile{
+    display:flex;
+    align-items:center;
+    width:100%;
+    padding-bottom:5px;
+    border-bottom:1px solid gainsboro;
+    font-size:15px;
 }
-
-#post_card ul li:nth-child(2), #post_card ul li:nth-child(3), #post_card ul li:nth-child(4){
-	font-size: 15px;
-	position: absolute;
+#posts .post-card .profile-image-box{
+    font-size:0;
 }
-
-#post_card ul li:nth-child(1) div{
-	border-radius: 30px;
-	width: 40px;
-	height: 40px;
-	padding: 10px;
-	margin: 15px;
+#posts .post-card .profile-image{
+    width:50px;
+    height:50px;
+    margin:15px;
+    border-radius:25px;
+    background-color:lightpink;
 }
-
-#post_card ul li:nth-child(1) img{
-	width: 40px;
-	height: 40px;
+#posts .post-card .user-info-box{
+    margin-left:5px;
+    line-height:25px;
 }
-
-#post_card ul li:nth-child(2){
-	top: 40px;
-	left: 95px;
-	font-weight: 700;
+#posts .post-card .user-info-box .location::before{
+    content:'';
+    display:inline-block;
+    width:13px;
+    height:17px;
+    margin-right:5px;
+    background:url(./images/post_card_location.png);
+    background-size:100%;
+    vertical-align:middle;
 }
-
-#post_card ul li:nth-child(3){
-	top: 10px;
-	right: 10px;
+#posts .post-card .field, #posts .post-card .tool{
+    height:50px;
+    padding:10px;
 }
-
-#post_card ul li:nth-child(4){
-	font-weight: 700;
-	top: 65px;
-	left: 90px;
+#posts .post-card .field{
+    font-family:'TmoneyRoundWindExtraBold';
+    font-size:20px;
 }
-
-#post_card ul li:nth-child(4) img{
-	vertical-align: middle;
-	padding-right: 5px;
-	z-index: -1;
+#posts .post-card .tool{
+    font-size:15px;
 }
-
-#post_card_field{
-	padding: 15px;
-	overflow: hidden;
-	font-size: 20px;
-	height: 50px;
-	width:280px;
-	font-family: 'TmoneyRoundWindExtraBold';
+#posts .post-card .date{
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    font-size:15px;
 }
-
-#post_card_tool{
-	padding: 15px;
-	overflow: hidden;
-	font-size: 15px;
-	width:280px;
-	height:50px;
+#posts .post-card .icon{
+	position:absolute;
+    right:10px;
+	bottom:10px;
+    font-size:0;
 }
-
-#post_card_icon{
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	padding-left: 5px;
-	z-index: -1;
+#posts .post-card .icon a{
+    display:inline-block;
+    z-index:10;
+    width:40px;
+    height:40px;
+    margin-left:15px;
 }
-
-#post_card_icon img{
-	width: 40px;
-	height: 40px;
+#posts .post-card .icon .message{
+    background:url(./images/post_card_message.png);
+    background-size:100%;
 }
-
-#post_card_icon a{
-	padding-right: 15px;
-	cursor: pointer;
-	width: 40px;
-	height: 40px;
-	display: inline-block;
-	z-index: 20;
+#posts .post-card .icon .scrap{
+    background:url(./images/post_card_scrap.png);
+    background-size:100%;
 }
-
-#post_card_icon img:hover{
-	width: 42px;
-	height: 42px;
+#posts .post-card .icon .scrap.scrapped{
+    background:url(./images/post_card_scrapped.png);
+    background-size:100%;
+}
+#posts .post-card.filling-empty-space{
+    height:0;
+    padding:0 5px;
+    margin:0 25px;
 }
 
 /**
 *  post page
 */
-
 #post_page{
-	clear: both;
-	font-family: 'TmoneyRoundWindExtraBold';
-	text-align: center;
-	margin: 20px;
-	font-size: 25px;
+	margin:20px;
+    font-family:'TmoneyRoundWindExtraBold';
+	font-size:25px;
+    text-align:center;
 }
-
 #post_page a{
-	text-decoration: none;
+    padding-left:30px;
 	color:black;
-	padding-left: 30px;
 }
