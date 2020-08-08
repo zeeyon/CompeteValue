@@ -2,27 +2,29 @@
 * check-box
 */
 #check-box{
-	min-width:800px;
-	max-width:800px;
+	padding-top:30px;
 	font-size:15px;
 	font-family:'IBMPlexSansKR-Light';
 	text-align:left;
 	margin-left: auto;
 	margin-right: auto;
+	width: 97%;
 }
 #check-box table{
 	border:1px solid gray;
 	border-spacing:15px;
 }
 #check-box table th{
-	width:80px;
+	width:75px;
 }
 #check-box label{
 	display:inline-block;
-	width:105px;
+	width:100px;
+	padding-bottom: 1px;
 }
 #check-box input{
 	margin-right:10px;
+	vertical-align:middle;
 }
 #check-box-add ul{
 	max-width:700px;
@@ -52,20 +54,15 @@
 	margin-top:100px;
 	font-family:'IBMPlexSansKR-Light';
 	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
 	clear: both;
 }
 
 #post_card{
 	box-shadow:0px 0px 5px darkgray;
-	width: 300px;
-	height: 300px;
 	padding: 5px;
 	position: relative;
 	float: left;
-	margin-left: 50px;
-	margin-bottom: 50px;
+	margin: 10px;
 	z-index: 10;
 }
 
@@ -78,7 +75,7 @@
 	border-bottom: 1px solid gainsboro;
 }
 
-#post_card ul li:nth-child(2), #post_card ul li:nth-child(3), #post_card ul li:nth-child(4){
+#post_card ul li:nth-child(2), #post_card ul li:nth-child(3){
 	font-size: 15px;
 	position: absolute;
 }
@@ -103,17 +100,12 @@
 }
 
 #post_card ul li:nth-child(3){
-	top: 10px;
-	right: 10px;
-}
-
-#post_card ul li:nth-child(4){
 	font-weight: 700;
 	top: 65px;
 	left: 90px;
 }
 
-#post_card ul li:nth-child(4) img{
+#post_card ul li:nth-child(3) img{
 	vertical-align: middle;
 	padding-right: 5px;
 	z-index: -1;
@@ -123,8 +115,6 @@
 	padding: 15px;
 	overflow: hidden;
 	font-size: 20px;
-	height: 50px;
-	width:280px;
 	font-family: 'TmoneyRoundWindExtraBold';
 }
 
@@ -132,8 +122,14 @@
 	padding: 15px;
 	overflow: hidden;
 	font-size: 15px;
-	width:280px;
-	height:50px;
+}
+
+#post_card_date{
+	position: absolute;
+	bottom: 5px;
+	left: 10px;
+	padding-right: 5px;
+	font-size: 15px;
 }
 
 #post_card_icon{
@@ -179,4 +175,54 @@
 	text-decoration: none;
 	color:black;
 	padding-left: 30px;
+}
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+#post_card{
+	width: 300px;
+	height: 300px;
+}
+
+#post_card_field{
+	width:270px;
+	height:50px;
+}
+
+#post_card_tool{
+	width:270px;
+	height:50px;
+}
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+   /*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#check-box{
+		width: 870px;
+	}
+}
+
+/* Desktop Device */
+@media all and (min-width:768px) and (max-width: 1400px){
+   /*  사용자 해상도가 768px 이상이고 1400px 이하일 때 이 코드가 실행됨. 아이패드, 노트북 등에 대응하는 코드를 작성한다. */
+
+}
+
+/* Desktop Device */
+@media all and (min-width:1400px){
+	/*  사용자 해상도가 1400px 이상일 때 이 코드가 실행됨. 1400px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	#post_card{
+		width: 380px;
+		height: 380px;
+	}
+
+	#post_card_field{
+		width:350px;
+		height:90px;
+	}
+	
+	#post_card_tool{
+		width:350px;
+		height:90px;
+	}
 }

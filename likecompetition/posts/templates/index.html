@@ -55,10 +55,7 @@
                         <div id="post_card_user"><img src="{% static '/images/post_card_user.png' %}"></div>
                     </li>
                     <li>
-                        {{ post.user }} / {{ post.gender }}
-                    </li>
-                    <li>
-                        {{ post.date }}
+                        {{ post.user }} / {{ post.gender }} / {{ post.age }}
                     </li>
                     <li>
                         <img src="{% static '/images/post_card_location.png' %}" style="width: 13px; height: 17px;">{{ post.city }} {{ post.area }}
@@ -72,8 +69,10 @@
                 </div>
             </a>
             
+            <div id="post_card_date">
+                {{ post.date }}
+            </div>
             <div id="post_card_icon">
-                <a href="#" onclick=""><img src="{% static '/images/post_card_message.png' %}"></a>
                 <form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
                     {% csrf_token %}
                     <a href="#" onclick="parentNode.submit();"><img src="{% static '/images/post_card_scrap.png' %}"></a>

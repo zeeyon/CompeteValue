@@ -1,3 +1,6 @@
+/* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -46,6 +49,8 @@ header{
 	font-family:'TmoneyRoundWindExtraBold';
 	vertical-align:middle;
 	z-index: 100;
+	display:flex;
+	align-items:flex-start;
 }
 header::after{
 	content:'';
@@ -53,16 +58,16 @@ header::after{
 	clear:both;
 }
 .hamburger-button{
-	float:left;
 	font-size:30pt;
 	color:white;
 	cursor:pointer;
+	margin-right: auto;
 }
 .header-logo{
-	float:left;
+	margin-right: auto;
 }
 .header-logo a{
-	padding:0px 25px;
+	padding:0px 5px;
 	font-size:30pt;
 	color:white;
 }
@@ -71,7 +76,7 @@ header::after{
 * 헤더 메뉴
 */
 #header-menu{
-	float:right;
+	margin-left: auto;
 	margin-right:50px;
 }
 #header-menu ul{
@@ -204,4 +209,51 @@ header::after{
 .user_dropdown li a:hover{
 	font-size:18px;
 	background-color:rgb(221, 221, 221);
+}
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+.content-main{
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#header-menu{
+	display:none;
+}
+
+.header-logo{
+	padding-right: 65px;
+}
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+   /*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+    .content-main{
+		padding-left:250px;
+		padding-right:250px;
+		padding-top:60px;
+	}
+
+	#header-menu{
+		display:flex;
+	}
+
+	.hamburger-button{
+		display:none;
+	}
+
+	.header-logo{
+		padding-right: 0px;
+	}
+}
+
+/* Tablet Device */
+@media all and (min-width:768px) and (max-width:1024px) {
+    /* 사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+}
+
+/* Desktop Device */
+@media all and (min-width:1025px) {
+   /*  사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
 }

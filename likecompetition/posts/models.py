@@ -19,7 +19,7 @@ class Area(models.Model):
 FIELD_CHOICES=(
     ('frontend','프론트엔드'),
     ('server_backend','서버/백엔드'),
-    ('web_pullstack','웹 풀스택'),
+    ('web_fullstack','웹 풀스택'),
     ('android','안드로이드'),
     ('ios','ios'),
     ('cloud','클라우드'),
