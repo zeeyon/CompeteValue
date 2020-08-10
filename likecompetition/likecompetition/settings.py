@@ -135,3 +135,11 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'login'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'like0.test@gmail.com'
+EMAIL_HOST_PASSWORD = 'rhdrkcl12345679'
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1

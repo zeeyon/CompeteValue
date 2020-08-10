@@ -22,6 +22,7 @@ class UserManager(BaseUserManager):
             password=password,
             nickname=nickname,
         )
+        user.is_verified = True
         user.is_admin = True
         user.save(using=self._db)
         return user
@@ -42,6 +43,7 @@ class User(AbstractBaseUser):
         null = True,
         default=None,
     )
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
