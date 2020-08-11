@@ -3,29 +3,37 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
 
 {% block content %}
-<a href="{% url 'index' %}">index로 이동하기</a>
+<a href="{{'index' }}">index로 이동하기</a>
 
 <h1>{{ post.title }}</h1>
 글번호 : {{ post.id }}<br>
 작성자 : {{ post.user }}<br>
 날짜 : {{ post.date }}<br>
-{% comment %} 성별 : {{ post.gender }}<br>
-나이 : {{ post.age }}<br> {% endcomment %}
+{% comment %} 성별 : {{ request.user }}<br> {% endcomment %}
+{% comment %} 나이 : {{ post.user.birth }}<br> {% endcomment %}
 시/도 : {{ post.city }}<br>
 구/군 : {{ post.area }}<br>
 분야 : {{ post.field }}<br>
+툴 :
+{% load taggit_templatetags2_tags %}
+		{% get_tags_for_object object as "tags" %}
+		{% for tag in tags %}
+		# {{ tag.name }}</a>
+    {% endfor %}
+<br>
 내용 : {{ post.content }}<br>
-조회수 : {{ post.view_count }}<br>
+조회수 : {% load hitcount_tags %} 
+        {% get_hit_count for post %} <br>
 
 {% if request.user == post.user %}
-    <a href="{% url 'post_edit' post.id %}">수정하기</a>
-    <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
+    <a href="{% url 'posts:post_edit' post.pk %}">수정하기</a>
+    <form class="inline_form" action="{% url 'posts:delete' post.id %}" method="post">
         {% csrf_token %}
         <a href="#" onclick="parentNode.submit();">삭제하기</a>
         <input type="hidden" name="_method" value="DELETE" />
     </form>
 {% endif %}
-<form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
+<form class="inline_form" action="{% url 'posts:scrap_detail' post.id %}" method="post">
     {% csrf_token %}
     <a href="#" onclick="parentNode.submit();">스크랩하기</a>
 </form>
@@ -36,7 +44,7 @@
     날짜 : {{ comment.date }}<br>
     내용 : {{ comment.content }}<br>
     {% if request.user == comment.user %}
-        <form class="inline_form" action="{% url 'comment_detail' post.id comment.id %}" method="post">
+        <form class="inline_form" action="{% url 'posts:comment_detail' post.id comment.id %}" method="post">
             {% csrf_token %}
             <a href="#" onclick="parentNode.submit();">삭제하기</a>
             <input type="hidden" name="_method" value="DELETE" />
@@ -45,12 +53,11 @@
     <br>
 {% endfor %}
 
-<form action="{% url 'comment' post.id %}" method="post">
+<form action="{% url 'posts:comment' post.id %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="등록" />
 </form>
 
 {% endblock %}
-
 {% block end %}{% endblock %}

@@ -21,16 +21,16 @@
 			<div class="header-logo"><a href="/">공가치</a></div>
 			<nav id="main-menu">
 				<ul>
-					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
+					<li><a href="{% url 'posts:post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">로그아웃</a></li>
 					<li class="profile">
-						<a href="#">{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></a>
+						{% comment %} <a href="#">{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></a> {% endcomment %}
 						<div id="user-menu">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
 								<li><a href="#">쪽지</a></li>
-								<li><a href="{% url 'scrap_list' %}">내 스크랩</a></li>
+								{% comment %} <li><a href="{% url 'posts:scrap_list' %}">내 스크랩</a></li> {% endcomment %}
 								<li><a href="#">내 글</a></li>
 							</ul>
 						</div>
@@ -47,7 +47,7 @@
 				<ul>
 					<li class="close-button" onclick="toggleMenu()">X</li>
 					<li><a href="{% url 'index' %}">홈</a></li>
-					<li><a href="{% url 'post_create' %}">글쓰기</a></li>
+					<li><a href="{% url 'posts:post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">{{ user.nickname }} / 로그아웃</a></li>
 					<li><a href="{% url 'mypage' %}">내 정보</a></li>

@@ -1,11 +1,15 @@
 from django import forms
 from .models import Post, Comment, Area
+from dal import autocomplete
+from taggit.models import Tag
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title','city','area','field','content']
-    
+        fields = ['title','city','area','field','tags','content']
+        widgets = {
+            'tags':autocomplete.TagSelect2(url='posts:tag_autocomplete'),
+        }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['area'].queryset = Area.objects.none()

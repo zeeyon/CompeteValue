@@ -6,7 +6,7 @@
 {{ error_message }}
 
 <div id="post_form_1">
-    <form method="POST" id="areaForm" data-areas-url="{% url 'ajax_load_areas' %}">
+    <form method="POST" id="areaForm" data-areas-url="{{'ajax_load_areas'}}">
         {% csrf_token %}
         <div id="post_form">
                 <legend>NEW POST</legend><br>
@@ -32,8 +32,7 @@
                     <tr>
                         <td>
                             <label for="id_tool">툴</label><br>
-                            {{ form.tool }}
-                            <input type="text" id="id_tool">
+                            {{ form.tags }}
                         </td>
                     </tr>
                     <tr>
@@ -54,5 +53,6 @@
 
 {% endblock %}
 {% block end %}
-<script src="/static/post_form.js"></script>
+<script type="text/javascript" src="/static/post_form.js"></script>
+{{ form.media }}
 {% endblock %}
