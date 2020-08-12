@@ -22,7 +22,8 @@ orange{
 
 #profile-bottom{
     position: relative;
-    top:200px;
+	top:200px;
+	padding: 50px 50px;
 }
 
 #profile-background{
@@ -53,7 +54,7 @@ orange{
 	opacity: 0.5;
 }
 #profile-header{
-	margin-left:350px;
+	margin-left:500px;
 	opacity:0;
 }
 .profile-name{

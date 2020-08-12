@@ -1,13 +1,11 @@
 #filter-box{
 	display:table;
-	min-width:800px;
-	max-width:800px;
 	padding:5px;
     margin:0 auto;
 	border:1px solid gray;
 	font-family:'IBMPlexSansKR-Light';
 	text-align:left;
-	width: 97%;
+	width: 90%;
 	font-size:15px;
 }
 #filter-box .filter{
@@ -16,12 +14,12 @@
 }
 #filter-box .filter .filter-name{
 	display:table-cell;
-    width:130px;
+    width:80px;
 	vertical-align:top;
 }
 #filter-box .filter .filter-option{
 	float:left;
-	width:130px;
+	width:110px;
     height:25px;
 }
 #filter-box .filter .filter-option label{
@@ -58,7 +56,13 @@
 @media all and (min-width:768px) {
    /*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	#filter-box{
-		max-width: 800px;
-		min-width: 800px;
+		max-width:800px;
+		min-width:800px;
+	}
+	#filter-box .filter .filter-name{
+		width:130px;
+	}
+	#filter-box .filter .filter-option{
+		width:130px;
 	}
 }

@@ -1,31 +1,43 @@
-
 /**
 *post_form
 */
 
-
-#post_form_1{
+#post_form_box{
 	box-shadow:0px 0px 10px gray;
 	margin-left:auto;
 	margin-right:auto;
-	width:550px;
+	width:700px;
 	background-color:white;
 	margin-bottom:100px;
 }
 
-#post_form span{
-	color:red;
+#post_form{
+	font-family:'IBMPlexSansKR-Light';
+	margin:0px;
+	padding:10px;
 }
 
-legend{
+#post_form div{
+	padding: 30px 30px;
+}
+
+#post_form legend{
 	font-size:40px;
 	text-align:center;
 	font-family:'TmoneyRoundWindExtraBold';
 	padding-right:5px;
 }
 
-input[type=text], select, input[type=number], textarea{
-	width:150px;
+#post_form label{
+	font-size:15px;
+	margin-bottom: 15px;
+}
+
+#post_form label span{
+	color:red;
+}
+
+#post_form input[type=text], select, textarea{
 	padding:12px 20px;
 	margin:8px 0;
 	display:inline-block;
@@ -35,20 +47,30 @@ input[type=text], select, input[type=number], textarea{
 	font-weight:bold;
 	font-family:'IBMPlexSansKR-Light';
 	font-size:20px;
+	vertical-align: center;
+}
+
+#id_city, #id_area{
+	width:250px;
 }
 
 #id_field{
-	list-style: none;
+	list-style:none;
 }
 
 #id_field li{
-	padding: 10px;
-	float: left;
-	width:210px;
+	display: inline-block;
+	padding: 10px 0px;
+	width:200px;
+}
+
+#id_field li:hover{
+	font-weight:bolder;
 }
 
 #id_tool{
 	width:100%;
+	clear:both;
 }
 
 textarea{
@@ -57,28 +79,13 @@ textarea{
 }
 
 input[type=submit]{
-	width:96%;
+	width:100%;
 	background-color:black;
 	color:white;
 	padding:14px 20px;
-	margin:8px 13px;
 	border:none;
 	border-radius:4px;
 	cursor:pointer;
 	font-size:25px;
 	font-family:'TmoneyRoundWindExtraBold';
-}
-
-#post_form{
-	font-family:'IBMPlexSansKR-Light';
-	margin:0px;
-	padding:10px;
-}
-
-label{
-	font-size:15px;
-}
-
-#post_form table{
-	border-spacing:30px;
 }
