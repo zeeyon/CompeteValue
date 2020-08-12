@@ -1,9 +1,173 @@
 <!--마이 페이지입니당.:3-->
 {% extends 'base.html' %}
-{% block title %}<link rel="stylesheet" type="text/css" href="">{% endblock %}
+{% load static %}
+{% block title %}<link rel="stylesheet" type="text/css" href="{% static 'mypage.css' %}">{% endblock %}
 {% block content %}
 
-<h3><a href="{% url 'scrap_list' %}">스크랩 보기</a></h3>
+<!-- <h3><a href="{% url 'scrap_list' %}">스크랩 보기</a></h3> -->
+<div id="profile-top">
+    <div id="profile-background">
+        <div id="profile-img">
+            <!--프사-->
+            <img src="{% static 'images/user.png' %}">
+        </div>
+    </div>
+</div>
+
+<div id="profile-bottom">
+    <div id="profile-header">
+        <!--닉네임-->
+        <div class="profile-name">{{ user.nickname }}</div>
+        <!--소개-->
+        <div class="profile-detail"> 여성 / 33세 </div>
+        <div class="profile-scores">
+            <!--
+            <div class="profile-score star">
+                <img src="star.png" title="좋아요">
+                <div id="number">123</div>
+            </div>
+            <div class="profile-score human">
+                <img src="human.png" title="같이 한 사람">
+                <div id="number">156</div>
+            </div>
+            -->
+            <!--onclick 부분은 임시로 해놓았습니다-->
+            <div class="profile-score project" onclick="location.href='?page=project'">
+                <img src="{% static 'images/folder.png' %}" title="참여한 프로젝트">
+                <div id="number">82</div>
+            </div>
+            <div class="profile-score list" onclick="location.href='?page=write'">
+                <img src="{% static 'images/file.png' %}" title="작성한 글">
+                <div id="number">12</div>
+            </div>
+            
+            <!--이 부분 부터는 본인프로필에서만 볼 수 있음-->
+            <div class="profile-score list" onclick="location.href='setting.html'">
+                <img src="{% static 'images/bookmark.png' %}" title="북마크한 글">
+                <div id="number"></div>
+            </div>
+
+
+            <div class="profile-score list" onclick="location.href='setting.html'">
+                <img src="{% static 'images/edit.png' %}" title="내 프로필 변경">
+                <div id="number"></div>
+            </div>
+
+            <!--여기까지-->
+            
+            <!--
+            <div class="profile-score comment">
+                <img src="comment.png" title="작성한 댓글">
+                <div id="number">56</div>
+            </div>
+            -->
+        </div>
+    </div>
+    <div id="profile-main">
+    
+        <!--START 이 부분이 page값에 따라 바뀝니다-->
+    
+        
+        <!--내가 쓴 글 START-->
+        <!--class명을 뭐로 해야 좋을지 몰라 일단 write로 했습니다. 나중에 수정해주세요-->
+
+        <div id="write-title">
+            {{ user.nickname }} 님이 작성한 글
+        </div>
+        <div id="write-menu">
+            <button class="menu-btn" id="menu-btn-modify" onclick="modifyMode()"><img src="{% static 'images/setting.png' %}"></button>
+            <!-- <button class="menu-btn" id="menu-btn-write" onclick="writeMode()"><img src="{% static 'images/write.png' %}"></button> -->
+        </div>
+        <div id="write-list">
+            
+            <div class="card">
+                <div class="modify hide">
+                    <img src="{% static 'images/delete.png' %}" onclick="deleteCard()">
+                    <img src="{% static 'images/modify.png' %}" onclick="modifyCard()">
+                </div>
+                <div class="title-detail">
+                    <div class="time">Aug 1. 2020, 11:55 PM</div>
+                    <div class="profile-img"><img src="{% static 'images/header_user_image.png' %}"></div>
+                    <div class="author">
+                        <span class="author-name">lifedev</span>
+                        <span class="author-location"><img src="{% static 'images/location.png' %}">강원도 원주시</span>
+                    </div>
+                </div>
+                <div class="intro long-card">
+                    <!--overflow는 ...으로 표시-->
+                    HTML5 CSS JS Vue.js / Django 우대 / 강원도 원주 / 20대 초반 / asdfasdfasdf/ㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄹㄴㅇ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ
+                    
+                </div>
+            </div>
+            
+        </div>
+<!--         <div class="newcard hide">
+            <div id="popup-header">
+                <button class="close-btn" onclick="closePopup(this.parentNode.parentNode)">X</button>
+            </div>
+            
+            <div id="popup-section"><form action="" method="post">
+                <div id="newcard-form">
+                    <div class="newcard-form">
+                        
+                        <select class="form-gender" name="gender">
+                            <option value="none">성별</option>
+                            <option value="male">남자</option>
+                            <option value="female">여자</option>
+                        </select>
+                        <select class="form-age" name="age">
+                            <option value="none">나이</option>
+                            <option value="10">10대</option>
+                            <option value="20">20대</option>
+                            <option value="30">30대</option>
+                            <option value="40">40대</option>
+                            <option value="50">50대~</option>
+                        </select>
+                        <select class="form-area" name="area" v-model="areaSel">
+                            <option value="none">지역</option>
+                            <option value="seoul">서울특별시</option>
+                            <option value="pusan">부산광역시</option>
+                            <option value="daegu">대구광역시</option>
+                            <option value="incheon">인천광역시</option>
+                            <option value="gwangju">광주광역시</option>
+                            <option value="daejeon">대전광역시</option>
+                            <option value="ulsan">울산광역시</option>
+                            <option value="sejong">세종특별자치시</option>
+                            <option value="gyeonggi">경기도</option>
+                            <option value="kangwon">강원도</option>
+                            <option value="chungbuk">충청북도</option>
+                            <option value="chungnam">충청남도</option>
+                            <option value="jeollabuk">전라북도</option>
+                            <option value="jeollanam">전라남도</option>
+                            <option value="gyeongbuk">경상북도</option>
+                            <option value="gyeongnam">경상남도</option>
+                            <option value="jeju">제주특별자치도</option>
+                        </select>
+                        <select class="form-area-detail" name="area-detail">
+                            <option v-for="area in areas" value="area.val">{{ area.name }}</option>
+                        </select>
+                        
+                    </div>
+                </div>
+                <div id="newcard-text">
+                    <textarea name="card_input" id="card-input"></textarea>
+                </div>
+                <div id="newcard-submit">
+                    <button class="newcard-btn">+</button>
+                </div>
+            </form></div>
+            
+        </div> -->
+        
+        <!--내가 쓴 글 END-->
+        
+        
+        <!--END-->
+    
+    </div>
+</div>
+
+
 
 
 
@@ -14,4 +178,4 @@
     <input type="submit" value="save"/>
 </form>
 {% endblock %}
-{% block end %}{% endblock %}
+{% block end %}<script src="{% static 'mypage.js' %}"></script>{% endblock %}

@@ -6,6 +6,8 @@
     margin:0 auto;
 	border:1px solid gray;
 	font-family:'IBMPlexSansKR-Light';
+	text-align:left;
+	width: 97%;
 	font-size:15px;
 }
 #filter-box .filter{
@@ -50,4 +52,12 @@
 #check-list .remove-option{
 	font-size:20px;
     cursor:pointer;
+}
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+   /*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#check-box{
+		width: 870px;
+	}
 }
