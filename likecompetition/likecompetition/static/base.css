@@ -45,6 +45,11 @@ header{
 	align-items:flex-start;
 	color:white;
 }
+header::after{
+	content:'';
+	display:block;
+	clear:both;
+}
 header .hamburger-button{
 	font-size:40px;
 	cursor:pointer;

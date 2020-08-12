@@ -106,3 +106,40 @@
 #page-btn a{
     margin:50px;
 }
+
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+#post_card{
+	width: 300px;
+	height: 300px;
+}
+
+#post_card_field{
+	width:270px;
+	height:50px;
+}
+
+#post_card_tool{
+	width:270px;
+	height:50px;
+}
+
+/* Desktop Device */
+@media all and (min-width:1400px){
+	/*  사용자 해상도가 1400px 이상일 때 이 코드가 실행됨. 1400px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	#post_card{
+		width: 380px;
+		height: 380px;
+	}
+
+	#post_card_field{
+		width:350px;
+		height:90px;
+	}
+	
+	#post_card_tool{
+		width:350px;
+		height:90px;
+	}
+}
