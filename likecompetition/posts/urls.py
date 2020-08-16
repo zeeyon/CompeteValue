@@ -13,5 +13,5 @@ urlpatterns = [
     path('scrap', views.ScrapView.as_view(), name='scrap_list'),
     path('<int:post_id>/scrap', views.ScrapView.as_view(), name='scrap_detail'),
     path('ajax_load_areas', views.LoadAreasView.as_view(), name='ajax_load_areas'),
-    path('tag-autocomplete', views.TagAutocompleteView.as_view(), name='tag-autocomplete'),
+    path('tag_autocomplete', views.TagAutocompleteView.as_view(), name='tag_autocomplete'),
 ]
