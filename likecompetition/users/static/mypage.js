@@ -4,15 +4,6 @@ $(window).scroll(function(event){
 	$('header').css('background-color','rgba(28, 28, 28, '+Math.min(1, scrollLocation*0.003)+')');
 });
 
-$("#profile-img").animate(
-    {opacity: 1},300,function(){
-    $("#profile-header").animate(
-        {opacity: 1},200,function(){
-            $("#profile-main").animate({opacity: 1},300);
-        }); 
-    }
-);
-
 $(document).ready(function(){
 /* 	$('#card-input').on('keyup', function(){
 		if($('#card-input').val().length>100){

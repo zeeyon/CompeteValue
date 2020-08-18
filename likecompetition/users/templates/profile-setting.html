@@ -1,0 +1,55 @@
+<div id="setting-main">
+	<div class="user-profile setting-box">
+		<form action="" method="post">
+			<div class="user-name setting">
+				<label for="user-name" class="setting-label">이름</label>
+				<input type="text" name="user_name" class="setting-input" id="user-name" value="lifedev" maxlength="20" required>
+			</div>
+			<div class="user-description setting">
+				<label for="user-description" class="setting-label">소갯말</label>
+				<input type="text" name="user_description" class="setting-input" id="user-description" value="프론트엔드" maxlength="20">
+			</div>
+			<div class="user-profile-img setting">
+				<label for="user-profile-img" class="setting-label">프로필 사진</label>
+				<img src="profile-img.png" id="user-profile-img">
+				<input type="file" name="user_profile_img">
+			</div>
+			<div class="user-background-img setting">
+				<label for="user-profile-img" class="setting-label">배경 사진</label>
+				<img src="background-img.png" id="user-background-img">
+				<input type="file" class="setting-file" name="user_background_img">
+			</div>
+			<div class="user-profile-submit setting">
+				<button class="setting-btn">변경사항 저장</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="user-info setting-box">
+		<form action="" method="post">
+			<div class="user-pw setting">
+				<label for="user-pw" class="setting-label">현재 비밀번호</label>
+				<input type="password" name="user_pw" class="setting-input" id="user-pw" maxlength="20" required>
+			</div>
+			<div class="user-new-pw setting">
+				<label for="user-new-pw" class="setting-label">새 비밀번호</label>
+				<input type="password" name="user_new_pw" class="setting-input" id="user-new-pw" maxlength="20">
+			</div>
+			<div class="user-new-pw setting">
+				<label for="user-new-pw2" class="setting-label">새 비밀번호 확인</label>
+				<input type="password" name="user_new_pw2" class="setting-input" id="user-new-pw2" maxlength="20">
+			</div>
+			<div class="user-brith setting">
+				<label for="user-birth" class="setting-label">생년월일</label>
+				<input type="date" name="user_birth" class="setting-input" id="user-birth" value="2001-07-31" required>
+			</div>
+			<div class="user-email setting">
+				<label for="user-email" class="setting-label">이메일</label>
+				<input type="email" name="user_email" class="setting-input" id="user-email" value="lifedev@naver.com" required>
+			</div>
+			<div class="user-info-submit setting">
+				<button class="setting-btn">변경사항 저장</button>
+			</div>
+		</form>
+	</div>
+</div>
