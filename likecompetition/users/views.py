@@ -5,8 +5,12 @@ from django.utils.crypto import salted_hmac, constant_time_compare
 from django.conf import settings
 from django.utils.http import base36_to_int, int_to_base36
 from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from .forms import *
 from .models import *
+
+
+
 
 class MyTokenGenerator(tokens.PasswordResetTokenGenerator):
 	def make_token(self, user):
@@ -149,11 +153,10 @@ def email_auth(request, token):
 def send_email_auth(user):
 	token = MyTokenGenerator().make_token(user)
 	auth_url = 'http://127.0.0.1:8000/users/activate/'+token
-	email_title = "[공가치] 이메일 인증 테스트"
-	email_content = """
-	이메일 인증 테스트 메일입니다.
-	링크:"""+auth_url
+	email_title = "[공가치] 이메일을 인증해주세요"
+	email_content = render_to_string('email_form.html', {'url':auth_url})
 	email = EmailMessage(email_title, email_content, to=[user.email])
+	email.content_subtype = "html"
 	email.send()
 
 
