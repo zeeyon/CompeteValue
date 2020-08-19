@@ -5,6 +5,9 @@
     overflow:auto;
     margin-top:10px;
     font-family:'IBMPlexSansKR-Light';
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 #posts .post-card{
     position:relative;

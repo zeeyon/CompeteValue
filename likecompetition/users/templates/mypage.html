@@ -32,23 +32,23 @@
             </div>
             -->
             <!--onclick 부분은 임시로 해놓았습니다-->
-            <div class="profile-score project" onclick="location.href='?page=project'">
+            <div class="profile-project-list" onclick="view_profile_main()">
                 <img src="{% static 'images/folder.png' %}" title="참여한 프로젝트">
                 <div id="number">82</div>
             </div>
-            <div class="profile-score list" onclick="location.href='?page=write'">
+            <div class="profile-post-list" onclick="location.href='?page=write'">
                 <img src="{% static 'images/file.png' %}" title="작성한 글">
                 <div id="number">12</div>
             </div>
             
             <!--이 부분 부터는 본인프로필에서만 볼 수 있음-->
-            <div class="profile-score list" onclick="location.href='setting.html'">
+            <div class="profile-bookmark-list" onclick="location.href='setting.html'">
                 <img src="{% static 'images/bookmark.png' %}" title="북마크한 글">
                 <div id="number">5</div>
             </div>
 
 
-            <div class="profile-score list" onclick="location.href='setting.html'">
+            <div class="profile-change" onclick="location.href='setting.html'">
                 <img src="{% static 'images/edit.png' %}" title="내 프로필 변경">
                 <div id="number"></div>
             </div>
@@ -63,20 +63,20 @@
             -->
         </div>
     </div>
+
     <div id="profile-main">
-    
         <!--START 이 부분이 page값에 따라 바뀝니다-->
     
         
         <!--내가 쓴 글 START-->
         <!--class명을 뭐로 해야 좋을지 몰라 일단 write로 했습니다. 나중에 수정해주세요-->
 
-        <div id="write-title">
+        <!--<div id="write-title">
             {{ user.nickname }} 님이 작성한 글
         </div>
         <div id="write-menu">
             <button class="menu-btn" id="menu-btn-modify" onclick="modifyMode()"><img src="{% static 'images/setting.png' %}"></button>
-            <!-- <button class="menu-btn" id="menu-btn-write" onclick="writeMode()"><img src="{% static 'images/write.png' %}"></button> -->
+            <button class="menu-btn" id="menu-btn-write" onclick="writeMode()"><img src="{% static 'images/write.png' %}"></button>
         </div>
         <div id="write-list">
             
@@ -94,13 +94,13 @@
                     </div>
                 </div>
                 <div class="intro long-card">
-                    <!--overflow는 ...으로 표시-->
+                    overflow는 ...으로 표시
                     HTML5 CSS JS Vue.js / Django 우대 / 강원도 원주 / 20대 초반 / asdfasdfasdf/ㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄹㄴㅇ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ
                     
                 </div>
             </div>
             
-        </div>
+        </div>-->
 <!--         <div class="newcard hide">
             <div id="popup-header">
                 <button class="close-btn" onclick="closePopup(this.parentNode.parentNode)">X</button>
@@ -166,10 +166,6 @@
     
     </div>
 </div>
-
-
-
-
 
 <form method="POST">
     {% csrf_token %}

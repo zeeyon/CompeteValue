@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'GmarketSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    background-color: gray;
+}
+
+.post_detail_box{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:'IBMPlexSansKR-Light';
+    width:1000px;
+    min-height:450px;
+}
+
+.post_detail_left{
+    background-image:url(./images/background-img.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    align-items: center;
+    width:30%;
+    color:white;
+    font-size: 15px;
+}
+
+.post_detail_left div{
+    margin-bottom:10px;
+}
+
+#post_detail_profile_img{
+    background-image:url(./images/post_card_user.png);
+    background-size:cover;
+    border-radius:50%;
+    background-color: white;
+    width:100px;
+    height:100px;
+    margin-top: 50px;
+}
+
+#post_detail_profile_name{
+    font-size: 60px;
+}
+
+.post_detail_right{
+    width:70%;
+    font-size:20px;
+    display:flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    flex-direction:column;
+    background-color: white;
+}
+
+.post_detail_right>div{
+    margin-left: 30px;
+    width: 90%;
+}
+
+#post_detail_field{
+    font-size: 40px;
+    font-family:'GmarketSansBold';
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+#asdf{
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+
+#post_detail_tool{
+    background-color: black;
+    border-radius:10px;
+    color: white;
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#post_detail_content{
+    color: gray;
+    line-height: 24px;
+    margin-bottom: 30px;
+}
+
+.post_detail_right .icon{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    font-size:0;
+}
+.post_detail_right .icon a{
+    display:inline-block;
+    z-index:10;
+    width:40px;
+    height:40px;
+    margin-left:15px;
+}
+.post_detail_right .icon .message{
+    background:url(./images/post_card_message.png);
+    background-size:100%;
+}
+.post_detail_right .icon .scrap{
+    background:url(./images/post_card_scrap.png);
+    background-size:100%;
+}
+.post_detail_right .icon .scrap .scrapped{
+    background:url(./images/post_card_scrapped.png);
+    background-size:100%;
+}

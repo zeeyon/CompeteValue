@@ -51,3 +51,9 @@ function closePopup(t){
 	//}
 } */
 
+function view_profile_main(){
+	$("#profile-main").load("{% static 'profile-project.html' %}");
+}
+
+
+
