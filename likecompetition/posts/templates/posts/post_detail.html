@@ -18,7 +18,7 @@
 {% load taggit_templatetags2_tags %}
 		{% get_tags_for_object object as "tags" %}
 		{% for tag in tags %}
-		# {{ tag.name }}</a>
+		# {{ tag.name }}</a> 
     {% endfor %}
 <br>
 내용 : {{ post.content|linebreaks }}<br>

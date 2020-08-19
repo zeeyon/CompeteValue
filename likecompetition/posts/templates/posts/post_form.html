@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
-<link rel="stylesheet" type="text/css" href="/static/post_form.css">
+<link rel="stylesheet" type="text/css" href="{% static 'post_form.css' %}">
 {% endblock %}
 {% block content %}
 {{ error_message }}
