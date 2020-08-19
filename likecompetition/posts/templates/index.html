@@ -36,7 +36,7 @@
 <div id="posts" v-cloak>
     {% for post in posts %}
     <div class="post-card">
-        <a href="{% url 'post_detail' post.id %}">
+        <a href="{% url 'posts:post_detail' post.id %}">
             <div class="profile">
                 <div class="profile-image-box"><img class="profile-image" src="{% static '/images/post_card_user.png' %}"></div>
                 <div class="user-info-box">
@@ -45,14 +45,21 @@
                 </div>
             </div>
         </a>
-        <a href="{% url 'post_detail' post.id %}">
+        <a href="{% url 'posts:post_detail' post.id %}">
             <div class="field">{{ post.field }}</div>
-            <div class="tool">암튼 툴임 :3</div>
+            <div class="tool">
+            
+            {% load taggit_templatetags2_tags %}
+            {% get_tags_for_object post as "tags" %}
+            {% for tag in tags %}
+            # {{ tag.name }}
+            {% endfor %}
+            </div>
         </a>
         <span class="date">{{ post.date }}</span>
         <div class="icon">
             <a class="message" href="#" onclick=""></a>
-            <scrap url="{% url 'scrap_detail' post.id %}" v-bind:initial-scrapped="{{ post.scrapped }}"></scrap>
+            <scrap url="{% url 'posts:scrap_detail' post.id %}" v-bind:initial-scrapped="{{ post.scrapped }}"></scrap>
         </div>
     </div>
     {% endfor %}

@@ -15,10 +15,11 @@ from likecompetition.views import OwnerOnlyMixin
 from hitcount.views import HitCountDetailView
 from django.contrib import messages
 
-class PostDetailView(LoginRequiredMixin, FormMixin, DetailView):
+class PostDetailView(LoginRequiredMixin, FormMixin, HitCountDetailView):
     template_name = 'posts/post_detail.html'
     model = Post
     form_class = CommentForm
+    count_hit = True 
 
     def get_success_url(self):
         return reverse_lazy('posts:post_detail', kwargs={'pk': self.object.pk})
