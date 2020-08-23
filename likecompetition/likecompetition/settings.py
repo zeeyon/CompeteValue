@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from .secret import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_u^b9h*jk34$_+mmc=48c)xxzg=70a9nm5oln1-5%#rkjp)13u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,3 +134,6 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'login'
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+

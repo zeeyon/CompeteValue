@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect, get_object_or_404
+from django.shortcuts import render ,redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import authenticate, login as signin, logout as signout
 from django.contrib.auth.decorators import login_required
 
@@ -23,12 +23,15 @@ def signup(request):
 					nickname = nickname,
 					password = password,
 				)
+				Profile.objects.create(user=user)
 				signin(request, user)
 				return redirect('index')
 			else:
 				err_msg ='비밀번호를 확인.'
+				print(err_msg)
 		else:
 			err_msg = '이미 가입된 이메일.'
+			print(err_msg)
 
 	form = SignupForm()
 	return render(request, 'signup.html', {"signupForm": form, 'err_msg':err_msg})
@@ -57,35 +60,72 @@ def logout(request):
 	return redirect('index')
 
 
+#@login_required
+def mypage(request, user_name):
+	user = get_object_or_404(User, nickname=user_name)
+	#if request.method == 'POST':
+	#	form = MypageForm(request.POST)
+	#	if form.is_valid():
+	#		birth = form.cleaned_data['birth']
+	#		user = get_object_or_404(User, email=request.user.email)
+	#		user.birth = birth
+	#		user.save()
+	#else:
+	#	form = MypageForm(instance = request.user)
+	return render(request, 'mypage.html', {'user':user})
+
 @login_required
-def mypage(request):
+def setting(request):
+	profile = get_object_or_404(Profile, user=request.user)
+	user = get_object_or_404(User, id=request.user.pk)
+
+	# 프로필 수정 폼을 눌렀다면
 	if request.method == 'POST':
-		form = MypageForm(request.POST)
-		if form.is_valid():
-			birth = form.cleaned_data['birth']
-			user = get_object_or_404(User, email=request.user.email)
-			user.birth = birth
-			user.save()
+		if 'setting_profile' in request.POST:
+			profile_form = ProfileForm(request.POST, instance=profile)
+			if profile_form.is_valid():
+				profile_form.save()
+		elif 'setting_account' in request.POST:
+			account_form = AccountForm(request.POST, instance=user)
+			if account_form.is_valid():
+				account_form.save()
+				#이메일 달라졌으면 인증
+				#if not request.user.email == account_form.cleaned_data['email']:
+		elif 'setting_password' in request.POST:
+			new_pass_form = NewPasswordForm(request.POST)
+			
+			if new_pass_form.is_valid():
+				p_o = new_pass_form.cleaned_data['password_conf']
+				p_n = new_pass_form.cleaned_data['password_new']
+				p_n_c = new_pass_form.cleaned_data['password_new_conf']
+				
+				if p_n == p_n_c and authenticate(email=request.user.email if request.user.is_authenticated else '', password=p_o):
+					user = get_object_or_404(User, email=request.user.email)
+					user.set_password(p_n)
+					user.save()
+		
+
+		return redirect('mypage', user_name=user.nickname)
 	else:
-		form = MypageForm(instance = request.user)
-	return render(request, 'mypage.html', {"mypageForm":form})
+		profile_form = ProfileForm(instance = profile)
+		new_pass_form = NewPasswordForm()
+		account_form = AccountForm(instance=user)
+	return render(request, 'setting.html', {'profile_form':profile_form, 'new_pass_form':new_pass_form, 'account_form':account_form})
+
+def test(request):
+	print(request.user.is_authenticated)
+	#if request.user.is_authenticated:
+	#	print('hello')
+	return HttpResponse(authenticate(email=request.user.email if request.user.is_authenticated else '', password='testtest'))
 
 """
-class PostEditView(LoginRequiredMixin, BaseView):
-    def get(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        return render(request, 'post_form.html', {'form': PostForm(instance=post), 'method': 'PUT'})
+프로필 설정:
+	(소갯말), 프사, 배사, (생년월일), (성별)
+계정 설정:
+	(이메일변경), (닉넴변경)
+비번 변경:
+	(비번변경)
 
-    def put(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        form = PostForm(request.POST, instance=post)
-        if not form.is_valid():
-            return render(request, 'post_form.html', {'form': form, 'method': 'PUT', 'error_message': 'Error..'})
-        post = form.save(commit=False)
-        post.save()
-        return redirect('post_detail', post_id=post.id)
+기타:
+	비밀번호 재설정
 """

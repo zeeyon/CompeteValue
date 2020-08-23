@@ -1,0 +1,18 @@
+<form method="POST">
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+    <!--yyyy-mm-dd 형태로 값이 저장되면 돼요.-->
+    <input type="submit" value="save" name="setting_profile"/>
+</form>
+<form method="POST">
+    {% csrf_token %}
+    {{ new_pass_form.as_p }}
+    <!--yyyy-mm-dd 형태로 값이 저장되면 돼요.-->
+    <input type="submit" value="save" name="setting_password"/>
+</form>
+<form method="POST">
+    {% csrf_token %}
+    {{ account_form.as_p }}
+    <!--yyyy-mm-dd 형태로 값이 저장되면 돼요.-->
+    <input type="submit" value="save" name="setting_account"/>
+</form>

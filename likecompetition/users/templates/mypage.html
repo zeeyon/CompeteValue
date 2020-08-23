@@ -48,7 +48,7 @@
             </div>
 
 
-            <div class="profile-score list" onclick="location.href='setting.html'">
+            <div class="profile-score list" onclick="location.href='{% url 'setting' %}'">
                 <img src="{% static 'images/edit.png' %}" title="내 프로필 변경">
                 <div id="number"></div>
             </div>
@@ -171,11 +171,6 @@
 
 
 
-<form method="POST">
-    {% csrf_token %}
-    {{ mypageForm.birth }}
-    <!--yyyy-mm-dd 형태로 값이 저장되면 돼요.-->
-    <input type="submit" value="save"/>
-</form>
+
 {% endblock %}
 {% block end %}<script src="{% static 'mypage.js' %}"></script>{% endblock %}

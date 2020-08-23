@@ -38,10 +38,7 @@ class User(AbstractBaseUser):
         max_length = 15,
         unique=False,
     )
-    birth = models.DateField(
-        null = True,
-        default=None,
-    )
+    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -62,3 +59,9 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    introduction = models.TextField(blank=True, null=True, max_length=100, default='')
+    birth = models.DateField(blank=True, null=True)
+    gender = models.BooleanField(blank=True, null=True, choices=((False, '남자'), (True, '여자'), (None, '선택안함')), default=None)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import *
 
 """
     폼에 속성 추가 방법:
@@ -29,10 +29,20 @@ class LoginForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'placeholder': 'PASSWORD'}),
         }
 
-class MypageForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['birth']
+        model = Profile
+        fields = ['introduction', 'birth', 'gender']
         widgets = {
             'birth': forms.DateInput(attrs={'type':'date'}),
         }
+
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['nickname', 'email']
+
+class NewPasswordForm(forms.Form):
+    password_conf = forms.CharField(min_length=10, widget=forms.PasswordInput)
+    password_new = forms.CharField(min_length=10, widget=forms.PasswordInput)
+    password_new_conf = forms.CharField(min_length=10, widget=forms.PasswordInput)
