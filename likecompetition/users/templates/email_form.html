@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Nanum Gothic', sans-serif;">
+  <head>
+    <title>이메일 인증</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family: 'Nanum Gothic', sans-serif;">
+    <table width="800" id="email-form" style="font-family: 'Nanum Gothic', sans-serif; border: 1px solid #111133;">
+		<tr style="font-family: 'Nanum Gothic', sans-serif;">
+			<td id="mail-title" style="font-family: 'Nanum Gothic', sans-serif; text-align: center; font-size: 20pt; background-color: #111133; color: white; padding: 20px 20px 20px 20px;" align="center" bgcolor="#111133">
+				공가치 이메일 인증 링크
+			</td>
+		</tr>
+		<tr style="font-family: 'Nanum Gothic', sans-serif;">
+			<td id="mail-info" style="font-family: 'Nanum Gothic', sans-serif; padding: 30px 30px 30px;">
+				<center style="font-family: 'Nanum Gothic', sans-serif;">아래 버튼을 클릭하여 이메일을 인증해주세요.</center>
+			</td>
+		</tr>
+		<tr style="font-family: 'Nanum Gothic', sans-serif;">
+			<td id="mail-link" style="font-family: 'Nanum Gothic', sans-serif; text-align: center; padding: 20px 20px 20px 20px;" align="center">
+				<a href="{{url}}" style="font-family: 'Nanum Gothic', sans-serif;"><input type="button" value="인증하기" id="btn" style="font-family: 'Nanum Gothic', sans-serif; width: 200; background-color: #111133; color: white; padding: 10px 10px 10px 10px;"/></a>
+			</td>
+		</tr>
+	</table>
+	  인증 링크 : <a href="{{url}}" rel="noreferrer noopener" target="_blank">{{url}}</a>
+  </body>
+</html>

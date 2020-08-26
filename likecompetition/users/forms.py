@@ -32,15 +32,16 @@ class LoginForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['introduction', 'birth', 'gender']
+        fields = ['introduction', 'birth', 'gender', 'image_profile']
         widgets = {
             'birth': forms.DateInput(attrs={'type':'date'}),
         }
 
 class AccountForm(forms.ModelForm):
+    #test_email = forms.CharField(widget = forms.TextInput(attrs={'placeholder': 'EMAIL'}))
     class Meta:
         model = User
-        fields = ['nickname', 'email']
+        fields = ['nickname', 'new_email']
 
 class NewPasswordForm(forms.Form):
     password_conf = forms.CharField(min_length=10, widget=forms.PasswordInput)

@@ -3,12 +3,13 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, nickname, password=None):
+    def create_user(self, email, nickname, new_email, password=None):
         if not email:
             raise ValueError('이메일값이 필요합니다.')
 
         user = self.model(
             email=self.normalize_email(email),
+            new_email=self.normalize_email(email),
             nickname=nickname,
         )
 
@@ -36,9 +37,14 @@ class User(AbstractBaseUser):
     nickname = models.CharField(
         verbose_name='nickname',
         max_length = 15,
-        unique=False,
+        unique=True,
     )
     
+    new_email = models.EmailField(max_length=50, null=True)
+    new_mail_auth = models.IntegerField(default=1)
+
+
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -65,3 +71,5 @@ class Profile(models.Model):
     introduction = models.TextField(blank=True, null=True, max_length=100, default='')
     birth = models.DateField(blank=True, null=True)
     gender = models.BooleanField(blank=True, null=True, choices=((False, '남자'), (True, '여자'), (None, '선택안함')), default=None)
+    image_profile = models.ImageField(blank=True, null=True, upload_to="media/a/")
+    image_profile = models.ImageField(blank=True, null=True, upload_to="media/a/")
