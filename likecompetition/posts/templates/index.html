@@ -33,8 +33,15 @@
     </div>
 </div>
 
+<form class="" method="get">
+  {{ posts.form.as_p }}
+  <button type="submit">검색</button>
+</form>
+<ul>
+
 <div id="posts" v-cloak>
-    {% for post in posts %}
+    {% for post in posts.qs %}
+    {% comment %} {% for post in posts %} {% endcomment %}
     <div class="post-card">
         <a href="{% url 'posts:post_detail' post.id %}">
             <div class="profile">

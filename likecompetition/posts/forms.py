@@ -2,6 +2,8 @@ from django import forms
 from .models import Post, Comment, Area
 from dal import autocomplete
 from taggit.models import Tag
+from multiselectfield import MultiSelectField
+from likecompetition.settings import FIELD_CHOICES
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -22,7 +24,7 @@ class PostForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             try:
-                self.fields['area'].queryset = self.instance.city.area_set.order_by('name')
+                self.fields['area'].queryset = self.instance.city.arefa_set.order_by('name')
             except:
                 pass
 
@@ -30,3 +32,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+# class SearchForm(forms.Form):
+#     searchfield = MultiSelectField(choices=FIELD_CHOICES)
+

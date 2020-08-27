@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 from taggit.managers import TaggableManager
 from hitcount.models import HitCountMixin
+from likecompetition.settings import FIELD_CHOICES
 
 class City(models.Model):
     name = models.CharField(max_length=40)
@@ -18,24 +19,6 @@ class Area(models.Model):
 
     def __str__(self):
         return self.name
-
-FIELD_CHOICES=(
-    ('frontend','프론트엔드'),
-    ('server_backend','서버/백엔드'),
-    ('web_fullstack','웹 풀스택'),
-    ('android','안드로이드'),
-    ('ios','ios'),
-    ('cloud','클라우드'),
-    ('vr_ar','가상현실'),
-    ('network','네트워크'),
-    ('blockchain','블록체인'),
-    ('ai','AI/머신러닝'),
-    ('bigdata','빅데이터'),
-    ('game','게임'),
-    ('iot','IOT'),
-    ('security','보안'),
-    ('etc','기타'),
-)
 
 class Post(models.Model, HitCountMixin):
     title = models.CharField(max_length=50, null=False)

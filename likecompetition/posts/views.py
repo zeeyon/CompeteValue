@@ -4,16 +4,17 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment, Scrap, Area
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm #, SearchForm
 from dal import autocomplete
 from taggit.models import Tag
 from django.urls import reverse_lazy, reverse
 from likecompetition.views import OwnerOnlyMixin
 from hitcount.views import HitCountDetailView
 from django.contrib import messages
+from likecompetition.settings import FIELD_CHOICES
 
 class PostDetailView(LoginRequiredMixin, FormMixin, HitCountDetailView):
     template_name = 'posts/post_detail.html'
@@ -115,3 +116,8 @@ class LoadAreasView(View):
             city_id = request.GET.get('city_id')
             areas = Area.objects.filter(city_id=city_id).all()
         return render(request, 'ajax_post_areas_list.html', {'areas':areas})
+
+# class SearchFormView():
+#     form_class = SearchForm
+
+#     # def dispatch(self, request, *args, **kwargs):
