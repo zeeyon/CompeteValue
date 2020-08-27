@@ -1,6 +1,6 @@
 var scrap = {
     delimiters: ['[[', ']]'],
-    template: '<a class="scrap" v-bind:class="{ scrapped: this.isScrapped }" href="#" v-on:click="toggle_scrap()"></a>',
+    template: '<a class="scrap" v-bind:class="{ scrapped: this.isScrapped }" href="#" onclick="return false" v-on:click="toggle_scrap()"></a>',
     props: {
         url: String,
         initialScrapped: Boolean
@@ -12,11 +12,14 @@ var scrap = {
     },
     methods: {
         toggle_scrap: function() {
-            var method = this.isScrapped ? 'delete' : 'post';
-            this.isScrapped = !this.isScrapped;
+            var scrap = this
+            var method = scrap.isScrapped ? 'delete' : 'post';
             axios({
                 method: method,
-                url: this.url
+                url: scrap.url
+            })
+            .then(function(response) {
+                scrap.isScrapped = !scrap.isScrapped;
             })
             .catch(function(error) {
                 console.log(error);

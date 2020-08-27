@@ -49,5 +49,13 @@ var filter_box = new Vue({
 		remove_option: function(option) {
 			this.check_list.splice(this.check_list.indexOf(option), 1);
 		}
+	},
+	watch: {
+		check_list: function() {
+			var check_list_name = [];
+			for (var i = 0; i < this.check_list.length; i++) {
+				check_list_name.push(this.check_list[i].name);
+			}
+		}
 	}
 })

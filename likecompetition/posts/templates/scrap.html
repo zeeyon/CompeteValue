@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'posts.css' %}">
+{% endblock %}
+
 {% block content %}
 <h2>스크랩한 글</h2>
-{% for scrap in scraps %}
-{% with post=scrap.post %}
-    <a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a><br>
-    스크랩 시간 : {{ scrap.date }}<br>
-    <form class="inline_form" action="{% url 'posts:scrap_delete' post.id %}" method="post">
-        {% csrf_token %}
-        <a href="#" onclick="parentNode.submit();">삭제하기</a>
-        <input type="hidden" name="_method" value="DELETE" />
-    </form>
-    <br>
-{% endwith %}
-{% endfor %}
 
+<div id="post_list">
+{% include 'post_list.html' %}
+</div>
+{% endblock %}
+
+{% block end %}
+<script src="{% static 'posts.js' %}"></script>
 {% endblock %}

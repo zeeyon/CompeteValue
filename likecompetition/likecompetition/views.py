@@ -7,13 +7,12 @@ from django.views.generic.edit import FormView
 from posts.filters import PostFilter
 
 class IndexView(View):
-
     def get(self, request, *args, **kwargs):
         page = self.kwargs.get('page')
         if page == None:
             return redirect('index_page', page=1)
         posts = Post.objects.all().order_by('-id')
-        posts = PostFilter(request.GET, queryset=posts)
+        # posts = PostFilter(request.GET, queryset=posts)
         paginator = Paginator(posts, 20)
         posts = paginator.get_page(page)
         for post in posts:

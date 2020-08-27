@@ -27,7 +27,7 @@
 
 {% if request.user == post.user %}
     <a href="{% url 'posts:post_edit' post.pk %}">수정하기</a>
-    <form class="inline_form" action="{% url 'posts:delete' post.id %}" method="post">
+    <form class="inline_form" action="{% url 'posts:post_detail' post.id %}" method="post">
         {% csrf_token %}
         <a href="#" onclick="parentNode.submit();">삭제하기</a>
         <input type="hidden" name="_method" value="DELETE" />
@@ -40,7 +40,6 @@
 <br><br>
 
 {% for comment in comments %}
-
     작성자 : {{ comment.user.nickname }}<br>
     날짜 : {{ comment.date }}<br>
     내용 : {{ comment.content|linebreaks }}<br>

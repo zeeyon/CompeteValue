@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment, Scrap, Area
-from .forms import PostForm, CommentForm #, SearchForm
+from .forms import PostForm, CommentForm
 from dal import autocomplete
 from taggit.models import Tag
 from django.urls import reverse_lazy, reverse
@@ -16,10 +16,10 @@ from hitcount.views import HitCountDetailView
 from django.contrib import messages
 from likecompetition.settings import FIELD_CHOICES
 
-class PostDetailView(LoginRequiredMixin, FormMixin, HitCountDetailView):
+
+class PostDetailView(LoginRequiredMixin, HitCountDetailView):
     template_name = 'posts/post_detail.html'
     model = Post
-    form_class = CommentForm
     count_hit = True 
 
     def get_success_url(self):
@@ -47,6 +47,14 @@ class PostDetailView(LoginRequiredMixin, FormMixin, HitCountDetailView):
         comment.save()
         return super(PostDetailView, self).form_valid(form)
 
+    # delete도 여기서
+
+
+class CommentCreateView(LoginRequiredMixin, FormMixin):
+    form_class = CommentForm
+    # PostDetailView와 CommentCreateView를 분리해주세요
+
+
 class TagAutocompleteView(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         # if not self.request.user.is_authenticated():
@@ -56,14 +64,17 @@ class TagAutocompleteView(autocomplete.Select2QuerySetView):
             qs = qs.filter(name__istartswith=self.q)
         return qs
 
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     login_url = settings.LOGIN_URL
     template_name = 'posts/post_form.html'
     form_class = PostForm
     model = Post
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
 
 class PostEditView(OwnerOnlyMixin, UpdateView):
     template_name = 'posts/post_form.html'
@@ -74,50 +85,50 @@ class PostEditView(OwnerOnlyMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class PostDeleteView(OwnerOnlyMixin, DeleteView):
-    model = Post
-    success_url = reverse_lazy('index')
 
 class CommentDeleteView(OwnerOnlyMixin, View):
     model = Comment
 
     def dispatch(self, request, *args, **kwargs):
         comment = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
-        if request.user == comment.user:
-            comment.delete()
-        return redirect('posts:post_detail', pk=comment.post.pk)
-        
+        comment.delete()
+        return HttpResponse()
+
+
 class ScrapView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        scraps = Scrap.objects.filter(user=request.user).order_by('-date')
-        return render(request, 'scrap.html', {'scraps': scraps})
+        posts = []
+        for scrap in Scrap.objects.filter(user=request.user).order_by('-date'):
+            posts.append(scrap.post)
+        for post in posts:
+            post.scrapped = 'true'
+        return render(request, 'scrap.html', {'posts': posts})
 
     def post(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         if not Scrap.objects.filter(user=request.user, post=post).exists():
             scrap = Scrap(user=request.user, post=post)
             scrap.save()
-        # return redirect('posts:scrap_list')
-        return redirect('posts:post_detail', pk=post.pk)
+        return HttpResponse()
 
-class ScrapDeleteView(OwnerOnlyMixin, DeleteView):
-    model = Scrap
-
-    def dispatch(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         scrap = get_object_or_404(Scrap, user=request.user, post=post)
-        if request.user == scrap.user:
-            scrap.delete()
-        return redirect('posts:scrap_list')
-        
+        scrap.delete()
+        return HttpResponse()
+
+
+class MyPostView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.filter(user=request.user).order_by('-date')
+        for post in posts:
+            post.scrapped = 'true' if request.user.is_authenticated and Scrap.objects.filter(user=request.user, post=post).exists() else 'false'
+        return render(request, 'scrap.html', {'posts': posts})
+
+
 class LoadAreasView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.method == 'GET':
             city_id = request.GET.get('city_id')
             areas = Area.objects.filter(city_id=city_id).all()
         return render(request, 'ajax_post_areas_list.html', {'areas':areas})
-
-# class SearchFormView():
-#     form_class = SearchForm
-
-#     # def dispatch(self, request, *args, **kwargs):
