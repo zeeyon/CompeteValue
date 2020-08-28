@@ -42,3 +42,14 @@ function closePopup(t){
 	//}
 } */
 
+function cropImage(){
+	window.name="이미지 자르기";
+	var popup = window.open("image_crop.html", "crop", "width=603px, height=670px, resizable=no, scrollbars=no");
+		
+	var input=document.getElementById("user_profile_img");
+	var fReader=new FileReader();
+	fReader.readAsDataURL(input.files[0]);
+	fReader.onloadend=function(e){
+		document.getElementById("imgName").value=e.target.result;
+	}
+}
