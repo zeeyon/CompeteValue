@@ -30,6 +30,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'users.apps.UsersConfig',
     'multiselectfield',
+    'hitcount',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +142,5 @@ LOGIN_URL = 'login'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 100

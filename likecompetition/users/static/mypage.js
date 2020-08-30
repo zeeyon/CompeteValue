@@ -4,15 +4,6 @@ $(window).scroll(function(event){
 	$('header').css('background-color','rgba(28, 28, 28, '+Math.min(1, scrollLocation*0.003)+')');
 });
 
-$("#profile-img").animate(
-    {opacity: 1},300,function(){
-    $("#profile-header").animate(
-        {opacity: 1},200,function(){
-            $("#profile-main").animate({opacity: 1},300);
-        }); 
-    }
-);
-
 $(document).ready(function(){
 /* 	$('#card-input').on('keyup', function(){
 		if($('#card-input').val().length>100){
@@ -51,3 +42,14 @@ function closePopup(t){
 	//}
 } */
 
+function cropImage(){
+	window.name="이미지 자르기";
+	var popup = window.open("image_crop.html", "crop", "width=603px, height=670px, resizable=no, scrollbars=no");
+		
+	var input=document.getElementById("user_profile_img");
+	var fReader=new FileReader();
+	fReader.readAsDataURL(input.files[0]);
+	fReader.onloadend=function(e){
+		document.getElementById("imgName").value=e.target.result;
+	}
+}

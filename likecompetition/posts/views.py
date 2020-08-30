@@ -1,94 +1,117 @@
+from likecompetition import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
+from django.views.generic.edit import FormMixin
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment, Scrap, Area
 from .forms import PostForm, CommentForm
+from dal import autocomplete
+from taggit.models import Tag
+from django.urls import reverse_lazy, reverse
+from likecompetition.views import OwnerOnlyMixin
+from hitcount.views import HitCountDetailView
+from django.contrib import messages
 
-class PostDetailView(View):
-    def get(self, request, *args, **kwargs):
-        post_id = self.kwargs['post_id']
-        post = get_object_or_404(Post, pk=post_id)
-        comments = Comment.objects.filter(post=post)
-        form = CommentForm()
-        Post.objects.filter(id=post_id).update(view_count=F('view_count')+1)
-        return render(request, 'post_detail.html', {'post': post, 'form': form, 'comments': comments})
+class PostDetailView(LoginRequiredMixin, FormMixin, HitCountDetailView):
+    template_name = 'posts/post_detail.html'
+    model = Post
+    form_class = CommentForm
+    count_hit = True 
 
-    def delete(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['post_id'])
-        if request.user == post.user:
-            post.delete()
-        return redirect('index')
+    def get_success_url(self):
+        return reverse_lazy('posts:post_detail', kwargs={'pk': self.object.pk})
 
-class PostCreateView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'post_form.html', {'form': PostForm()})
+    def get_context_data(self, **kwargs):	
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user	
+        context['comments'] = self.object.comment_set.all()
+        return context
 
-    def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST)
-        if not form.is_valid():
-            return render(request, 'post_form.html', {'form': form, 'error_message': 'Error..'})
-        post = form.save(commit=False)
-        post.user = request.user
-        post.save()
-        return redirect('post_detail', post_id=post.id)
+    def post(self, request, *args, **kwargs):	
+        self.object = self.get_object()	
+        form = self.get_form()		
 
-class PostEditView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        return render(request, 'post_form.html', {'form': PostForm(instance=post), 'method': 'PUT'})
+        if form.is_valid():			
+            return self.form_valid(form)
+        else:			
+            return self.form_invalid(form)
 
-    def put(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        form = PostForm(request.POST, instance=post)
-        if not form.is_valid():
-            return render(request, 'post_form.html', {'form': form, 'method': 'PUT', 'error_message': 'Error..'})
-        post = form.save(commit=False)
-        post.save()
-        return redirect('post_detail', post_id=post.id)
+    def form_valid(self, form):
+        comment = form.save(commit=False)	
+        comment.post = get_object_or_404(Post, pk=self.object.pk) 
+        comment.user = self.request.user
+        comment.save()
+        return super(PostDetailView, self).form_valid(form)
 
-class CommentView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.user = request.user
-            comment.save()
-        return redirect('post_detail', post_id=post.id)
+class TagAutocompleteView(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # if not self.request.user.is_authenticated():
+        #     return Tag.objects.none()
+        qs = Tag.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
 
-    def delete(self, request, *args, **kwargs):
+class PostCreateView(LoginRequiredMixin, CreateView):
+    login_url = settings.LOGIN_URL
+    template_name = 'posts/post_form.html'
+    form_class = PostForm
+    model = Post
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class PostEditView(OwnerOnlyMixin, UpdateView):
+    template_name = 'posts/post_form.html'
+    model = Post
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class PostDeleteView(OwnerOnlyMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('index')
+
+class CommentDeleteView(OwnerOnlyMixin, View):
+    model = Comment
+
+    def dispatch(self, request, *args, **kwargs):
         comment = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
         if request.user == comment.user:
             comment.delete()
-        return redirect('post_detail', post_id=comment.post.id)
-
+        return redirect('posts:post_detail', pk=comment.post.pk)
+        
 class ScrapView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         scraps = Scrap.objects.filter(user=request.user).order_by('-date')
         return render(request, 'scrap.html', {'scraps': scraps})
 
     def post(self, request, *args, **kwargs):
-        post_id = self.kwargs['post_id']
-        post = get_object_or_404(Post, pk=post_id)
+        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         if not Scrap.objects.filter(user=request.user, post=post).exists():
             scrap = Scrap(user=request.user, post=post)
             scrap.save()
-        return HttpResponse()
+        # return redirect('posts:scrap_list')
+        return redirect('posts:post_detail', pk=post.pk)
 
-    def delete(self, request, *args, **kwargs):
+class ScrapDeleteView(OwnerOnlyMixin, DeleteView):
+    model = Scrap
+
+    def dispatch(self, request, *args, **kwargs):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
         scrap = get_object_or_404(Scrap, user=request.user, post=post)
-        scrap.delete()
-        return HttpResponse()
-
-def load_areas(request):
-    city_id = request.GET.get('city_id')
-    areas = Area.objects.filter(city_id=city_id).all()
-    return render(request, 'ajax_post_areas_list.html', {'areas':areas})
+        if request.user == scrap.user:
+            scrap.delete()
+        return redirect('posts:scrap_list')
+        
+class LoadAreasView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            city_id = request.GET.get('city_id')
+            areas = Area.objects.filter(city_id=city_id).all()
+        return render(request, 'ajax_post_areas_list.html', {'areas':areas})
