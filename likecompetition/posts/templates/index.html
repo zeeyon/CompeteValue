@@ -7,78 +7,36 @@
 {% endblock %}
 
 {% block content %}
-<div id="filter-box" v-cloak>
-    <div class="filter" v-for="filter in filters">
-        <div class="filter-name">[[ filter.name_kor ]]</div>
-        <div class="filter-options">
-            <div class="filter-option" v-for="(option, index) in filter.options">
-                <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
-                <label :for="option.name">[[ option.text ]]</label>
-            </div>
-        </div>
-    </div>
-    <div class="filter">
-        <div class="filter-name">언어</div>
-        <div class="filter-options">
-            <input type="text">
-        </div>
-    </div>
-    <div id="check-list">
-        <ul>
-            <li v-for="option in check_list">
-                <span class="option-name">[[ option.text ]]</span>
-                <span class="remove-option" v-on:click="remove_option(option)">×</span>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div id="posts" v-cloak>
-    {% for post in posts %}
-    <div class="post-card">
-        <a href="{% url 'posts:post_detail' post.id %}">
-            <div class="profile">
-                <div class="profile-image-box"><img class="profile-image" src="{% static '/images/post_card_user.png' %}"></div>
-                <div class="user-info-box">
-                    <span class="user-info">{{ post.user }} / 남자 / 20세</span><br>
-                    <span class="location">{{ post.city }} {{ post.area }}</span>
+<div id="index" v-cloak>
+    <div id="filter-box">
+        <div class="filter" v-for="filter in filters">
+            <div class="filter-name">[[ filter.text ]]</div>
+            <div class="filter-options">
+                <div class="filter-option" v-for="(option, index) in filter.options">
+                    <input type="checkbox" :id="option.name" :name="filter.name" :value="option" v-model="check_list">
+                    <label :for="option.name">[[ option.text ]]</label>
                 </div>
             </div>
-        </a>
-        <a href="{% url 'posts:post_detail' post.id %}">
-            <div class="field">{{ post.field }}</div>
-            <div class="tool">
-            
-            {% load taggit_templatetags2_tags %}
-            {% get_tags_for_object post as "tags" %}
-            {% for tag in tags %}
-            # {{ tag.name }}
-            {% endfor %}
+        </div>
+        <div class="filter">
+            <div class="filter-name">언어</div>
+            <div class="filter-options">
+                <input type="text">
             </div>
-        </a>
-        <span class="date">{{ post.date }}</span>
-        <div class="icon">
-            <a class="message" href="#" onclick=""></a>
-            <scrap url="{% url 'posts:scrap_detail' post.id %}" v-bind:initial-scrapped="{{ post.scrapped }}"></scrap>
+        </div>
+        <div id="check-list">
+            <ul>
+                <li v-for="option in check_list">
+                    <span class="option-name">[[ option.text ]]</span>
+                    <span class="remove-option" v-on:click="remove_option(option)">×</span>
+                </li>
+            </ul>
         </div>
     </div>
-    {% endfor %}
-    <div class="post-card filling-empty-space"></div>
-    <div class="post-card filling-empty-space"></div>
-    <div class="post-card filling-empty-space"></div>
-</div>
-
-<div id="page-btn">
-    {% if posts.has_previous %}
-    <a href="{% url 'index_page' posts.previous_page_number %}">&#60;Prev</a>
-    {% endif %}
-    {% if posts.has_next %}
-    <a href="{% url 'index_page' posts.next_page_number %}">Next&#62;</a>
-    {% endif %}
+    <post_list ref="post_list"></post_list>
 </div>
 {% endblock %}
 
 {% block end %}
 <script src="{% static 'index.js' %}"></script>
-<script src="{% static 'posts.js' %}"></script>
 {% endblock %}

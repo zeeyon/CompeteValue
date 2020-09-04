@@ -4,7 +4,7 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="/static/login.css">{% endblock %}
 {% block content %}
 <fieldset>
-    <form method="POST" action="{% url 'login' %}">
+    <form method="post" action="{% url 'login' %}">
         <div id="login-form">
             <legend>공가치</legend>
             {% csrf_token %}
@@ -29,7 +29,7 @@
                 <span id="user-register"><a href="{% url 'signup' %}">회원가입</a></span>
                 <span id="user-find"><a href="">비밀번호 찾기</a></span>
             </div>
-            {{err_msg}}
+            {{ err_msg }}
         </div>
     </form>
 </fieldset>

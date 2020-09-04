@@ -1,0 +1,40 @@
+{% load static %}
+<div id="post_list">
+    <div id="posts">
+        {% for post in posts %}
+        <div class="post-card">
+            <a href="{% url 'posts:post_detail' post.id %}">
+                <div class="profile">
+                    <div class="profile-image-box"><img class="profile-image" src="{% static '/images/post_card_user.png' %}"></div>
+                    <div class="user-info-box">
+                        <span class="user-info">{{ post.user }} / 남성 / 20세</span><br>
+                        <span class="location">{{ post.city }} {{ post.area }}</span>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'posts:post_detail' post.id %}">
+                <div class="field">{{ post.field }}</div>
+                <div class="tool">
+                </div>
+            </a>
+            <span class="date">{{ post.date }}</span>
+            <div class="icon">
+                <a class="message" href="#" onclick=""></a>
+                <scrap url="{% url 'posts:scrap_detail' post.id %}" v-bind:initial-scrapped="{{ post.scrapped }}"></scrap>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="post-card filling-empty-space"></div>
+        <div class="post-card filling-empty-space"></div>
+        <div class="post-card filling-empty-space"></div>
+    </div>
+
+    <div id="page-btn">
+        {% if posts.has_previous %}
+        <a href="#" onclick="return false" v-on:click="prev_page()">&#60;Prev</a>
+        {% endif %}
+        {% if posts.has_next %}
+        <a href="#" onclick="return false" v-on:click="next_page()">Next&#62;</a>
+        {% endif %}
+    </div>
+</div>

@@ -4,15 +4,9 @@ from . import models
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'date', 'city','area','field','content', 'tag_list')
+    list_display = ('title', 'user', 'date', 'city', 'area', 'field', 'content')
     # list_filter = ('modify_dt',)
     # search_fields = ('title', 'content')
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('tags')
-
-    def tag_list(self, obj):         
-        return ', '.join(o.name for o in obj.tags.all())
 
 
 admin.site.register(Post, PostAdmin)

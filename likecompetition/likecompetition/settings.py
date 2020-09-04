@@ -33,8 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dal',
     'dal_select2',
-    'taggit.apps.TaggitAppConfig',
-    'taggit_templatetags2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'multiselectfield',
     'hitcount',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -141,5 +140,16 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'login'
 
-TAGGIT_CASE_INSENSITIVE = True
-TAGGIT_LIMIT = 100
+
+FIELD_CHOICES=(
+    ('web','웹'),
+    ('android','안드로이드'),
+    ('ios','iOS'),
+    ('game','게임'),
+    ('ml','머신러닝'),
+    ('bigdata','빅데이터'),
+    ('iot','IoT'),
+    ('blockchain','블록체인'),
+    ('vr','가상현실'),
+    ('etc','기타'),
+)

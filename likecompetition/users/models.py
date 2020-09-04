@@ -5,7 +5,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 class UserManager(BaseUserManager):
     def create_user(self, email, nickname, password=None):
         if not email:
-            raise ValueError('이메일값이 필요합니다.')
+            raise ValueError('이메일 값이 필요합니다.')
 
         user = self.model(
             email=self.normalize_email(email),
