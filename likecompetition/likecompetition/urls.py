@@ -7,7 +7,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='index'),
-    path('<int:page>', views.IndexView.as_view(), name='index_page'),
     path('posts/', include('posts.urls')),
     path('users/', include('users.urls')),
 ]

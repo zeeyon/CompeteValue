@@ -1,6 +1,73 @@
-var filter_box = new Vue({
+var scrap = {
 	delimiters: ['[[', ']]'],
-	el: '#filter-box',
+	template: '<a class="scrap" v-bind:class="{ scrapped: this.isScrapped }" href="#" onclick="return false" v-on:click="toggle_scrap()"></a>',
+	props: {
+		url: String,
+		initialScrapped: Boolean
+	},
+	data: function() {
+		return {
+			isScrapped: this.initialScrapped
+		}
+	},
+	methods: {
+		toggle_scrap: function() {
+			var vue = this;
+			var method = this.isScrapped ? 'delete' : 'post';
+			axios({
+				method: method,
+				url: this.url
+			})
+			.then(function(response) {
+				vue.isScrapped = !vue.isScrapped;
+			})
+			.catch(function(error) {
+				console.log(error);
+			})
+		}
+	}
+};
+
+var post_list = {
+	components: {
+		'scrap': scrap
+	},
+	data() {
+		return {
+			template: '',
+			templateRender: null
+		};
+	},
+	render(h) {
+		if (!this.templateRender) {
+			return h('div', 'loading...');
+		} else {
+			return this.templateRender();
+		}
+	},
+	watch: {
+		template: {
+			immediate: true,
+			handler() {
+				console.log(this.template);
+				var res = Vue.compile(this.template);
+				this.templateRender = res.render;
+				this.$options.staticRenderFns = [];
+				this._staticTrees = [];
+				for (var i in res.staticRenderFns) {
+					this.$options.staticRenderFns.push(res.staticRenderFns[i]);
+				}
+			}
+		}
+	}
+};
+
+new Vue({
+	delimiters: ['[[', ']]'],
+	el: '#index',
+	components: {
+		'post_list': post_list
+	},
 	data: {
 		filters: [
 			{name_kor:'나이', name_eng:'age', options:[
@@ -33,29 +100,61 @@ var filter_box = new Vue({
 			]},
 			{name_kor:'분야', name_eng:'field', options:[
 				{name:'web', text:'웹'},
-				{name:'mobile', text:'모바일'},
-				{name:'research', text:'연구'},
-				{name:'ai', text:'인공지능'},
-				{name:'bigdata', text:'빅데이터'},
+				{name:'android', text:'안드로이드'},
+				{name:'ios', text:'iOS'},
 				{name:'game', text:'게임'},
-				{name:'embedded', text:'임베디드'},
-				{name:'security', text:'보안'},
+				{name:'ml', text:'머신러닝'},
+				{name:'bigdata', text:'빅데이터'},
+				{name:'iot', text:'IoT'},
+				{name:'blockchain', text:'블록체인'},
+				{name:'vr', text:'가상현실'},
 				{name:'etc', text:'기타'}
 			]}
 		],
-		check_list: []
+		check_list: [],
+		query: ['?page=1'],
+		page: 1
 	},
 	methods: {
 		remove_option: function(option) {
 			this.check_list.splice(this.check_list.indexOf(option), 1);
+		},
+		next_page: function() {
+			this.page++;
+			this.send_query();
+		},
+		prev_page: function() {
+			this.page = Math.max(this.page - 1, 1);
+			this.send_query();
+		},
+		send_query: function() {
+			var vue = this;
+			this.query[0] = '/posts/?page=' + this.page;
+			var query_string = this.query.join('&');
+			axios.get(query_string)
+			.then(function(response) {
+				vue.$refs.post_list.template = response.data;
+			})
+			.catch(function(error) {
+				console.log(error);
+			})
 		}
 	},
 	watch: {
 		check_list: function() {
-			var check_list_name = [];
-			for (var i = 0; i < this.check_list.length; i++) {
-				check_list_name.push(this.check_list[i].name);
+			this.query.splice(1, this.query.length - 1);
+			for (var i = 0; i < this.filters.length; i++) {
+				for (var j = 0; j < this.filters[i].options.length; j++) {
+					if (this.check_list.includes(this.filters[i].options[j])) {
+						this.query.push(this.filters[i].name_eng + '=' + this.filters[i].options[j].name);
+					}
+				}
 			}
-		}
+			this.page = 1;
+			this.send_query();
+		},
+	},
+	mounted: function() {
+		this.send_query();
 	}
-})
+});

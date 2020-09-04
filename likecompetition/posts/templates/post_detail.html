@@ -14,13 +14,7 @@
 시/도 : {{ post.city }}<br>
 구/군 : {{ post.area }}<br>
 분야 : {{ post.field }}<br>
-툴 :
-{% load taggit_templatetags2_tags %}
-		{% get_tags_for_object object as "tags" %}
-		{% for tag in tags %}
-		# {{ tag.name }}</a> 
-    {% endfor %}
-<br>
+툴 : 다 잘해요<br>
 내용 : {{ post.content|linebreaks }}<br>
 조회수 : {% load hitcount_tags %} 
         {% get_hit_count for post %} <br>

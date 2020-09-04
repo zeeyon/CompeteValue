@@ -1,14 +1,10 @@
-
-$("#id_city").change(function () {
-	const url = $("#areaForm").attr("data-areas-url");
-	const cityId = $(this).val();
+$("#id_city").change(function() {
+	const city_id = $(this).val();
+	const url = "cities/" + city_id;
 
 	$.ajax({
 		url: url,
-		data: {
-			'city_id': cityId
-		},
-		success: function (data) {
+		success: function(data) {
 			$("#id_area").html(data);
 		}
 	});

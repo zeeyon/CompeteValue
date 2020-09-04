@@ -1,5 +1,6 @@
 {% load static %}
-<div id="posts" v-cloak>
+<div id="post_list">
+<div id="posts">
     {% for post in posts %}
     <div class="post-card">
         <a href="{% url 'posts:post_detail' post.id %}">
@@ -14,11 +15,6 @@
         <a href="{% url 'posts:post_detail' post.id %}">
             <div class="field">{{ post.field }}</div>
             <div class="tool">
-            {% load taggit_templatetags2_tags %}
-            {% get_tags_for_object post as "tags" %}
-            {% for tag in tags %}
-            # {{ tag.name }}
-            {% endfor %}
             </div>
         </a>
         <span class="date">{{ post.date }}</span>
@@ -35,9 +31,10 @@
 
 <div id="page-btn">
     {% if posts.has_previous %}
-    <a href="{% url 'index_page' posts.previous_page_number %}">&#60;Prev</a>
+    <a href="#" onclick="return false" v-on:click="prev_page()">&#60;Prev</a>
     {% endif %}
     {% if posts.has_next %}
-    <a href="{% url 'index_page' posts.next_page_number %}">Next&#62;</a>
+    <a href="#" onclick="return false" v-on:click="next_page()">Next&#62;</a>
     {% endif %}
+</div>
 </div>

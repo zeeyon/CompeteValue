@@ -7,38 +7,36 @@
 {% endblock %}
 
 {% block content %}
-<div id="filter-box" v-cloak>
-    <div class="filter" v-for="filter in filters">
-        <div class="filter-name">[[ filter.name_kor ]]</div>
-        <div class="filter-options">
-            <div class="filter-option" v-for="(option, index) in filter.options">
-                <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
-                <label :for="option.name">[[ option.text ]]</label>
+<div id="index" v-cloak>
+    <div id="filter-box">
+        <div class="filter" v-for="filter in filters">
+            <div class="filter-name">[[ filter.name_kor ]]</div>
+            <div class="filter-options">
+                <div class="filter-option" v-for="(option, index) in filter.options">
+                    <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
+                    <label :for="option.name">[[ option.text ]]</label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="filter">
-        <div class="filter-name">언어</div>
-        <div class="filter-options">
-            <input type="text">
+        <div class="filter">
+            <div class="filter-name">언어</div>
+            <div class="filter-options">
+                <input type="text">
+            </div>
+        </div>
+        <div id="check-list">
+            <ul>
+                <li v-for="option in check_list">
+                    <span class="option-name">[[ option.text ]]</span>
+                    <span class="remove-option" v-on:click="remove_option(option)">×</span>
+                </li>
+            </ul>
         </div>
     </div>
-    <div id="check-list">
-        <ul>
-            <li v-for="option in check_list">
-                <span class="option-name">[[ option.text ]]</span>
-                <span class="remove-option" v-on:click="remove_option(option)">×</span>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div id="post_list">
-{% include 'post_list.html' %}
+    <post_list ref="post_list"></post_list>
 </div>
 {% endblock %}
 
 {% block end %}
 <script src="{% static 'index.js' %}"></script>
-<script src="{% static 'posts.js' %}"></script>
 {% endblock %}
