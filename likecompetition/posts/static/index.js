@@ -23,7 +23,7 @@ var scrap = {
 			})
 			.catch(function(error) {
 				console.log(error);
-			})
+			});
 		}
 	}
 };
@@ -34,24 +34,34 @@ var post_list = {
 	},
 	data() {
 		return {
-			template: '',
-			templateRender: null
+			content: '',
+			contentRender: null,
+			query_string: ''
 		};
 	},
 	render(h) {
-		if (!this.templateRender) {
+		if (!this.contentRender) {
 			return h('div', 'loading...');
 		} else {
-			return this.templateRender();
+			return this.contentRender();
 		}
 	},
 	watch: {
-		template: {
+		query_string: function() {
+			var vue = this;
+			axios.get(this.query_string)
+			.then(function(response) {
+				vue.content = response.data;
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+		},
+		content: {
 			immediate: true,
 			handler() {
-				console.log(this.template);
-				var res = Vue.compile(this.template);
-				this.templateRender = res.render;
+				var res = Vue.compile(this.content);
+				this.contentRender = res.render;
 				this.$options.staticRenderFns = [];
 				this._staticTrees = [];
 				for (var i in res.staticRenderFns) {
@@ -70,16 +80,16 @@ new Vue({
 	},
 	data: {
 		filters: [
-			{name_kor:'나이', name_eng:'age', options:[
+			{name:'age', text:'나이', options:[
 				{name:'age10', text:'10대'},
 				{name:'age20', text:'20대'},
 				{name:'age30', text:'30대'}
 			]},
-			{name_kor:'성별', name_eng:'gender', options:[
+			{name:'gender', text:'성별', options:[
 				{name:'male', text:'남성'},
 				{name:'female', text:'여성'}
 			]},
-			{name_kor:'지역', name_eng:'area', options:[
+			{name:'area', text:'지역', options:[
 				{name:'seoul', text:'서울'},
 				{name:'busan', text:'부산'},
 				{name:'daegu', text:'대구'},
@@ -98,7 +108,7 @@ new Vue({
 				{name:'gyenognam', text:'경남'},
 				{name:'jeju', text:'제주'}
 			]},
-			{name_kor:'분야', name_eng:'field', options:[
+			{name:'field', text:'분야', options:[
 				{name:'web', text:'웹'},
 				{name:'android', text:'안드로이드'},
 				{name:'ios', text:'iOS'},
@@ -128,16 +138,8 @@ new Vue({
 			this.send_query();
 		},
 		send_query: function() {
-			var vue = this;
 			this.query[0] = '/posts/?page=' + this.page;
-			var query_string = this.query.join('&');
-			axios.get(query_string)
-			.then(function(response) {
-				vue.$refs.post_list.template = response.data;
-			})
-			.catch(function(error) {
-				console.log(error);
-			})
+			this.$refs.post_list.query_string = this.query.join('&');
 		}
 	},
 	watch: {

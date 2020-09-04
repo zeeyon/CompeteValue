@@ -7,20 +7,18 @@ from django.db.models import F
 from .models import Post, Comment, Scrap, Area
 from .forms import PostForm, CommentForm
 from django.core import serializers
+import random
 
 
 class PostListView(View):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all().order_by('-id')
-        paginator = Paginator(posts, 2)
+        paginator = Paginator(posts, 1)
         page = request.GET.get('page', 1)
+        page = random.randint(1, 4);
         posts = paginator.get_page(page)
         for post in posts:
-            setattr(post, 'scrapped', 'true' if request.user.is_authenticated and Scrap.objects.filter(user=request.user, post=post).exists() else 'false')
-        json = serializers.serialize('json', posts)
-        print(json)
-        for post in posts:
-            print(post)
+            post.scrapped = 'true' if request.user.is_authenticated and Scrap.objects.filter(user=request.user, post=post).exists() else 'false'
         return render(request, 'post_list.html', {'posts': posts})
 
 
@@ -34,7 +32,7 @@ class PostDetailView(View):
         post = get_object_or_404(Post, pk=kwargs['post_id'])
         if request.user == post.user:
             post.delete()
-        return redirect('index')
+        return HttpResponse()
 
 
 class PostCreateView(LoginRequiredMixin, View):
@@ -86,7 +84,7 @@ class CommentDeleteView(LoginRequiredMixin, View):
         comment = get_object_or_404(Comment, pk=kwargs['comment_id'])
         if request.user == comment.user:
             comment.delete()
-        return redirect('posts:post_detail', post_id=comment.post.id)
+        return HttpResponse()
 
 
 class MyScrapView(LoginRequiredMixin, View):

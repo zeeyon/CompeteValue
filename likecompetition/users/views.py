@@ -26,9 +26,9 @@ def signup(request):
 				signin(request, user)
 				return redirect('index')
 			else:
-				err_msg ='비밀번호를 확인.'
+				err_msg ='비밀번호를 확인하세요'
 		else:
-			err_msg = '이미 가입된 이메일.'
+			err_msg = '이미 가입된 이메일입니다'
 
 	form = SignupForm()
 	return render(request, 'signup.html', {"signupForm": form, 'err_msg':err_msg})
@@ -46,7 +46,7 @@ def login(request):
 			signin(request, is_user) # 로그인
 			return redirect('index')
 		else:
-			err_msg = '가입하지 않은 아아디, 혹은 잘못된 비밀번호.(문구는 추후 수정~)'
+			err_msg = '아이디 혹은 비밀번호가 잘못되었습니다 :3'
 			
 	form = LoginForm()
 	return render(request, 'login.html', {"loginForm": form, 'err_msg':err_msg})

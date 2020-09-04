@@ -10,10 +10,10 @@
 <div id="index" v-cloak>
     <div id="filter-box">
         <div class="filter" v-for="filter in filters">
-            <div class="filter-name">[[ filter.name_kor ]]</div>
+            <div class="filter-name">[[ filter.text ]]</div>
             <div class="filter-options">
                 <div class="filter-option" v-for="(option, index) in filter.options">
-                    <input type="checkbox" :id="option.name" :name="filter.name_eng" :value="option" v-model="check_list">
+                    <input type="checkbox" :id="option.name" :name="filter.name" :value="option" v-model="check_list">
                     <label :for="option.name">[[ option.text ]]</label>
                 </div>
             </div>
