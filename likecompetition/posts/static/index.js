@@ -1,8 +1,7 @@
 var scrap = {
-	delimiters: ['[[', ']]'],
 	template: '<a class="scrap" v-bind:class="{ scrapped: this.isScrapped }" href="#" onclick="return false" v-on:click="toggle_scrap()"></a>',
 	props: {
-		url: String,
+		id: Number,
 		initialScrapped: Boolean
 	},
 	data: function() {
@@ -16,7 +15,7 @@ var scrap = {
 			var method = this.isScrapped ? 'delete' : 'post';
 			axios({
 				method: method,
-				url: this.url
+				url: '/posts/' + this.id + '/scrap'
 			})
 			.then(function(response) {
 				vue.isScrapped = !vue.isScrapped;
@@ -28,62 +27,18 @@ var scrap = {
 	}
 };
 
-var post_list = {
-	components: {
-		'scrap': scrap
-	},
-	data() {
-		return {
-			content: '',
-			contentRender: null,
-			query_string: ''
-		};
-	},
-	render(h) {
-		if (!this.contentRender) {
-			return h('div', 'loading...');
-		} else {
-			return this.contentRender();
-		}
-	},
-	watch: {
-		query_string: function() {
-			var vue = this;
-			axios.get(this.query_string)
-			.then(function(response) {
-				vue.content = response.data;
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-		},
-		content: {
-			immediate: true,
-			handler() {
-				var res = Vue.compile(this.content);
-				this.contentRender = res.render;
-				this.$options.staticRenderFns = [];
-				this._staticTrees = [];
-				for (var i in res.staticRenderFns) {
-					this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-				}
-			}
-		}
-	}
-};
-
 new Vue({
 	delimiters: ['[[', ']]'],
 	el: '#index',
 	components: {
-		'post_list': post_list
+		'scrap': scrap,
 	},
 	data: {
 		filters: [
 			{name:'age', text:'나이', options:[
-				{name:'age10', text:'10대'},
-				{name:'age20', text:'20대'},
-				{name:'age30', text:'30대'}
+				{name:'10s', text:'10대'},
+				{name:'20s', text:'20대'},
+				{name:'30s', text:'30대'}
 			]},
 			{name:'gender', text:'성별', options:[
 				{name:'male', text:'남성'},
@@ -123,7 +78,8 @@ new Vue({
 		],
 		check_list: [],
 		query: ['?page=1'],
-		page: 1
+		page: 1,
+		posts: null
 	},
 	methods: {
 		remove_option: function(option) {
@@ -138,8 +94,16 @@ new Vue({
 			this.send_query();
 		},
 		send_query: function() {
+			var vue = this;
 			this.query[0] = '/posts/?page=' + this.page;
-			this.$refs.post_list.query_string = this.query.join('&');
+			var query_string = this.query.join('&');
+			axios.get(query_string)
+			.then(function(response) {
+				vue.posts = response.data;
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
 		}
 	},
 	watch: {
@@ -148,7 +112,7 @@ new Vue({
 			for (var i = 0; i < this.filters.length; i++) {
 				for (var j = 0; j < this.filters[i].options.length; j++) {
 					if (this.check_list.includes(this.filters[i].options[j])) {
-						this.query.push(this.filters[i].name_eng + '=' + this.filters[i].options[j].name);
+						this.query.push(this.filters[i].name + '=' + this.filters[i].options[j].name);
 					}
 				}
 			}
@@ -156,7 +120,7 @@ new Vue({
 			this.send_query();
 		},
 	},
-	mounted: function() {
+	created: function() {
 		this.send_query();
 	}
 });

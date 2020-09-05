@@ -66,4 +66,6 @@ legend{
 	color:black;
 	text-decoration:none;
 }
-
+.err_msg{
+	font-size:16px;
+}

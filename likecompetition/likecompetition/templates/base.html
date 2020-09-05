@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <title>공가치</title>
+	<title>공가치</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
 	{% block title %}{% endblock %}
 </head>
@@ -28,6 +28,7 @@
 						<div id="user-menu">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
+								<li><a href="{% url 'posts:my_scrap' %}">my scrap</a></li>
 								<li><a href="#">쪽지</a></li>
 								<li><a href="{% url 'logout' %}">로그아웃</a></li>
 							</ul>
