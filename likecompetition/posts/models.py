@@ -39,8 +39,8 @@ class Post(models.Model, HitCountMixin):
 	title = models.CharField(max_length=50, null=False)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	date = models.DateTimeField(auto_now_add=True)
-	city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
-	area = models.ForeignKey(Area, on_delete=models.SET_NULL, blank=True, null=True) 
+	city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+	area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True) 
 	field = MultiSelectField(choices=FIELD_CHOICES)
 	content = models.TextField(default='')
 	

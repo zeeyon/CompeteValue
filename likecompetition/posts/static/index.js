@@ -86,10 +86,12 @@ new Vue({
 			this.check_list.splice(this.check_list.indexOf(option), 1);
 		},
 		next_page: function() {
+			window.scrollTo(0, 0);
 			this.page++;
 			this.send_query();
 		},
 		prev_page: function() {
+			window.scrollTo(0, 0);
 			this.page = Math.max(this.page - 1, 1);
 			this.send_query();
 		},

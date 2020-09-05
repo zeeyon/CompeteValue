@@ -20,6 +20,8 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
 	date = serializers.SerializerMethodField()
+	city = serializers.SerializerMethodField()
+	area = serializers.SerializerMethodField()
 	field = serializers.SerializerMethodField()
 	scrapped = serializers.SerializerMethodField()
 	comments = CommentSerializer(many=True)
@@ -30,6 +32,12 @@ class PostSerializer(serializers.ModelSerializer):
 
 	def get_date(self, obj):
 		return obj.date.strftime('%Y-%m-%d %H:%M')
+
+	def get_city(self, obj):
+		return obj.city.name
+
+	def get_area(self, obj):
+		return obj.area.name
 
 	def get_field(self, obj):
 		return str(obj.field)
