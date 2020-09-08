@@ -50,6 +50,9 @@
 #id_content{
 	width:100%;
 	height:200px;
+	font-family:'IBMPlexSansKR-Light';
+	font-size:20px;
+	vertical-align: center;
 }
 input[type=submit]{
 	width:100%;
@@ -61,4 +64,10 @@ input[type=submit]{
 	font-size:25px;
 	color:white;
 	cursor:pointer;
+}
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	
 }

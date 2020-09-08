@@ -1,0 +1,30 @@
+<div id="write-title">
+    {{ user.nickname }} 님이 작성한 글
+</div>
+<div id="write-menu">
+    <button class="menu-btn" id="menu-btn-modify" onclick="modifyMode()"><img src="{% static 'images/setting.png' %}"></button>
+    <!-- <button class="menu-btn" id="menu-btn-write" onclick="writeMode()"><img src="{% static 'images/write.png' %}"></button> -->
+</div>
+<div id="write-list">
+    
+    <div class="card">
+        <div class="modify hide">
+            <img src="{% static 'images/delete.png' %}" onclick="deleteCard()">
+            <img src="{% static 'images/modify.png' %}" onclick="modifyCard()">
+        </div>
+        <div class="title-detail">
+            <div class="time">Aug 1. 2020, 11:55 PM</div>
+            <div class="profile-img"><img src="{% static 'images/header_user_image.png' %}"></div>
+            <div class="author">
+                <span class="author-name">lifedev</span>
+                <span class="author-location"><img src="{% static 'images/location.png' %}">강원도 원주시</span>
+            </div>
+        </div>
+        <div class="intro long-card">
+            <!--overflow는 ...으로 표시-->
+            HTML5 CSS JS Vue.js / Django 우대 / 강원도 원주 / 20대 초반 / asdfasdfasdf/ㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㄹㅇ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄴㅇㄹ/ㅁㄹㄴㅇ/ㅁㄴㅇㄻㄴㅇㄹ/ㅁㄴㅇㄹ
+            
+        </div>
+    </div>
+    
+</div>
