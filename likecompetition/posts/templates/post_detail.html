@@ -3,13 +3,30 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
 
 {% block content %}
-<a href="{% url 'index' %}">index로 이동하기</a>
 <div class="post_detail_box">
     <div class="post_detail_left">
         <div id="post_detail_profile_img"></div>
         <div id="post_detail_profile_name">{{ post.user }}</div>
         <div>{{ post.gender }} 남성 / 33세{{ post.age }}</div>
         <div> {{ post.city }} {{ post.area }}</div>
+        <div class="icon_box">
+            <div class="icon">
+                <a class="message" href="#"></a>
+                <form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
+                    {% csrf_token %}
+                    <a href="#" class="scrap" onclick="parentNode.submit();">
+                    </a>
+                </form>
+                {% if request.user == post.user %}
+                <a class="edit" href="{% url 'post_edit' post.id %}"></a>
+                <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
+                    {% csrf_token %}
+                    <a href="#" class="delete" onclick="parentNode.submit();"> </a>
+                    <input type="hidden" name="_method" value="DELETE" />
+                </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="post_detail_right">
         <div>
@@ -17,30 +34,13 @@
                 {{ post.field }}
             </div>
             <div id="asdf">
-                {% for tool in post.field %}
+                {% for tool in post.field %} <!--post.tool로 바꾸기-->
                     <div id="post_detail_tool">#{{ tool }}</div>
                 {% endfor %}
             </div>
-        </div>
-        <div>
             <div id="post_detail_content">{{ post.content }}</div>
-            <div class="icon">
-                <a class="message" href="#"></a>
-                <scrap url="{% url 'scrap_detail' post.id %}" v-bind:initial-scrapped="{{ post.scrapped }}"></scrap>
-                <!-- <form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#" onclick="parentNode.submit();">스크랩하기</a>
-                </form> -->
-                {% if request.user == post.user %}
-                <a href="{% url 'post_edit' post.id %}">수정하기</a>
-                <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#" onclick="parentNode.submit();" id="post_detail_delete"></a>
-                    <input type="hidden" name="_method" value="DELETE" />
-                </form>
-                {% endif %}
-            </div>
         </div>
+        <div id="post_detail_comment"><a href="#" onclick="window.location.reload();">{{ comments|length }}  comments</a></div>
     </div>
 </div>
 
@@ -56,9 +56,6 @@
 분야 : {{ post.field }}<br>
 내용 : {{ post.content }}<br>
 <br>
--->
-
-
 {% if request.user == post.user %}
     <a href="{% url 'post_edit' post.id %}">수정하기</a>
     <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
@@ -72,6 +69,14 @@
     <a href="#" onclick="parentNode.submit();">스크랩하기</a>
 </form>
 <br><br>
+{% if request.user == post.user %}
+    <a href="{% url 'post_edit' post.id %}">수정하기</a>
+    <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
+        {% csrf_token %}
+        <a href="#" onclick="parentNode.submit();">삭제하기</a>
+        <input type="hidden" name="_method" value="DELETE" />
+    </form>
+{% endif %}
 
 {% for comment in comments %}
     작성자 : {{ comment.user.nickname }}<br>
@@ -93,6 +98,50 @@
     <input type="submit" value="등록" />
 </form>
 
+-->
+
+<div class="create_comment_box">
+    <div class="create_comment">
+        <div id="comment_profile_img"></div>
+        <div id="comment_content">
+            <form action="{% url 'comment' post.id %}" method="post">
+                {% csrf_token %}
+                {{ form.content }}
+                <input type="submit" value="POST" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="comment_box">
+    {% for comment in comments reversed %}
+    <div class="comment">
+        <div class="comment_left">
+            <div id="comment_profile_img"></div>
+        </div>
+        <div class="comment_right">
+            <div class="comment_right_line">
+                <div>
+                    <div id="comment_name">{{ comment.user.nickname }}</div>
+                    <div id="comment_date">{{ comment.date }}</div>
+                </div>
+                <div id="comment_menu">
+                    {% if request.user == comment.user %}
+                        <form class="inline_form" action="{% url 'comment_detail' post.id comment.id %}" method="post">
+                            {% csrf_token %}
+                            <a href="#" onclick="parentNode.submit();">삭제하기</a>
+                            <input type="hidden" name="_method" value="DELETE" />
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="comment_content">{{ comment.content }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
 
-{% block end %}<script src="{% static 'post_detail.js' %}"></script>{% endblock %}
+{% block end %}{% endblock %}

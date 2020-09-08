@@ -4,6 +4,7 @@
 {% block title %}
 <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'posts.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -36,7 +37,8 @@
 <div id="posts" v-cloak>
     {% for post in posts %}
     <div class="post-card">
-        <a href="{% url 'post_detail' post.id %}">
+        <input type="hidden" id="post_detail_url{{ post.id }}" data-url="{% url 'post_detail' post.id %}">
+        <div class="open_post_detail_dialog" onclick="open_post_detail('{{ post.id }}');">
             <div class="profile">
                 <div class="profile-image-box"><img class="profile-image" src="{% static '/images/post_card_user.png' %}"></div>
                 <div class="user-info-box">
@@ -44,11 +46,11 @@
                     <span class="location">{{ post.city }} {{ post.area }}</span>
                 </div>
             </div>
-        </a>
-        <a href="{% url 'post_detail' post.id %}">
+        </div>
+        <div class="open_post_detail_dialog" onclick="open_post_detail('{{ post.id }}');">
             <div class="field">{{ post.field }}</div>
             <div class="tool">암튼 툴임 :3</div>
-        </a>
+        </div>
         <span class="date">{{ post.date }}</span>
         <div class="icon">
             <a class="message" href="#" onclick=""></a>
