@@ -8,7 +8,7 @@
     <div class="post_detail_left">
         <div id="post_detail_profile_img"></div>
         <div id="post_detail_profile_name">{{ post.user }}</div>
-        <div>{{ post.gender }} 남성 / 33세{{ post.age }}</div>
+        <div>{% comment %} {{ request.user }} {% endcomment %} / {% comment %} {{ post.user.birth }} {% endcomment %}</div>
         <div> {{ post.city }} {{ post.area }}</div>
         <div class="icon_box">
             <div class="icon">
@@ -19,12 +19,8 @@
                     </a>
                 </form>
                 {% if request.user == post.user %}
-                <a class="edit" href="{% url 'post_edit' post.id %}"></a>
-                <form class="inline_form" action="{% url 'post_detail' post.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#" class="delete" onclick="parentNode.submit();"> </a>
-                    <input type="hidden" name="_method" value="DELETE" />
-                </form>
+                <a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
+                <a class="delete" href="#" onclick="deletePost('{{ post.id }}')">삭제하기</a>
                 {% endif %}
             </div>
         </div>
@@ -39,7 +35,7 @@
                     <div id="post_detail_tool">#{{ tool }}</div>
                 {% endfor %}
             </div>
-            <div id="post_detail_content">{{ post.content }}</div>
+            <div id="post_detail_content">{{ post.content|linebreaks }}</div>
         </div>
         <div id="post_detail_comment"><a href="#" onclick="window.location.reload();">{{ comments|length }}  comments</a></div>
     </div>
@@ -87,7 +83,7 @@
     <div class="create_comment">
         <div id="comment_profile_img"></div>
         <div id="comment_content">
-            <form action="{% url 'comment' post.id %}" method="post">
+            <form action="{% url 'posts:comment_create' post.id %}" method="post">
                 {% csrf_token %}
                 {{ form.content }}
                 <input type="submit" value="POST" />
@@ -95,7 +91,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="comment_box">
     {% for comment in comments reversed %}
@@ -111,19 +106,16 @@
                 </div>
                 <div id="comment_menu">
                     {% if request.user == comment.user %}
-                        <form class="inline_form" action="{% url 'comment_detail' post.id comment.id %}" method="post">
-                            {% csrf_token %}
-                            <a href="#" onclick="parentNode.submit();">삭제하기</a>
-                            <input type="hidden" name="_method" value="DELETE" />
-                        </form>
+                        <a href="#" onclick="deleteComment('{{ comment.id }}')">삭제하기</a>
                     {% endif %}
                 </div>
             </div>
-            <div id="comment_content">{{ comment.content }}</div>
+            <div id="comment_content">{{ comment.content|linebreaks }}</div>
         </div>
     </div>
     {% endfor %}
 </div>
+{% endblock %}
 
 {% block end %}
 <script>
