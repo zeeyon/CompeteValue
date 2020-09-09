@@ -1,3 +1,4 @@
+
 var scrap = {
 	template: '<a class="scrap" v-bind:class="{ scrapped: this.isScrapped }" href="#" onclick="return false" v-on:click="toggle_scrap()"></a>',
 	props: {
@@ -106,6 +107,37 @@ new Vue({
 			.catch(function(error) {
 				console.log(error);
 			});
+		},
+		open_post_detail: function(post_id) {
+			var url= document.getElementById(post_id).href;
+			var now_href= window.location.href;
+			var now_scroll= $(document).scrollTop();
+
+			history.pushState(null, null, url);
+			$("#dialog").load(url.concat(" .post_detail_box"));
+	
+			$("#dialog").dialog({
+				modal: true,
+				width: '1000',
+				height: 'auto',
+				draggable: false,
+				resizable:false,
+				open:function(){
+					window.scroll(0, now_scroll);
+					$('html, body').animate({scrollTop : now_scroll}, 400);
+					$(this).parents(".ui-dialog:first").find(".ui-dialog-titlebar").remove();
+					$('.ui-widget-overlay').off('click');
+					window.onpopstate = () => {
+						$('#dialog').dialog('close');
+					};
+					$('.ui-widget-overlay').on('click', function(){ $('#dialog').dialog('close');})
+					$('.ui-dialog').css("padding", "0");
+					$('.ui-dialog-content').css("padding", "0");
+				},
+				close:function(){
+					history.pushState(null, null, now_href);
+				}
+			});
 		}
 	},
 	watch: {
@@ -127,35 +159,3 @@ new Vue({
 	}
 });
 
-
-function open_post_detail(num) {
-	var url= $("#post_detail_url"+num).attr("data-url");
-	var now_href= window.location.href;
-	var now_scroll= $(document).scrollTop();
-
-	history.pushState(null, null, url);
-	$("#dialog").load(url.concat(" .post_detail_box"));
-	
-	$("#dialog").dialog({
-		modal: true,
-		width: '1000',
-		height: 'auto',
-		draggable: false,
-		resizable:false,
-		open:function(){
-			window.scroll(0, now_scroll);
-			$('html, body').animate({scrollTop : now_scroll}, 400);
-			$(this).parents(".ui-dialog:first").find(".ui-dialog-titlebar").remove();
-			$('.ui-widget-overlay').off('click');
-			window.onpopstate = () => {
-				$('#dialog').dialog('close');
-			};
-			$('.ui-widget-overlay').on('click', function(){ $('#dialog').dialog('close');})
-			$('.ui-dialog').css("padding", "0");
-			$('.ui-dialog-content').css("padding", "0");
-		},
-		close:function(){
-			history.pushState(null, null, now_href);
-		}
-	});
-}

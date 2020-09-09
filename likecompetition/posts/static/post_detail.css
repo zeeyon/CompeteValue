@@ -36,7 +36,7 @@
 }
 
 .post_detail_left #post_detail_profile_name{
-    font-size: 60px;
+    font-size: 50px;
 }
 
 .post_detail_left .icon_box{
@@ -48,7 +48,7 @@
     margin-top: 100px;
 }
 
-.post_detail_left .icon a{
+.post_detail_left .icon a, .post_detail_left .icon .scrap{
     z-index:15;
     width:40px;
     height:40px;
