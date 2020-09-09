@@ -1,22 +1,94 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="save"/>
-</form>
-<!--
-<form method="POST">
-    {% csrf_token %}
-    {{ profile_form.as_p }}
-    <input type="submit" value="save" name="setting_profile"/>
-</form>
-<form method="POST">
-    {% csrf_token %}
-    {{ new_pass_form.as_p }}
-    <input type="submit" value="save" name="setting_password"/>
-</form>
-<form method="POST">
-    {% csrf_token %}
-    {{ account_form.as_p }}
-    <input type="submit" value="save" name="setting_account"/>
-</form>
--->
+<link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v2.0.0-RC1/css/Jcrop.css" type="text/css">
+<div id="setting-main">
+	<div class="user-profile setting-box">
+		<form action="" method="post" id="user_profile" onSubmit="return false" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="user-name setting">
+				<label for="user-name" class="setting-label">이름</label>
+				<!--<input type="text" name="user_name" class="setting-input" id="user-name" value="lifedev" maxlength="20" required>-->
+				{{ form.birth }}
+			</div>
+			<div class="user-description setting">
+				<label for="user-description" class="setting-label">소갯말</label>
+				<!--<input type="text" name="user_description" class="setting-input" id="user-description" value="프론트엔드" maxlength="20">-->
+				{{ form.introduction }}
+			</div>
+			<div class="user-profile-img setting">
+				<label for="user-profile-img" class="setting-label">프로필 사진</label>
+				<!--<img src="profile-img.png" id="user-profile-img">-->
+				<!--<input type="file" id="user_profile_img" name="user_profile_img" onchange="cropImage()">-->
+				
+				{{ form.image_profile_org }}
+				<input type="hidden" id="imgSize" name="imgSize" value="ERROR">
+				<div class="img-crop popup invisible">
+					<img src="profile-img.png" class="popup-img" id="imgPath">
+				</div>
+			</div>
+			<div class="user-background-img setting">
+				<label for="user-profile-img" class="setting-label">배경 사진</label>
+				<input type="file" class="setting-file" name="user_background_img">
+			</div>
+			<div class="user-profile-submit setting">
+				<button class="setting-btn" onclick="submit()">변경사항 저장</button>
+			</div>
+		</form>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="http://jcrop-cdn.tapmodo.com/v2.0.0-RC1/js/Jcrop.js"></script>
+<script>
+	function cropImage() {
+		var input = document.getElementById("user_profile_img");
+		var fReader = new FileReader();
+		fReader.readAsDataURL(input.files[0]);
+		fReader.onloadend = function(e) {
+			var img = new Image();
+			img.src = e.target.result;
+			img.onload = function() {
+				document.getElementById("imgPath").src = e.target.result;
+				$('.img-crop').toggleClass('invisible');
+				//$('.img-crop').Jcrop();
+				$('#imgPath').Jcrop({
+					onChange: setSize,
+					onSeelct: setSize,
+					aspectRatio: 1
+				});
+			}
+		}
+	}
+	
+	var setSize=function(c){
+		document.getElementById('imgSize').value=[c.x, c.y, c.w, c.h].join('/');
+	}
+	
+	function submit(){
+		document.getElementById('user_profile').submit();
+	}
+
+</script>
+<style>
+	.img-crop {
+		max-width: 1000px;
+		max-height: 500px;
+	}
+
+	.popup {
+		max-width: 1000px;
+		max-height: 500px;
+		margin: 20px auto;
+	}
+	
+	.popup-img {
+		border:1px solid black;
+		height:100%;
+		z-index: 2;
+		left: 0;
+		top: 0;
+	}
+
+
+	.invisible {
+		display: none;
+	}
+
+</style>

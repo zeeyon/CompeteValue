@@ -144,3 +144,7 @@ PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 100
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]

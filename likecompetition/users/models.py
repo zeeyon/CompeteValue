@@ -19,9 +19,10 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, nickname, password):
         user = self.create_user(
-            email,
+            email=email,
             password=password,
             nickname=nickname,
+            new_email=email,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -71,5 +72,5 @@ class Profile(models.Model):
     introduction = models.TextField(blank=True, null=True, max_length=100, default='')
     birth = models.DateField(blank=True, null=True)
     gender = models.BooleanField(blank=True, null=True, choices=((False, '남자'), (True, '여자'), (None, '선택안함')), default=None)
-    image_profile = models.ImageField(blank=True, null=True, upload_to="media/a/")
-    image_profile = models.ImageField(blank=True, null=True, upload_to="media/a/")
+    profile_img = models.ImageField(blank=True, null=True, upload_to="profile")
+    background_img = models.ImageField(blank=True, null=True, upload_to="background")

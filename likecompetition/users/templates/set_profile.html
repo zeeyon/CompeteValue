@@ -1,28 +1,39 @@
+<a href = "./profile">프로필 설정</a> / <a href = "./password">비번 설정</a> / <a href = "./account">계정 설정</a>
+
+
 <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v2.0.0-RC1/css/Jcrop.css" type="text/css">
 <div id="setting-main">
 	<div class="user-profile setting-box">
-		<form action="" method="post" id="user_profile" onSubmit="return false">
+		<form action="" method="post" id="user_profile" onSubmit="return false" enctype="multipart/form-data">
+			{% csrf_token %}
+			
 			<div class="user-name setting">
 				<label for="user-name" class="setting-label">이름</label>
-				<input type="text" name="user_name" class="setting-input" id="user-name" value="lifedev" maxlength="20" required>
+				<!--<input type="text" name="user_name" class="setting-input" id="user-name" value="lifedev" maxlength="20" required>-->
+				{{ form.birth }}
 			</div>
 			<div class="user-description setting">
 				<label for="user-description" class="setting-label">소갯말</label>
-				<input type="text" name="user_description" class="setting-input" id="user-description" value="프론트엔드" maxlength="20">
+				<!--<input type="text" name="user_description" class="setting-input" id="user-description" value="프론트엔드" maxlength="20">-->
+				{{ form.introduction }}
 			</div>
 			<div class="user-profile-img setting">
 				<label for="user-profile-img" class="setting-label">프로필 사진</label>
 				<!--<img src="profile-img.png" id="user-profile-img">-->
-				<input type="file" id="user_profile_img" name="user_profile_img" onchange="cropImage()">
+				<!--<input type="file" id="user_profile_img" name="user_profile_img" onchange="cropImage()">-->
+				
+				{{ form.profile_new_img }}
 				<input type="hidden" id="imgSize" name="imgSize" value="ERROR">
 				<div class="img-crop popup invisible">
 					<img src="profile-img.png" class="popup-img" id="imgPath">
 				</div>
 			</div>
+			<!--
 			<div class="user-background-img setting">
 				<label for="user-profile-img" class="setting-label">배경 사진</label>
 				<input type="file" class="setting-file" name="user_background_img">
 			</div>
+			-->
 			<div class="user-profile-submit setting">
 				<button class="setting-btn" onclick="submit()">변경사항 저장</button>
 			</div>
@@ -87,11 +98,3 @@
 	}
 
 </style>
-
-<!--
-{% if profile.image_profile %}
-    <img src='{{ profile.image_profile.url }}''>
-{% else %}
-    암것도 없음
-{% endif %}
--->

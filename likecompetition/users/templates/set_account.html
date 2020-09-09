@@ -1,0 +1,6 @@
+<a href = "./profile">프로필 설정</a> / <a href = "./password">비번 설정</a> / <a href = "./account">계정 설정</a>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button onclick="submit()">변경사항 저장</button>
+</form>

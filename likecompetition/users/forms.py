@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
-
+from io import BytesIO
+from PIL import Image as pil
 """
     폼에 속성 추가 방법:
     다음과 같은 코드를 widgets에 추가.
@@ -30,13 +31,16 @@ class LoginForm(forms.ModelForm):
         }
 
 class ProfileForm(forms.ModelForm):
+    profile_new_img = forms.ImageField(required = False)
+    profile_new_img.widget.attrs.update({'onchange':'cropImage()', 'name':'user_profile_img', 'id':'user_profile_img'})
     class Meta:
         model = Profile
-        fields = ['introduction', 'birth', 'gender', 'image_profile']
+        fields = ['introduction', 'birth', 'gender',]
         widgets = {
             'birth': forms.DateInput(attrs={'type':'date'}),
         }
 
+        
 class AccountForm(forms.ModelForm):
     #test_email = forms.CharField(widget = forms.TextInput(attrs={'placeholder': 'EMAIL'}))
     class Meta:
