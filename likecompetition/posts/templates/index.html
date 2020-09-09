@@ -37,7 +37,8 @@
 	<div id="post_list" v-if="posts !== null">
 		<div id="posts">
 			<div class="post-card" v-for="post in posts.results">
-				<a :href="'/posts/' + [[ post.id ]]">
+				<a :id="[[ post.id ]]" :href="'/posts/'+[[ post.id ]]"></a>
+				<div class="open_post_detail_dialog" v-on:click="open_post_detail([[ post.id ]])">
 					<div class="profile">
 						<div class="profile-image-box"><img class="profile-image" src="/static/images/post_card_user.png"></div>
 						<div class="user-info-box">
@@ -45,12 +46,12 @@
 							<span class="location">[[ post.city ]] [[ post.area ]]</span>
 						</div>
 					</div>
-				</a>
-				<a :href="'/posts/' + [[ post.id ]]">
+				</div>
+				<div class="open_post_detail_dialog" v-on:click="open_post_detail([[ post.id ]])">
 					<div class="field">[[ post.field ]]</div>
 					<div class="tool">
 					</div>
-				</a>
+				</div>
 				<span class="date">[[ post.date ]]</span>
 				<div class="icon">
 					<a class="message" href="#" onclick=""></a>

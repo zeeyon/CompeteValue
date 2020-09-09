@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load hitcount_tags %} 
 {% load static %}
+{% load hitcount_tags %} 
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
 
 {% block content %}
@@ -13,11 +13,7 @@
         <div class="icon_box">
             <div class="icon">
                 <a class="message" href="#"></a>
-                <form class="inline_form" action="{% url 'scrap_detail' post.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#" class="scrap" onclick="parentNode.submit();">
-                    </a>
-                </form>
+                <scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
                 {% if request.user == post.user %}
                 <a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
                 <a class="delete" href="#" onclick="deletePost('{{ post.id }}')">삭제하기</a>
@@ -75,7 +71,6 @@
 	{{ form.as_p }}
 	<input type="submit" value="등록" />
 </form>
-{% endblock %}
 
 -->
 
