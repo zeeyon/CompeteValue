@@ -4,111 +4,57 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
 
 {% block content %}
-<div class="post_detail_box">
-    <div class="post_detail_left">
-        <div id="post_detail_profile_img"></div>
-        <div id="post_detail_profile_name">{{ post.user }}</div>
-        <div>{% comment %} {{ request.user }} {% endcomment %} / {% comment %} {{ post.user.birth }} {% endcomment %}</div>
-        <div> {{ post.city }} {{ post.area }}</div>
-        <div class="icon_box">
-            <div class="icon">
-                <a class="message" href="#"></a>
-                <scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
-                {% if request.user == post.user %}
-                <a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
-                <a class="delete" href="#" onclick="deletePost('{{ post.id }}')">삭제하기</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="post_detail_right">
-        <div>
-            <div id="post_detail_field">
-                {{ post.field }}
-            </div>
-            <div id="asdf">
-                {% for tool in post.field %} <!--post.tool로 바꾸기-->
-                    <div id="post_detail_tool">#{{ tool }}</div>
-                {% endfor %}
-            </div>
-            <div id="post_detail_content">{{ post.content|linebreaks }}</div>
-        </div>
-        <div id="post_detail_comment"><a href="#" onclick="window.location.reload();">{{ comments|length }}  comments</a></div>
-    </div>
+<div id="post_detail_wrap">
+<div id="post_detail_box">
+	<div class="profile">
+		<img class="profile_img" src="{% static '/images/post_card_user.png' %}" /><br>
+		<span class="user_info">{{ post.user }}</span><br>
+		<span class="location">{{ post.city }} {{ post.area }}</span>
+	</div>
+	<div class="contents">
+		<div class="field">{{ post.field }}</div>
+		<div class="tools">
+			{% for tool in post.field %}
+			<div class="tool">#{{ tool }}</div>
+			{% endfor %}
+		</div>
+		<div class="content">{{ post.content|linebreaks }}</div>
+		<div class="comment_cnt"><a href="{% url 'posts:post_detail' post.id %}">{{ comments|length }} comments</a></div>
+	</div>
+	<div class="icon">
+		<a class="message" href="#"></a>
+		<scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
+		{% if request.user == post.user %}
+		<a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
+		<a class="delete" href="#" onclick="deletePost('{{ post.id }}')"></a>
+		{% endif %}
+	</div>
 </div>
 
-<!--
-<h1>{{ post.title }}</h1>
-글번호 : {{ post.id }}<br> 
-조회수 : {{ post.view_count }}<br>
-날짜 : {{ post.date }}<br>
-{% comment %} 성별 : {{ request.user }}<br> {% endcomment %}
-{% comment %} 나이 : {{ post.user.birth }}<br> {% endcomment %}
-지역 : {{ post.city }} {{ post.area }}<br>
-분야 : {{ post.field }}<br>
-툴 : 다 잘해요<br>
-내용 : {{ post.content|linebreaks }}
-조회수 : {% get_hit_count for post %}<br>
+<div id="comment_box">
+	{% for comment in comments %}
+	<div class="comment">
+		<div class="profile">
+			<img class="profile_img" src="{% static '/images/post_card_user.png' %}" />
+			<span class="nickname">{{ comment.user.nickname }}</span>
+			<span class="date">{{ comment.date }}</span>
+		</div>
+		<div class="content">{{ comment.content|linebreaks }}</div>
+		{% if request.user == comment.user %}
+		<a class="delete" href="#" onclick="deleteComment('{{ comment.id }}')">삭제하기</a>
+		{% endif %}
+	</div>
+	{% endfor %}
+</div>
 
-{% if request.user == post.user %}
-	<a href="{% url 'posts:post_edit' post.id %}">수정하기</a>
-	<a href="#" onclick="deletePost('{{ post.id }}')">삭제하기</a>
-{% endif %}
-<br><br><br>
-
-{% for comment in comments %}
-	작성자 : {{ comment.user.nickname }}<br>
-	날짜 : {{ comment.date }}<br>
-	내용 : {{ comment.content|linebreaks }}
-	{% if request.user == comment.user %}
-		<a href="#" onclick="deleteComment('{{ comment.id }}')">삭제하기</a>
-	{% endif %}
-	<br><br>
-{% endfor %}
-
-<form action="{% url 'posts:comment_create' post.id %}" method="post">
+{% if user.is_authenticated %}
+<form id="comment_form" action="{% url 'posts:comment_create' post.id %}" method="post">
 	{% csrf_token %}
-	{{ form.as_p }}
+	<img class="profile_img" src="{% static '/images/post_card_user.png' %}" />
+	{{ form.content }}
 	<input type="submit" value="등록" />
 </form>
-
--->
-
-<div class="create_comment_box">
-    <div class="create_comment">
-        <div id="comment_profile_img"></div>
-        <div id="comment_content">
-            <form action="{% url 'posts:comment_create' post.id %}" method="post">
-                {% csrf_token %}
-                {{ form.content }}
-                <input type="submit" value="POST" />
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="comment_box">
-    {% for comment in comments reversed %}
-    <div class="comment">
-        <div class="comment_left">
-            <div id="comment_profile_img"></div>
-        </div>
-        <div class="comment_right">
-            <div class="comment_right_line">
-                <div>
-                    <div id="comment_name">{{ comment.user.nickname }}</div>
-                    <div id="comment_date">{{ comment.date }}</div>
-                </div>
-                <div id="comment_menu">
-                    {% if request.user == comment.user %}
-                        <a href="#" onclick="deleteComment('{{ comment.id }}')">삭제하기</a>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="comment_content">{{ comment.content|linebreaks }}</div>
-        </div>
-    </div>
-    {% endfor %}
+{% endif %}
 </div>
 {% endblock %}
 
