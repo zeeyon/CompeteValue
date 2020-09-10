@@ -94,13 +94,13 @@ class ScrapToggleView(LoginRequiredMixin, View):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
 		scrap = Scrap(user=request.user, post=post)
 		scrap.save()
-		return HttpResponse()
+		return HttpResponse(status=201)
 
 	def delete(self, request, *args, **kwargs):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
 		scrap = get_object_or_404(Scrap, user=request.user, post=post)
 		scrap.delete()
-		return HttpResponse()
+		return HttpResponse(status=204)
 
 
 class LoadAreasView(LoginRequiredMixin, View):

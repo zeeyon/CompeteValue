@@ -34,7 +34,7 @@
 			</ul>
 		</div>
 	</div>
-	<div id="post_list" v-if="posts !== null">
+	<div id="post_list">
 		<div id="posts">
 			<div class="post-card" v-for="post in posts.results" v-on:click="open_post_detail([[ post.id ]])">
 				<div class="profile">
@@ -47,10 +47,10 @@
 				<div class="field">[[ post.field ]]</div>
 				<div class="tool"></div>
 				<span class="date">[[ post.date ]]</span>
-				<!--<div class="icon">
+				<div class="icon" onclick="return false">
 					<a class="message" href="#" onclick=""></a>
 					<scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
-				</div>-->
+				</div>
 			</div>
 			<div class="post-card filling-empty-space"></div>
 			<div class="post-card filling-empty-space"></div>

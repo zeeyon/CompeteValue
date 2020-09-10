@@ -82,6 +82,9 @@ header .header-logo a{
 #main-menu>ul>li>a{
 	color:white;
 }
+#main-menu .profile span{
+	cursor:pointer;
+}
 #main-menu .profile .user-image{
 	width:45px;
 	height:45px;

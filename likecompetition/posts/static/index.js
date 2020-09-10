@@ -19,7 +19,9 @@ var scrap = {
 				url: '/posts/' + this.id + '/scrap'
 			})
 			.then(function(response) {
-				vue.isScrapped = !vue.isScrapped;
+				if (response.status == 201 || response.status == 204) {
+					vue.isScrapped = !vue.isScrapped;
+				}
 			})
 			.catch(function(error) {
 				console.log(error);
@@ -80,7 +82,7 @@ new Vue({
 		check_list: [],
 		query: ['?page=1'],
 		page: 1,
-		posts: null,
+		posts: {},
 		dialog_idx: -1
 	},
 	methods: {

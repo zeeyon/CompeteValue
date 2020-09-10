@@ -25,7 +25,7 @@
 					<li><a href="{% url 'posts:post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li class="profile">
-						<a href="#">{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></a>
+						<span>{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></span>
 						<div id="user-menu">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>

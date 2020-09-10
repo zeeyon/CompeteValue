@@ -24,11 +24,11 @@ class PostSerializer(serializers.ModelSerializer):
 	area = serializers.SerializerMethodField()
 	field = serializers.SerializerMethodField()
 	scrapped = serializers.SerializerMethodField()
-	comments = CommentSerializer(many=True)
+	comment_cnt = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Post
-		fields = ['id', 'title', 'user', 'date', 'city', 'area', 'field', 'content', 'scrapped', 'comments']
+		fields = ['id', 'title', 'user', 'date', 'city', 'area', 'field', 'content', 'scrapped', 'comment_cnt']
 
 	def get_date(self, obj):
 		return obj.date.strftime('%Y-%m-%d %H:%M')
@@ -44,3 +44,6 @@ class PostSerializer(serializers.ModelSerializer):
 
 	def get_scrapped(self, obj):
 		return obj.scrapped
+
+	def get_comment_cnt(self, obj):
+		return Comment.objects.all().filter(post=obj.id).count()
