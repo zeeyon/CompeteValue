@@ -80,7 +80,8 @@ new Vue({
 		check_list: [],
 		query: ['?page=1'],
 		page: 1,
-		posts: null
+		posts: null,
+		dialog_idx: -1
 	},
 	methods: {
 		remove_option: function(option) {
@@ -109,17 +110,19 @@ new Vue({
 			});
 		},
 		open_post_detail: function(post_id) {
-			var url= document.getElementById(post_id).href;
-			var now_href= window.location.href;
-			history.pushState(null, null, url);
-			$("#dialog").load(url.concat(" .post_detail_box"));
+			var url = '/posts/' + post_id;
+			history.pushState(null, null, window.location.href);
+			$("#dialog").load(url.concat(" #post_detail_box"));
 			$("#dialog").dialog({
 				modal: true,
 				width: '1000',
 				height: 'auto',
 				draggable: false,
-				resizable:false,
-				open:function(){
+				resizable: false,
+				create: function(event, ui) {
+					$(this).parent().css('position', 'fixed');
+				},
+				open: function() {
 					$(this).parents(".ui-dialog:first").find(".ui-dialog-titlebar").remove();
 					window.onpopstate = () => {
 						$('#dialog').dialog('close');
@@ -128,8 +131,8 @@ new Vue({
 					$('.ui-dialog').css("padding", "0");
 					$('.ui-dialog-content').css("padding", "0");
 				},
-				close:function(){
-					history.pushState(null, null, now_href);
+				close: function() {
+					// history.back();, 스크롤 버그
 				}
 			});
 		}

@@ -3,11 +3,9 @@
     flex-wrap:wrap;
     justify-content:space-around;
     overflow:auto;
-    margin-top:10px;
+    margin:10px auto 0 auto;
     font-family:'IBMPlexSansKR-Light';
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    width:90%;
 }
 #posts .post-card{
     position:relative;
@@ -16,6 +14,7 @@
     padding:5px;
     margin:25px;
     box-shadow:0px 0px 5px darkgray;
+    cursor:pointer;
 }
 #posts .post-card:hover{
     box-shadow:0px 0px 5px gray;
@@ -77,10 +76,9 @@
 }
 #posts .post-card .icon a{
     display:inline-block;
-    z-index:10;
+    margin-left:15px;
     width:40px;
     height:40px;
-    margin-left:15px;
 }
 #posts .post-card .icon .message{
     background:url(./images/post_card_message.png);
