@@ -111,11 +111,8 @@ new Vue({
 		open_post_detail: function(post_id) {
 			var url= document.getElementById(post_id).href;
 			var now_href= window.location.href;
-			var now_scroll= $(document).scrollTop();
-
 			history.pushState(null, null, url);
 			$("#dialog").load(url.concat(" .post_detail_box"));
-	
 			$("#dialog").dialog({
 				modal: true,
 				width: '1000',
@@ -123,10 +120,7 @@ new Vue({
 				draggable: false,
 				resizable:false,
 				open:function(){
-					window.scroll(0, now_scroll);
-					$('html, body').animate({scrollTop : now_scroll}, 400);
 					$(this).parents(".ui-dialog:first").find(".ui-dialog-titlebar").remove();
-					$('.ui-widget-overlay').off('click');
 					window.onpopstate = () => {
 						$('#dialog').dialog('close');
 					};
