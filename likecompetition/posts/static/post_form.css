@@ -1,4 +1,4 @@
-#post_form{
+#post-form{
 	width:700px;
 	margin:0px auto 30px auto;
 	padding:20px;
@@ -6,20 +6,20 @@
 	font-family:'IBMPlexSansKR-Light';
 	box-shadow:0px 0px 10px gray;
 }
-#post_form legend{
+#post-form legend{
 	font-family:'TmoneyRoundWindExtraBold';
 	font-size:40px;
 	text-align:center;
 }
-#post_form label{
+#post-form label{
 	display:inline-block;
 	margin:15px 0 5px 0;
 	font-size:15px;
 }
-#post_form label span{
+#post-form label span{
 	color:red;
 }
-#id_title, #id_city, #id_area, #id_content{
+#id_title, #id_sido, #id_area, #id_content{
 	display:inline-block;
 	padding:12px 20px;
 	margin:8px 0;
@@ -33,19 +33,20 @@
 #id_title{
 	width:510px;
 }
-#id_city, #id_area{
+#id_sido, #id_area{
 	width:250px;
 }
-#id_city{
+#id_sido{
 	margin-right:10px;
 }
 #id_field li{
 	display:inline-block;
-	width:170px;
+	width:130px;
 	margin:5px 0;
 }
-#id_field li:hover{
-	font-weight:bolder;
+#id_field input[type=checkbox]{
+	position:relative;
+	top:2px;
 }
 #id_content{
 	width:100%;
@@ -59,7 +60,7 @@ input[type=submit]{
 	padding:14px 20px;
 	border:none;
 	border-radius:4px;
-	background-color:black;
+	background-color:#1C1C1C;
 	font-family:'TmoneyRoundWindExtraBold';
 	font-size:25px;
 	color:white;

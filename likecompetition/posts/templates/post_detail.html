@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load hitcount_tags %} 
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
 
 {% block content %}
@@ -9,7 +8,7 @@
 	<div class="profile">
 		<img class="profile_img" src="{% static '/images/post_card_user.png' %}" /><br>
 		<span class="user_info">{{ post.user }}</span><br>
-		<span class="location">{{ post.city }} {{ post.area }}</span>
+		<span class="area">{{ post.area }}</span>
 	</div>
 	<div class="contents">
 		<div class="field">{{ post.field }}</div>

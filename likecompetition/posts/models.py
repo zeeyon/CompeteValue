@@ -1,24 +1,25 @@
 from django.db import models
 from django.conf import settings
-from django.urls import reverse
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
-from hitcount.models import HitCountMixin
 
 
-class City(models.Model):
+class Sido(models.Model):
 	name = models.CharField(max_length=40)
 
 	def __str__(self):
 		return self.name
 
 
-class Area(models.Model):
-	city = models.ForeignKey(City, on_delete=models.CASCADE)
+class Sigungu(models.Model):
+	sido = models.ForeignKey(Sido, on_delete=models.CASCADE)
 	name = models.CharField(max_length=40)
 
 	def __str__(self):
 		return self.name
+
+	def get_full_name(self):
+		return self.sido.name + ' ' + self.name
 
 
 FIELD_CHOICES=(
@@ -35,17 +36,15 @@ FIELD_CHOICES=(
 )
 
 
-class Post(models.Model, HitCountMixin):
-	title = models.CharField(max_length=50, null=False)
+class Post(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	date = models.DateTimeField(auto_now_add=True)
-	city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
-	area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True) 
+	area = models.ForeignKey(Sigungu, on_delete=models.SET_NULL, null=True)
 	field = MultiSelectField(choices=FIELD_CHOICES)
-	content = models.TextField(default='')
+	content = models.TextField()
 	
 	def __str__(self):
-		return self.title
+		return self.content
 
 
 class Comment(models.Model):

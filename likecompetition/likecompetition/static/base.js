@@ -1,7 +1,9 @@
-function toggleMenu(){
-	var sideBar=$("#side-bar");
-	sideBar.toggleClass('open');
-}
-
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+new Vue({
+	el: '#app',
+	data: {
+		sideBarOpen: false
+	}
+});

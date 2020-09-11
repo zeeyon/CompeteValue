@@ -29,40 +29,36 @@ a:link,a:visited,a:hover,a:active{text-decoration:none;}
 @font-face{font-family:'IBMPlexSansKR-Light';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');font-weight:normal;font-style:normal;}
 @font-face {font-family: 'GmarketSansBold';src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');font-weight: normal;font-style: normal;}
 [v-cloak]{display:none !important;}
-#wrap{width:100%;height:100%;padding-top:65px;}
-#wrap>h1{font-size:0;}
+#app{width:100%;height:100%;padding-top:65px;}
+#app>h1{font-size:0;}
 
 header{
 	display:flex;
 	position:fixed;
 	top:0;
 	z-index:102;
-	box-sizing:border-box;
 	width:100%;
 	height:65px;
 	padding:5px 15px;
+	box-sizing:border-box;
 	background-color:#1C1C1C;
 	font-family:'IBMPlexSansKR-Light';
 	vertical-align:middle;
 	align-items:flex-start;
 	color:white;
 }
-header::after{
-	content:'';
-	display:block;
-	clear:both;
-}
 header .hamburger-button{
 	font-size:40px;
 	cursor:pointer;
 	line-height:55px;
-	margin-right: auto;
 }
 header .header-logo{
+	position:absolute;
+	left:50%;
+	transform:translate(-50%);
 	font-family:'TmoneyRoundWindExtraBold';
 	font-size:40px;
 	line-height:50px;
-	margin-right: auto;
 }
 header .header-logo a{
 	padding:0px 5px;
@@ -70,6 +66,7 @@ header .header-logo a{
 }
 
 #main-menu{
+	display:none;
 	margin-left:auto;
 	margin-right:25px;
 }
@@ -81,6 +78,9 @@ header .header-logo a{
 }
 #main-menu>ul>li>a{
 	color:white;
+}
+#main-menu .profile span{
+	cursor:pointer;
 }
 #main-menu .profile .user-image{
 	width:45px;
@@ -127,7 +127,7 @@ header .header-logo a{
 	left:-300px;
 	width:280px;
 	height:100%;
-	padding:10px 10px;
+	padding:75px 10px 0 10px;
 	background-color:#264653;
 	font-family:'TmoneyRoundWindExtraBold';
 	line-height:2;
@@ -147,38 +147,21 @@ header .header-logo a{
 #side-bar>ul>li>a:hover, #side-bar>ul>li>a:active{
 	color:red;
 }
-#side-bar .close-button{
-	padding-right:10px;
-	font-size:200%;
-	line-height:1.5;
-	text-align:right;
-	cursor:pointer;
-}
 
-/**
-* content
-*/
 #content{
 	padding-top:30px;
 }
 
 /* Mobile Device */
 /* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
-#main-menu{
-	display:none;
-}
-.header-logo{
-	padding-right:40px;
-}
+
+
 
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
    /*  사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	.hamburger-button{
 		display:none;
-	}
-	.header-logo{
-		padding-right:0px;
 	}
 	#main-menu{
 		display:flex;

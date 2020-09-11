@@ -7,16 +7,15 @@
 
 {% block content %}
 {{ error_message }}
-<form method="post" id="post_form">
+<form method="post" id="post-form">
 	{% csrf_token %}
 	<legend>NEW POST</legend><br><br>
-	<label for="id_title">제목 <span>*</span></label><br>
-	{{ form.title }}<br><br>
-	<label for="id_city">지역 <span>*</span></label><br>
-	{{ form.city }}{{ form.area }}<br><br>
+	<label for="id_sido">지역 <span>*</span></label><br>
+	{{ form.area }}
+	<br><br>
 	<label for="id_field">분야 <span>*</span></label><br>
 	{{ form.field }}<br>
-	<label for="id_content">기타 사항</label><br>
+	<label for="id_content">내용 <span>*</span></label><br>
 	{{ form.content }}<br><br>
 	<input type="submit" value="등록" />
 </form>
