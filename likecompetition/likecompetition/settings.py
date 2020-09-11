@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 	'users.apps.UsersConfig',
 	'rest_framework',
 	'multiselectfield',
-	'hitcount',
 	'django_filters',
 	'dal',
 	'dal_select2',
@@ -143,5 +142,5 @@ LOGIN_URL = 'login'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
+    'PAGE_SIZE': 24,
 }

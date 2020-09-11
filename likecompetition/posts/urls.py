@@ -12,5 +12,6 @@ urlpatterns = [
 	path('comments/<int:comment_id>', views.CommentDeleteView.as_view(), name='comment_delete'),
 	path('scrap', views.MyScrapView.as_view(), name='my_scrap'),
 	path('<int:post_id>/scrap', views.ScrapToggleView.as_view(), name='scrap_detail'),
-	path('cities/<int:city_id>', views.LoadAreasView.as_view(), name='load_areas'),
+    path('sidos', views.SidoListView.as_view(), name='sido_list'),
+	path('sidos/<int:sido_id>', views.SigunguListView.as_view(), name='sigungu_list'),
 ]

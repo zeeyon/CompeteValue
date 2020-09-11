@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import Post, Comment
+from posts.models import Post, Comment, Sido, Sigungu
 from users.models import User
 
 
@@ -20,7 +20,6 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
 	date = serializers.SerializerMethodField()
-	city = serializers.SerializerMethodField()
 	area = serializers.SerializerMethodField()
 	field = serializers.SerializerMethodField()
 	scrapped = serializers.SerializerMethodField()
@@ -28,16 +27,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Post
-		fields = ['id', 'title', 'user', 'date', 'city', 'area', 'field', 'content', 'scrapped', 'comment_cnt']
+		fields = ['id', 'user', 'date', 'area', 'field', 'content', 'scrapped', 'comment_cnt']
 
 	def get_date(self, obj):
 		return obj.date.strftime('%Y-%m-%d %H:%M')
 
-	def get_city(self, obj):
-		return obj.city.name
-
 	def get_area(self, obj):
-		return obj.area.name
+		return obj.area.get_full_name()
 
 	def get_field(self, obj):
 		return str(obj.field)
@@ -46,4 +42,16 @@ class PostSerializer(serializers.ModelSerializer):
 		return obj.scrapped
 
 	def get_comment_cnt(self, obj):
-		return Comment.objects.all().filter(post=obj.id).count()
+		return Comment.objects.filter(post=obj.id).count()
+
+
+class SidoSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Sido
+		fields = ['id', 'name']
+
+
+class SigunguSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Sigungu
+		fields = ['id', 'name']

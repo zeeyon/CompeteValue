@@ -2,72 +2,14 @@
 {% load static %}
 
 {% block title %}
-<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'posts.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'post_list.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">
 {% endblock %}
 
 {% block content %}
-<div id="index" v-cloak>
-	<div id="filter-box">
-		<div class="filter" v-for="filter in filters">
-			<div class="filter-name">[[ filter.text ]]</div>
-			<div class="filter-options">
-				<div class="filter-option" v-for="(option, index) in filter.options">
-					<input type="checkbox" :id="option.name" :name="filter.name" :value="option" v-model="check_list">
-					<label :for="option.name">[[ option.text ]]</label>
-				</div>
-			</div>
-		</div>
-		<div class="filter">
-			<div class="filter-name">언어</div>
-			<div class="filter-options">
-				<input type="text">
-			</div>
-		</div>
-		<div id="check-list">
-			<ul>
-				<li v-for="option in check_list">
-					<span class="option-name">[[ option.text ]]</span>
-					<span class="remove-option" v-on:click="remove_option(option)">×</span>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div id="post_list">
-		<div id="posts">
-			<div class="post-card" v-for="post in posts.results" v-on:click="open_post_detail([[ post.id ]])">
-				<div class="profile">
-					<div class="profile-image-box"><img class="profile-image" src="/static/images/post_card_user.png"></div>
-					<div class="user-info-box">
-						<span class="user-info">[[ post.user.nickname ]] / 남성 / 20세</span><br>
-						<span class="location">[[ post.city ]] [[ post.area ]]</span>
-					</div>
-				</div>
-				<div class="field">[[ post.field ]]</div>
-				<div class="tool"></div>
-				<span class="date">[[ post.date ]]</span>
-				<div class="icon" onclick="return false">
-					<a class="message" href="#" onclick=""></a>
-					<scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
-				</div>
-			</div>
-			<div class="post-card filling-empty-space"></div>
-			<div class="post-card filling-empty-space"></div>
-			<div class="post-card filling-empty-space"></div>
-		</div>
-		<div id="page-btn">
-			<a v-if="posts.previous" href="#" onclick="return false" v-on:click="prev_page()">&#60;Prev</a>
-			<a v-if="posts.next" href="#" onclick="return false" v-on:click="next_page()">Next&#62;</a>
-		</div>
-	</div>
-	<div id="dialog"></div>
-	<div id="dialog1" v-if="dialog_idx !== -1">
-		
-	</div>
-</div>
+<post-list></post-list>
 {% endblock %}
 
 {% block end %}
-<script src="{% static 'index.js' %}"></script>
+<script src="{% static 'post_list.js' %}"></script>
 {% endblock %}

@@ -15,17 +15,17 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<section id="wrap">
+	<section id="app">
 		<h1>공가치</h1>
 		<header>
-			<div class="hamburger-button" onclick="toggleMenu()">☰</div>
+			<div class="hamburger-button" @click="sideBarOpen=!sideBarOpen">☰</div>
 			<div class="header-logo"><a href="/">공가치</a></div>
 			<nav id="main-menu">
 				<ul>
 					<li><a href="{% url 'posts:post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
 					<li class="profile">
-						<span>{{ user.nickname }}<img class="user-image" src="{% static 'images/header_user_image.png' %}"></span>
+						<span>{{ user.nickname }}<img class="user-image" src="{% static 'images/post_card_user.png' %}"></span>
 						<div id="user-menu">
 							<ul>
 								<li><a href="{% url 'mypage' %}">내 정보</a></li>
@@ -43,9 +43,8 @@
 			</nav>
 		</header>
 		<div id="container">
-			<aside id="side-bar">
+			<aside id="side-bar" :class="{ open: sideBarOpen }">
 				<ul>
-					<li class="close-button" onclick="toggleMenu()">X</li>
 					<li><a href="{% url 'index' %}">홈</a></li>
 					<li><a href="{% url 'posts:post_create' %}">글쓰기</a></li>
 					{% if user.is_authenticated %}
@@ -64,7 +63,7 @@
 			</section>
 		</div>
 	</section>
-	<script src="{% static 'base.js' %}"></script>
 	{% block end %}{% endblock %}
+	<script src="{% static 'base.js' %}"></script>
 </body>
 </html>

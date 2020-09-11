@@ -2,9 +2,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from .models import Post, Comment, Scrap, Area
+from .models import *
 from .forms import PostForm, CommentForm
-from likecompetition.serializers import PostSerializer
+from likecompetition.serializers import PostSerializer, SidoSerializer, SigunguSerializer
 from rest_framework import generics
 
 
@@ -92,18 +92,29 @@ class MyScrapView(LoginRequiredMixin, View):
 class ScrapToggleView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		scrap = Scrap(user=request.user, post=post)
-		scrap.save()
+		if not Scrap.objects.filter(user=request.user, post=post).exists():
+			scrap = Scrap(user=request.user, post=post)
+			scrap.save()
 		return HttpResponse(status=201)
 
 	def delete(self, request, *args, **kwargs):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		scrap = get_object_or_404(Scrap, user=request.user, post=post)
-		scrap.delete()
+		if Scrap.objects.filter(user=request.user, post=post).exists():
+			scrap = get_object_or_404(Scrap, user=request.user, post=post)
+			scrap.delete()
 		return HttpResponse(status=204)
 
 
-class LoadAreasView(LoginRequiredMixin, View):
-	def get(self, request, *args, **kwargs):
-		areas = Area.objects.filter(city_id=kwargs['city_id'])
-		return render(request, 'area_list.html', {'areas': areas})
+class SidoListView(generics.ListAPIView):
+	serializer_class = SidoSerializer
+
+	def get_queryset(self):
+		return Sido.objects.all().order_by('id')
+
+
+class SigunguListView(generics.ListAPIView):
+	serializer_class = SigunguSerializer
+
+	def get_queryset(self):
+		sigungus = Sigungu.objects.filter(sido_id=self.kwargs['sido_id']).order_by('id')
+		return sigungus
