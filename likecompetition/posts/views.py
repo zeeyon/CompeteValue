@@ -1,22 +1,32 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.views.generic.base import View
-from django.views.generic.edit import CreateView
+from django.views.generic.base import View, TemplateView
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
 from .models import Post, Comment, Sido, Sigungu, Scrap
 from .forms import PostForm, CommentForm
 from posts.serializers import *
 from posts.permissions import IsOwnerOrReadOnly
-from rest_framework.views import APIView
 from rest_framework import generics, mixins, permissions, status
 
 
-class PostAPIView(View):
+class PostAPIView(generics.RetrieveDestroyAPIView):
+	serializer_class = PostSerializer
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+
+	def get_object(self):
+		obj = get_object_or_404(Post, pk=self.kwargs['post_id'])
+		self.check_object_permissions(self.request, obj)
+		obj.scrapped = self.request.user.is_authenticated and Scrap.objects.filter(user=self.request.user, post=obj).exists()
+		return obj
+
+	def get(self, request, *args, **kwargs):
+		return self.retrieve(request, *args, **kwargs)
+
 	def delete(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if request.user == post.user:
-			post.delete()
-		return HttpResponse(status=204)
+		return self.destroy(request, *args, **kwargs)
 
 
 class PostListView(generics.ListAPIView):
@@ -29,43 +39,45 @@ class PostListView(generics.ListAPIView):
 		return posts
 
 
-class PostDetailView(View):
+class PostDetailView(View): # 수정 예정
 	def get(self, request, *args, **kwargs):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
 		comments = Comment.objects.filter(post=post)
 		return render(request, 'post_detail.html', {'post': post, 'form': CommentForm(), 'comments': comments})
 
 
-class PostCreateView(LoginRequiredMixin, View):
-	def get(self, request, *args, **kwargs):
-		return render(request, 'post_form.html', {'form': PostForm()})
+class PostCreateView(LoginRequiredMixin, CreateView):
+	model = Post
+	form_class = PostForm
+	template_name = 'post_form.html'
 
-	def post(self, request, *args, **kwargs):
-		form = PostForm(request.POST)
-		if not form.is_valid():
-			return render(request, 'post_form.html', {'form': form, 'error_message': 'form is not valid :('})
-		post = form.save(commit=False)
-		post.user = request.user
-		post.save()
-		return redirect('posts:post_detail', post_id=post.id)
+	def get_success_url(self):
+		return reverse_lazy('posts:post_detail', kwargs={'post_id': self.object.id})
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
+	def form_invalid(self, form):
+		return self.render_to_response(self.get_context_data(form=form, error_message='form is not valid :('))
 
 
-class PostEditView(LoginRequiredMixin, View):
-	def get(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if not request.user == post.user:
-			return redirect('index')
-		return render(request, 'post_form.html', {'form': PostForm(instance=post)})
+class PostEditView(LoginRequiredMixin, UpdateView):
+	model = Post
+	form_class = PostForm
+	template_name = 'post_form.html'
 
-	def post(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if not request.user == post.user:
-			return redirect('index')
-		form = PostForm(request.POST, instance=post)
-		if not form.is_valid():
-			return render(request, 'post_form.html', {'form': form, 'error_message': 'form is not valid :('})
-		form.save()
-		return redirect('posts:post_detail', post_id=post.id)
+	def get_success_url(self):
+		return reverse_lazy('posts:post_detail', kwargs={'post_id': self.object.id})
+
+	def get_object(self, *args, **kwargs):
+		obj = super().get_object(*args, **kwargs)
+		if not obj.user == self.request.user:
+			raise PermissionDenied
+		return obj
+
+	def form_invalid(self, form):
+		return self.render_to_response(self.get_context_data(form=form, error_message='form is not valid :('))
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -76,6 +88,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		form.save()
 		return HttpResponse(status=status.HTTP_201_CREATED)
+
+	def form_invalid(self, form):
+		return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentDeleteView(generics.DestroyAPIView):
@@ -88,11 +103,6 @@ class CommentDeleteView(generics.DestroyAPIView):
 
 	def delete(self, request, *args, **kwargs):
 		return self.destroy(request, *args, **kwargs)
-
-
-class MyScrapView(LoginRequiredMixin, View):
-	def get(self, request, *args, **kwargs):
-		return HttpResponse() # 수정 예정
 
 
 class ScrapToggleView(mixins.CreateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
