@@ -126,11 +126,11 @@ class SidoListView(generics.ListAPIView):
 	serializer_class = SidoSerializer
 
 	def get_queryset(self):
-		return Sido.objects.all()
+		return Sido.objects.all().order_by('id')
 
 
 class SigunguListView(generics.ListAPIView):
 	serializer_class = SigunguSerializer
 
 	def get_queryset(self):
-		return Sigungu.objects.filter(sido=self.kwargs['sido_id'])
+		return Sigungu.objects.filter(sido=self.kwargs['sido_id']).order_by('id')
