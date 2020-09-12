@@ -168,7 +168,7 @@
 	font-size:20px;
 	resize:none;
 }
-#comment_form input[type=submit]{
+#comment_form input[type=button]{
 	display:block;
 	width:80px;
 	height:120px;

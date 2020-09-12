@@ -92,7 +92,7 @@ Vue.component('post-filter', {
 			var query_string = this.query.join('&');
 			axios.get(query_string)
 			.then(response => {
-				this.$emit('update-post', response.data.results);
+				this.$emit('update-post', response.data);
 			})
 			.catch(error => {
 				console.log(error);
@@ -118,30 +118,6 @@ Vue.component('post-filter', {
 	}
 });
 
-Vue.component('scrap', {
-	template: `<a class="scrap" href="#" onclick="return false" :class="{ scrapped: this.post.scrapped }" @click="toggle_scrap()"></a>`,
-	props: {
-		'post': Object
-	},
-	methods: {
-		toggle_scrap: function() {
-			var method = this.post.scrapped ? 'delete' : 'post';
-			axios({
-				method: method,
-				url: '/posts/' + this.post.id + '/scrap'
-			})
-			.then(response => {
-				if (response.status == 201 || response.status == 204) {
-					this.post.scrapped = !this.post.scrapped;
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-		}
-	}
-});
-
 Vue.component('post-card', {
 	template: `<div class="post-card" @click="open_post_detail(post.id)">
 	<div class="profile">
@@ -164,7 +140,7 @@ Vue.component('post-card', {
 	},
 	methods: {
 		open_post_detail: function(post_id) {
-			var url = '/posts/' + post_id;
+			var url = '/posts/' + post_id + '/detail';
 			history.pushState(null, null, window.location.href);
 			$("#dialog").load(url.concat(" #post_detail_box"));
 			$("#dialog").dialog({
@@ -196,7 +172,7 @@ Vue.component('post-card', {
 Vue.component('post-list', {
 	template: `<div><post-filter @update-post="posts=$event" ref="filter"></post-filter>
 	<div id="post-cards">
-		<post-card v-for="post in posts" :key="post.id" :post=post></post-card>
+		<post-card v-for="post in posts.results" :key="post.id" :post=post></post-card>
 		<div class="post-card filling-empty-space"></div>
 		<div class="post-card filling-empty-space"></div>
 		<div class="post-card filling-empty-space"></div>

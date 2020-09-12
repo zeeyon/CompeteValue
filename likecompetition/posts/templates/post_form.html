@@ -11,8 +11,12 @@
 	{% csrf_token %}
 	<legend>NEW POST</legend><br><br>
 	<label for="id_sido">지역 <span>*</span></label><br>
-	{{ form.area }}
-	<br><br>
+	{% if form.instance.area %}
+	<select-area :initial_selected_sido="{{ form.instance.area.sido.id }}" :initial_selected_sigungu="{{ form.instance.area.id }}"></select-area>
+	{% else %}
+	<select-area></select-area>
+	{% endif %}
+	<br>
 	<label for="id_field">분야 <span>*</span></label><br>
 	{{ form.field }}<br>
 	<label for="id_content">내용 <span>*</span></label><br>
@@ -22,5 +26,5 @@
 {% endblock %}
 
 {% block end %}
-<script type="text/javascript" src="{% static 'post_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'select_area.js' %}"></script>
 {% endblock %}
