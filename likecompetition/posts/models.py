@@ -51,7 +51,7 @@ class Comment(models.Model):
 	post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	date = models.DateTimeField(auto_now_add=True)
-	content = models.TextField(default='')
+	content = models.TextField()
 
 	def __str__(self):
 		return self.content
@@ -66,4 +66,4 @@ class Scrap(models.Model):
 	date = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return self.user.nickname + "|" + self.post.title
+		return str(self.user) + ' ' + str(self.post)

@@ -1,20 +1,18 @@
+from posts.models import *
 from rest_framework import serializers
-from posts.models import Post, Comment, Sido, Sigungu
-from users.models import User
-
-
-class UserSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = User
-		fields = ['id', 'nickname']
+from users.serializers import UserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
+	date = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Comment
-		fields = ['id', 'user', 'content']
+		fields = ['id', 'user', 'date', 'content']
+
+	def get_date(self, obj):
+		return obj.date.strftime('%Y-%m-%d %H:%M')
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -42,7 +40,7 @@ class PostSerializer(serializers.ModelSerializer):
 		return obj.scrapped
 
 	def get_comment_cnt(self, obj):
-		return Comment.objects.filter(post=obj.id).count()
+		return Comment.objects.filter(post=obj).count()
 
 
 class SidoSerializer(serializers.ModelSerializer):
@@ -55,3 +53,9 @@ class SigunguSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Sigungu
 		fields = ['id', 'name']
+
+
+class ScrapSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Scrap
+		fields = ['user', 'post']

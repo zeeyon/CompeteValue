@@ -22,7 +22,7 @@
 	</div>
 	<div class="icon">
 		<a class="message" href="#"></a>
-		<scrap :id="parseInt([[ post.id ]])" v-bind:initial-scrapped="[[ post.scrapped ]] === 'true'"></scrap>
+		<!-- 스크랩 추가해야 함 -->
 		{% if request.user == post.user %}
 		<a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
 		<a class="delete" href="#" onclick="deletePost('{{ post.id }}')"></a>
@@ -51,7 +51,7 @@
 	{% csrf_token %}
 	<img class="profile_img" src="{% static '/images/post_card_user.png' %}" />
 	{{ form.content }}
-	<input type="submit" value="등록" />
+	<input type="button" value="등록" onclick="test('{{ post.id }}')" />
 </form>
 {% endif %}
 </div>
@@ -71,6 +71,17 @@
 
 	function deleteComment(comment_id) {
 		axios.delete('/posts/comments/' + comment_id)
+		.then(function(response) {
+			location.reload(true);
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	}
+
+	function test(post_id) {
+		console.log('1234');
+		axios.post('/posts/' + post_id + '/comments', new FormData(document.getElementById('comment_form')))
 		.then(function(response) {
 			location.reload(true);
 		})

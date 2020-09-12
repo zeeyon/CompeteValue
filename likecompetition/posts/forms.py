@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comment, Sido, Sigungu
+from .models import Post, Comment, Sigungu
 
 
 class PostForm(forms.ModelForm):

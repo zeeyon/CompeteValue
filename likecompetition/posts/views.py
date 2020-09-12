@@ -1,11 +1,22 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from .models import *
+from django.views.generic.base import View
+from django.views.generic.edit import CreateView
+from .models import Post, Comment, Sido, Sigungu, Scrap
 from .forms import PostForm, CommentForm
-from likecompetition.serializers import PostSerializer, SidoSerializer, SigunguSerializer
-from rest_framework import generics
+from posts.serializers import *
+from posts.permissions import IsOwnerOrReadOnly
+from rest_framework.views import APIView
+from rest_framework import generics, mixins, permissions, status
+
+
+class PostAPIView(View):
+	def delete(self, request, *args, **kwargs):
+		post = get_object_or_404(Post, pk=kwargs['post_id'])
+		if request.user == post.user:
+			post.delete()
+		return HttpResponse(status=204)
 
 
 class PostListView(generics.ListAPIView):
@@ -23,12 +34,6 @@ class PostDetailView(View):
 		post = get_object_or_404(Post, pk=kwargs['post_id'])
 		comments = Comment.objects.filter(post=post)
 		return render(request, 'post_detail.html', {'post': post, 'form': CommentForm(), 'comments': comments})
-
-	def delete(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if request.user == post.user:
-			post.delete()
-		return HttpResponse()
 
 
 class PostCreateView(LoginRequiredMixin, View):
@@ -63,58 +68,59 @@ class PostEditView(LoginRequiredMixin, View):
 		return redirect('posts:post_detail', post_id=post.id)
 
 
-class CommentCreateView(LoginRequiredMixin, View):
-	def post(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			comment = form.save(commit=False)
-			comment.post = post
-			comment.user = request.user
-			comment.save()
-		return redirect('posts:post_detail', post_id=post.id)
+class CommentCreateView(LoginRequiredMixin, CreateView):
+	form_class = CommentForm
+
+	def form_valid(self, form):
+		form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])
+		form.instance.user = self.request.user
+		form.save()
+		return HttpResponse(status=status.HTTP_201_CREATED)
 
 
-class CommentDeleteView(LoginRequiredMixin, View):
+class CommentDeleteView(generics.DestroyAPIView):
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+
+	def get_object(self):
+		obj = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
+		self.check_object_permissions(self.request, obj)
+		return obj
+
 	def delete(self, request, *args, **kwargs):
-		comment = get_object_or_404(Comment, pk=kwargs['comment_id'])
-		if request.user == comment.user:
-			comment.delete()
-		return HttpResponse()
+		return self.destroy(request, *args, **kwargs)
 
 
 class MyScrapView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
-		scraps = Scrap.objects.filter(user=request.user).order_by('-date')
-		return render(request, 'scrap.html', {'scraps': scraps})
+		return HttpResponse() # 수정 예정
 
 
-class ScrapToggleView(LoginRequiredMixin, View):
+class ScrapToggleView(mixins.CreateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+	serializer_class = ScrapSerializer
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+
+	def get_object(self):
+		obj = get_object_or_404(Scrap, user=self.request.user, post=self.kwargs['post_id'])
+		self.check_object_permissions(self.request, obj)
+		return obj
+
 	def post(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if not Scrap.objects.filter(user=request.user, post=post).exists():
-			scrap = Scrap(user=request.user, post=post)
-			scrap.save()
-		return HttpResponse(status=201)
+		request.data.update(user=request.user.id, post=kwargs['post_id'])
+		return self.create(request, *args, **kwargs)
 
 	def delete(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		if Scrap.objects.filter(user=request.user, post=post).exists():
-			scrap = get_object_or_404(Scrap, user=request.user, post=post)
-			scrap.delete()
-		return HttpResponse(status=204)
+		return self.destroy(request, *args, **kwargs)
 
 
 class SidoListView(generics.ListAPIView):
 	serializer_class = SidoSerializer
 
 	def get_queryset(self):
-		return Sido.objects.all().order_by('id')
+		return Sido.objects.all()
 
 
 class SigunguListView(generics.ListAPIView):
 	serializer_class = SigunguSerializer
 
 	def get_queryset(self):
-		sigungus = Sigungu.objects.filter(sido_id=self.kwargs['sido_id']).order_by('id')
-		return sigungus
+		return Sigungu.objects.filter(sido=self.kwargs['sido_id'])
