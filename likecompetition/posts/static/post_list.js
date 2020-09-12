@@ -12,7 +12,7 @@ Vue.component('post-filter', {
 	<div class="filter">
 		<div class="filter-name">언어</div>
 		<div class="filter-options">
-			<input type="text">
+			<input type="text" id="lang" name="lang">
 		</div>
 	</div>
 	<div id="check-list">
@@ -97,7 +97,7 @@ Vue.component('post-filter', {
 			.catch(error => {
 				console.log(error);
 			});
-		},
+		}
 	},
 	watch: {
 		check_list: function() {
@@ -111,7 +111,7 @@ Vue.component('post-filter', {
 			}
 			this.page = 1;
 			this.send_query();
-		},
+		}
 	},
 	created: function() {
 		this.send_query();
@@ -128,7 +128,7 @@ Vue.component('post-card', {
 		</div>
 	</div>
 	<div class="field">{{ post.field }}</div>
-	<div class="tool"></div>
+	<div class="lang"></div>
 	<span class="date">{{ post.date }}</span>
 	<div class="icon" v-on:click.stop>
 		<a class="message" href="#" onclick=""></a>

@@ -1,15 +1,15 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.views.generic.base import View, TemplateView
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
-from .models import Post, Comment, Sido, Sigungu, Scrap
-from .forms import PostForm, CommentForm
+from .models import *
+from .forms import *
 from posts.serializers import *
 from posts.permissions import IsOwnerOrReadOnly
-from rest_framework import generics, mixins, permissions, status
+from rest_framework import generics, mixins, pagination, permissions, status
 
 
 class PostAPIView(generics.RetrieveDestroyAPIView):
@@ -39,11 +39,13 @@ class PostListView(generics.ListAPIView):
 		return posts
 
 
-class PostDetailView(View): # 수정 예정
-	def get(self, request, *args, **kwargs):
-		post = get_object_or_404(Post, pk=kwargs['post_id'])
-		comments = Comment.objects.filter(post=post)
-		return render(request, 'post_detail.html', {'post': post, 'form': CommentForm(), 'comments': comments})
+class PostDetailView(TemplateView):
+	template_name = 'post_detail.html'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['post_id'] = kwargs['post_id']
+		return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -80,26 +82,38 @@ class PostEditView(LoginRequiredMixin, UpdateView):
 		return self.render_to_response(self.get_context_data(form=form, error_message='form is not valid :('))
 
 
-class CommentCreateView(LoginRequiredMixin, CreateView):
-	form_class = CommentForm
+class CommentListCreateView(generics.ListAPIView):
+	class CommentListPagination(pagination.PageNumberPagination):
+		page_size = 1000
 
-	def form_valid(self, form):
-		form.instance.post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-		form.instance.user = self.request.user
+	serializer_class = CommentSerializer
+	pagination_class = CommentListPagination
+
+	def get_queryset(self):
+		return Comment.objects.filter(post=self.kwargs['post_id']).order_by('id')
+
+	def post(self, request, *args, **kwargs):
+		post = get_object_or_404(Post, pk=kwargs['post_id'])
+		form = CommentForm(request.POST)
+		if not form.is_valid():
+			return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+		form.instance.post = post
+		form.instance.user = request.user
 		form.save()
-		return HttpResponse(status=status.HTTP_201_CREATED)
-
-	def form_invalid(self, form):
-		return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
+		return HttpResponse(form.instance.id, status=status.HTTP_201_CREATED)
 
 
-class CommentDeleteView(generics.DestroyAPIView):
+class CommentRetrieveDestroyView(generics.RetrieveDestroyAPIView):
+	serializer_class = CommentSerializer
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 
 	def get_object(self):
 		obj = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
 		self.check_object_permissions(self.request, obj)
 		return obj
+
+	def get(self, request, *args, **kwargs):
+		return self.retrieve(request, *args, **kwargs)
 
 	def delete(self, request, *args, **kwargs):
 		return self.destroy(request, *args, **kwargs)

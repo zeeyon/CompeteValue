@@ -3,91 +3,14 @@
 {% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
 
 {% block content %}
-<div id="post_detail_wrap">
-<div id="post_detail_box">
-	<div class="profile">
-		<img class="profile_img" src="{% static '/images/post_card_user.png' %}" /><br>
-		<span class="user_info">{{ post.user }}</span><br>
-		<span class="area">{{ post.area }}</span>
-	</div>
-	<div class="contents">
-		<div class="field">{{ post.field }}</div>
-		<div class="tools">
-			{% for tool in post.field %}
-			<div class="tool">#{{ tool }}</div>
-			{% endfor %}
-		</div>
-		<div class="content">{{ post.content|linebreaks }}</div>
-		<div class="comment_cnt"><a href="{% url 'posts:post_detail' post.id %}">{{ comments|length }} comments</a></div>
-	</div>
-	<div class="icon">
-		<a class="message" href="#"></a>
-		<!-- 스크랩 추가해야 함 -->
-		{% if request.user == post.user %}
-		<a class="edit" href="{% url 'posts:post_edit' post.id %}"></a>
-		<a class="delete" href="#" onclick="delete_post('{{ post.id }}'); return false;"></a>
-		{% endif %}
-	</div>
-</div>
-
-<div id="comment_box">
-	{% for comment in comments %}
-	<div class="comment">
-		<div class="profile">
-			<img class="profile_img" src="{% static '/images/post_card_user.png' %}" />
-			<span class="nickname">{{ comment.user.nickname }}</span>
-			<span class="date">{{ comment.date }}</span>
-		</div>
-		<div class="content">{{ comment.content|linebreaks }}</div>
-		{% if request.user == comment.user %}
-		<a class="delete" href="#" onclick="delete_comment('{{ comment.id }}'); return false;">삭제하기</a>
-		{% endif %}
-	</div>
-	{% endfor %}
-</div>
-
-{% if user.is_authenticated %}
-<form id="comment_form" action="{% url 'posts:comment_create' post.id %}" method="post">
-	{% csrf_token %}
-	<img class="profile_img" src="{% static '/images/post_card_user.png' %}" />
-	{{ form.content }}
-	<input type="button" value="등록" onclick="create_comment('{{ post.id }}')" />
-</form>
+{% if request.user.id %}
+<post-detail-card :post_id="{{ post_id }}" :request_user_id="{{ request.user.id }}"></post-detail-card>
+{% else %}
+<post-detail-card :post_id="{{ post_id }}"></post-detail-card>
 {% endif %}
-</div>
 {% endblock %}
 
 {% block end %}
-<script>
-	function delete_post(post_id) {
-		axios.delete('/posts/' + post_id)
-		.then(function(response) {
-			location.href = '/';
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-	}
-
-	function delete_comment(comment_id) {
-		axios.delete('/posts/comments/' + comment_id)
-		.then(function(response) {
-			location.reload(true);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-	}
-
-	function create_comment(post_id) {
-		console.log('1234');
-		axios.post('/posts/' + post_id + '/comments', new FormData(document.getElementById('comment_form')))
-		.then(function(response) {
-			location.reload(true);
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
-	}
-</script>
+<script type="text/javascript" src="{% static 'scrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'post_detail.js' %}"></script>
 {% endblock %}

@@ -31,8 +31,8 @@ def signup(request):
 			err_msg = '이미 가입된 이메일입니다'
 
 	form = SignupForm()
-	return render(request, 'signup.html', {"signupForm": form, 'err_msg':err_msg})
-	
+	return render(request, 'signup.html', {"signupForm": form, 'error_message':err_msg})
+
 def login(request):
 	# 로그인된 유저정보는 다음과 같이 가져오면 된다.
 	# request.user.값
@@ -49,7 +49,7 @@ def login(request):
 			err_msg = '아이디 혹은 비밀번호가 잘못되었습니다 :3'
 			
 	form = LoginForm()
-	return render(request, 'login.html', {"loginForm": form, 'err_msg':err_msg})
+	return render(request, 'login.html', {"loginForm": form, 'error_message':err_msg})
 
 @login_required
 def logout(request):

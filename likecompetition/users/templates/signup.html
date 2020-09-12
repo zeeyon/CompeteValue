@@ -1,12 +1,11 @@
-<!--회원가입 페이지입니당.:3-->
 {% extends 'base.html' %}
 
 {% block title %}<link rel="stylesheet" type="text/css" href="/static/signup.css">{% endblock %}
 {% block content %}
-<form method="POST" id="register-form">
+<form method="post" id="register-form">
     <span id="legend">공가치</span>
     <table>
-        {%csrf_token%}
+        {% csrf_token %}
         <tr class="user-id">
             <td class="user-id-logo"><img src="/static/images/userID.png" id="user-id-logo"></td>
             <td class="user-id-input">{{ signupForm.nickname }}</td>
@@ -26,7 +25,7 @@
     </table>
     
     <div id="form-submit">
-        <button class="form-submit" style="cursor:pointer">가입</button>
+        <button class="submit-button" style="cursor:pointer">가입</button>
     </div>
 </div>
 </form>
