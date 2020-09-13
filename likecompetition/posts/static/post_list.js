@@ -146,6 +146,7 @@ Vue.component('post-card', {
 					$('#post_detail_card').dialog({
 						modal: true,
 						width: 1000,
+						minHeight: 450,
 						draggable: false,
 						resizable: false,
 						create: function() {

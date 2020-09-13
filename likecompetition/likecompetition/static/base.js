@@ -1,13 +1,15 @@
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-axios.get('/users/me')
-.then(response => {
-	Vue.prototype.$user = response.data;
-})
-.catch(error => {
-	console.log(error);
-});
+async function getUser() {
+	try {
+		var response = await axios.get('/users/me');
+		Vue.prototype.$user = response.data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+getUser();
 
 new Vue({
 	el: '#app',
