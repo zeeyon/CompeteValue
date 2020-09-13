@@ -8,34 +8,31 @@
 .content-main{
 	height:100%;
 	font-family:'Nanum Gothic', sans-serif;
-	font-size:15pt;
+	font-size:20px;
 	text-align:center;
 }
 
 #login-form{
+	margin-top:100px;
 	vertical-align:middle;
-	margin-top: 100px;
 }
 #id_email, #id_password{
-	font-size:15pt;
-	padding:10px;
 	width:324px;
-	border-radius:3px;
+	padding:10px;
 	border:1px solid #B9B9B9;
-	outline:0;
+	border-radius:3px;
+	font-size:20px;
 }
 #login-form>#login-button{
-	margin-top:20px;
-	margin-bottom:10px;
 	width:346px;
 	padding:10px;
-	background-color:#1C1C1C;
-	color:white;
-	font-family:'TmoneyRoundWindExtraBold';
-	font-size:15pt;
-	border-radius:3px;
+	margin:20px auto 10px auto;
 	border:0;
-	outline:0;
+	border-radius:3px;
+	background-color:#1C1C1C;
+	font-family:'TmoneyRoundWindRegular';
+	font-size:20px;
+	color:white;
 	cursor:pointer;
 }
 
@@ -52,10 +49,9 @@ legend{
 	text-decoration:none;
 }
 #user-register{
-	font-size:80%;
-	padding-right:5px;
-	padding-left:5px;
+	padding:0 5px;
 	border-right:1px solid black;
+	font-size:80%;
 	cursor:pointer;
 }
 #user-find{
@@ -66,6 +62,6 @@ legend{
 	color:black;
 	text-decoration:none;
 }
-.err_msg{
+.error_message{
 	font-size:16px;
 }

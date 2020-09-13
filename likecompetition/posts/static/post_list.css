@@ -29,6 +29,9 @@
 	position:relative;
 	top:-2px;
 }
+#filter-box .filter #lang{
+	width:200px;
+}
 
 #check-list ul{
 	display:flex;
@@ -123,15 +126,15 @@
 	background-size:100%;
 	vertical-align:middle;
 }
-.post-card .field, .post-card .tool{
+.post-card .field, .post-card .lang{
 	height:50px;
 	padding:10px;
 }
 .post-card .field{
-	font-family:'TmoneyRoundWindExtraBold';
+	font-family:'TmoneyRoundWindRegular';
 	font-size:20px;
 }
-.post-card .tool{
+.post-card .lang{
 	font-size:15px;
 }
 .post-card .date{
@@ -173,7 +176,7 @@
 
 #page-btn{
 	margin:50px auto 40px auto;
-	font-family:'TmoneyRoundWindExtraBold';
+	font-family:'TmoneyRoundWindRegular';
 	font-size:25px;
 	text-align:center;
 }
@@ -193,7 +196,7 @@
 	height:50px;
 }
 
-#post_card_tool{
+#post_card_lang{
 	width:270px;
 	height:50px;
 }
@@ -210,8 +213,8 @@
 		width:350px;
 		height:90px;
 	}
-	
-	#post_card_tool{
+
+	#post_card_lang{
 		width:350px;
 		height:90px;
 	}

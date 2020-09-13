@@ -42,8 +42,6 @@ INSTALLED_APPS = [
 	'rest_framework',
 	'multiselectfield',
 	'django_filters',
-	'dal',
-	'dal_select2',
 ]
 
 MIDDLEWARE = [
