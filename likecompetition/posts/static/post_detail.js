@@ -7,15 +7,11 @@ Vue.component('comment-box', {
 			<span class="date">{{ comment.date }}</span>
 		</div>
 		<div class="content">{{ comment.content }}</div>
-		<a v-if="comment.user.id === request_user_id" class="delete" href="#" onclick="return false" @click="delete_comment(idx)">삭제하기</a>
+		<a v-if="comment.user.id === $user.id" class="delete" href="#" onclick="return false" @click="delete_comment(idx)">삭제하기</a>
 	</div>
 </div>`,
 	props: {
-		'comments': Array,
-		'request_user_id': {
-			type: Number,
-			default: -1
-		}
+		'comments': Array
 	},
 	methods: {
 		delete_comment: function(idx){
@@ -37,11 +33,7 @@ Vue.component('comment-form', {
 	<input type="submit" value="등록" @click="create_comment()" />
 </form>`,
 	props: {
-		'post_id': Number,
-		'request_user_id': {
-			type: Number,
-			default: -1
-		}
+		'post_id': Number
 	},
 	methods: {
 		create_comment: function(){
@@ -85,37 +77,40 @@ Vue.component('post-detail-card', {
 		<div class="icon">
 			<a class="message" href="#"></a>
 			<scrap :post=post></scrap>
-			<template v-if="post.user.id === request_user_id">
+			<template v-if="post.user.id === $user.id">
 			<a class="edit" :href="'/posts/' + post.id + '/edit'"></a>
 			<a class="delete" href="#" @click="delete_post()"></a>
 			</template>
 		</div>
 	</div>
 	<template v-if="comments !== null">
-		<comment-box :comments="comments" :request_user_id="request_user_id"></comment-box>
-		<comment-form v-if="request_user_id !== -1" :post_id="post.id" :request_user_id="request_user_id" @add_comment="add_comment"></comment-form>
+		<comment-box :comments="comments"></comment-box>
+		<comment-form v-if="post !== null" :post_id="post.id" @add_comment="add_comment"></comment-form>
 	</template>
 </div>`,
 	props: {
-		'post_id': Number,
+		'_post': {
+			type: Object,
+			default: null
+		},
+		'post_id': {
+			type: Number,
+			default: null
+		},
 		'show_comments': {
 			type: Boolean,
-			default: true
-		},
-		'request_user_id': {
-			type: Number,
-			default: -1
+			default: false
 		}
 	},
 	data: function() {
 		return {
-			post: null,
-			comments: null
+			comments: null,
+			post: this._post
 		}
 	},
 	methods: {
 		delete_post: function() {
-			axios.delete('/posts/' + this.post_id)
+			axios.delete('/posts/' + this.post.id)
 			.then(response => {
 				location.href = '/';
 			})
@@ -133,14 +128,21 @@ Vue.component('post-detail-card', {
 			});
 		}
 	},
+	watch: {
+		_post: function() {
+			this.post = this._post;
+		}
+	},
 	created: function() {
-		axios.get('/posts/' + this.post_id)
-		.then(response => {
-			this.post = response.data;
-		})
-		.catch(error => {
-			console.log(error);
-		});
+		if (this.post === null) {
+			axios.get('/posts/' + this.post_id)
+			.then(response => {
+				this.post = response.data;
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		}
 		if (this.show_comments) {
 			axios.get('/posts/' + this.post_id + '/comments')
 			.then(response => {

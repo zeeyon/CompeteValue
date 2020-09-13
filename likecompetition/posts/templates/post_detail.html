@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">{% endblock %}
+
+{% block title %}
+<link rel="stylesheet" type="text/css" href="{% static 'post_detail.css' %}">
+{% endblock %}
 
 {% block content %}
-{% if request.user.id %}
-<post-detail-card :post_id="{{ post_id }}" :request_user_id="{{ request.user.id }}"></post-detail-card>
-{% else %}
-<post-detail-card :post_id="{{ post_id }}"></post-detail-card>
-{% endif %}
+<post-detail-card :post_id="{{ post_id }}" :show_comments="true"></post-detail-card>
 {% endblock %}
 
 {% block end %}

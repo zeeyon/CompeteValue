@@ -5,8 +5,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
-from .models import *
-from .forms import *
+from posts.models import *
+from posts.forms import *
 from posts.serializers import *
 from posts.permissions import IsOwnerOrReadOnly
 from rest_framework import generics, mixins, pagination, permissions, status
@@ -14,7 +14,7 @@ from rest_framework import generics, mixins, pagination, permissions, status
 
 class PostAPIView(generics.RetrieveDestroyAPIView):
 	serializer_class = PostSerializer
-	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def get_object(self):
 		obj = get_object_or_404(Post, pk=self.kwargs['post_id'])
@@ -105,7 +105,7 @@ class CommentListCreateView(generics.ListAPIView):
 
 class CommentRetrieveDestroyView(generics.RetrieveDestroyAPIView):
 	serializer_class = CommentSerializer
-	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def get_object(self):
 		obj = get_object_or_404(Comment, pk=self.kwargs['comment_id'])
@@ -121,7 +121,7 @@ class CommentRetrieveDestroyView(generics.RetrieveDestroyAPIView):
 
 class ScrapToggleView(mixins.CreateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
 	serializer_class = ScrapSerializer
-	permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 	def get_object(self):
 		obj = get_object_or_404(Scrap, user=self.request.user, post=self.kwargs['post_id'])

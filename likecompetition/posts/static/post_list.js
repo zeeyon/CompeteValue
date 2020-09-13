@@ -119,7 +119,7 @@ Vue.component('post-filter', {
 });
 
 Vue.component('post-card', {
-	template: `<div class="post-card" @click="open_post_detail(post.id)">
+	template: `<div class="post-card" @click="open_post_detail()">
 	<div class="profile">
 		<div class="profile-image-box"><img class="profile-image" src="/static/images/post_card_user.png"></div>
 		<div class="user-info-box">
@@ -139,32 +139,36 @@ Vue.component('post-card', {
 		'post': Object
 	},
 	methods: {
-		open_post_detail: function(post_id) {
-			var url = '/posts/' + post_id + '/detail';
-			history.pushState(null, null, window.location.href);
-			$("#dialog").load(url.concat(" #post_detail_box"));
-			$("#dialog").dialog({
-				modal: true,
-				width: '1000',
-				height: 'auto',
-				draggable: false,
-				resizable: false,
-				create: function(event, ui) {
-					$(this).parent().css('position', 'fixed');
-				},
-				open: function() {
-					$(this).parents(".ui-dialog:first").find(".ui-dialog-titlebar").remove();
-					window.onpopstate = () => {
-						$('#dialog').dialog('close');
-					};
-					$('.ui-widget-overlay').on('click', function(){ $('#dialog').dialog('close');})
-					$('.ui-dialog').css("padding", "0");
-					$('.ui-dialog-content').css("padding", "0");
-				},
-				close: function() {
-					// history.back();, 스크롤 버그
+		open_post_detail: function() {
+			this.$emit('open-detail', this.post);
+			var func = () => {
+				if ($('#post_detail_card').length) {
+					$('#post_detail_card').dialog({
+						modal: true,
+						width: 1000,
+						draggable: false,
+						resizable: false,
+						create: function() {
+							$(this).parent().find('.ui-dialog-titlebar').remove();
+							$(this).parent().css('position', 'fixed');
+							$(this).parent().css('padding', 0);
+							$(this).css('padding', 0);
+						},
+						open: function() {
+							window.onpopstate = () => {
+								$('#post_detail_card').dialog('close');
+							};
+							$('.ui-widget-overlay').on('click', () => {
+								$('#post_detail_card').dialog('close');
+							});
+
+						}
+					});
+				} else {
+					setTimeout(func, 10);
 				}
-			});
+			};
+			func();
 		}
 	}
 });
@@ -172,7 +176,7 @@ Vue.component('post-card', {
 Vue.component('post-list', {
 	template: `<div><post-filter @update-post="posts=$event" ref="filter"></post-filter>
 	<div id="post-cards">
-		<post-card v-for="post in posts.results" :key="post.id" :post=post></post-card>
+		<post-card v-for="post in posts.results" :key="post.id" :post=post @open-detail="detail_post=post"></post-card>
 		<div class="post-card filling-empty-space"></div>
 		<div class="post-card filling-empty-space"></div>
 		<div class="post-card filling-empty-space"></div>
@@ -181,10 +185,11 @@ Vue.component('post-list', {
 		<a v-if="posts.previous" href="#" onclick="return false" @click="$refs.filter.prev_page()">&#60;Prev</a>
 		<a v-if="posts.next" href="#" onclick="return false" @click="$refs.filter.next_page()">Next&#62;</a>
 	</div>
-	<div id="dialog"></div></div>`,
+	<post-detail-card v-if="detail_post !== null" :_post="detail_post"></post-detail-card></div>`,
 	data: function() {
 		return {
-			posts: {}
+			posts: {},
+			detail_post: null
 		}
 	}
 });

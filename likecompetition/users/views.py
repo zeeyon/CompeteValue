@@ -1,9 +1,11 @@
 from django.shortcuts import render ,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as signin, logout as signout
 from django.contrib.auth.decorators import login_required
+from users.forms import *
+from users.models import *
+from users.serializers import UserSerializer
+from rest_framework import generics, permissions
 
-from .forms import *
-from .models import *
 
 def signup(request):
 	err_msg = '' # 에러 메세지
@@ -31,7 +33,8 @@ def signup(request):
 			err_msg = '이미 가입된 이메일입니다'
 
 	form = SignupForm()
-	return render(request, 'signup.html', {"signupForm": form, 'error_message':err_msg})
+	return render(request, 'signup.html', {'signupForm': form, 'error_message':err_msg})
+
 
 def login(request):
 	# 로그인된 유저정보는 다음과 같이 가져오면 된다.
@@ -49,7 +52,8 @@ def login(request):
 			err_msg = '아이디 혹은 비밀번호가 잘못되었습니다 :3'
 			
 	form = LoginForm()
-	return render(request, 'login.html', {"loginForm": form, 'error_message':err_msg})
+	return render(request, 'login.html', {'loginForm': form, 'error_message':err_msg})
+
 
 @login_required
 def logout(request):
@@ -68,24 +72,15 @@ def mypage(request):
 			user.save()
 	else:
 		form = MypageForm(instance = request.user)
-	return render(request, 'mypage.html', {"mypageForm":form})
+	return render(request, 'mypage.html', {'mypageForm':form})
 
-"""
-class PostEditView(LoginRequiredMixin, BaseView):
-    def get(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        return render(request, 'post_form.html', {'form': PostForm(instance=post), 'method': 'PUT'})
 
-    def put(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=self.kwargs['post_id'])
-        if not request.user == post.user:
-            return redirect('index')
-        form = PostForm(request.POST, instance=post)
-        if not form.is_valid():
-            return render(request, 'post_form.html', {'form': form, 'method': 'PUT', 'error_message': 'Error..'})
-        post = form.save(commit=False)
-        post.save()
-        return redirect('post_detail', post_id=post.id)
-"""
+class MyUserView(generics.RetrieveAPIView):
+	serializer_class = UserSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+	def get_object(self):
+		return self.request.user if self.request.user.is_authenticated else None
+
+	def get(self, request, *args, **kwargs):
+		return self.retrieve(request, *args, **kwargs)
