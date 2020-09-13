@@ -162,6 +162,7 @@ def croped_image(data, x=0, y=0, s1=10, s2=10):
 	file_name = data.name.split()[0]+'.jpg'
 	f = BytesIO(data.read())
 	img = pil.open(f)
+	img = img.convert('RGB')
 	f = img.crop((x, y, x+s1, y+s2))
 	f_io = BytesIO()
 	f.save(f_io, format='JPEG')
