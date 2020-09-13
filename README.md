@@ -10,7 +10,7 @@
 * 팀장
     * 백지연([@zeeyon](https://github.com/zeeyon)) : 
 * 팀원
-    * 이현준([@bessapple14](https://github.com/bessapple14)) : 
+    * 이현준([@light2u](https://github.com/light2u)) : 
     * 허민([@gjals](https://github.com/gjals)) : 
     * 지우성([@WSJI0](https://github.com/WSJI0)) : 
     * 신승원([@SpicyKong](https://github.com/SpicyKong)) : 
